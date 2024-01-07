@@ -6,11 +6,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="w-full min-h-screen bg-background-primary">
+    <div className="w-full min-h-screen bg-bg-primary">
       <Navbar />
-      <div className="max-w-main-content mx-auto flex">
-        <main>{children}</main>
-      </div>
+      <main>{children}</main>
     </div>
   );
 }
