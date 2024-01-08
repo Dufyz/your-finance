@@ -31,10 +31,10 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="hidden justify-around items-center gap-[32px] text-base flex-wrap lg:flex">
-            <button className="w-32 h-7 flex items-center justify-center bg-btn-primary hover:bg-btn-primary-hover text-text-primary font-medium rounded-sm">
+            <button className="w-32 h-7 flex items-center justify-center bg-btn-primary hover:bg-btn-primary-hover text-text-primary font-medium rounded-md">
               Purchase
             </button>
-            <button className="w-32 h-7 flex items-center justify-center bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary font-medium rounded-sm">
+            <button className="w-32 h-7 flex items-center justify-center bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary font-medium rounded-md">
               Login
             </button>
           </div>
@@ -51,7 +51,7 @@ const Navbar = () => {
         className={`lg:hidden 280px:h-[calc(100vh-96px)] bg-nav-bg ${
           isMenuMobileOpen ? "flex" : "hidden"
         } 
-         flex-col justify-start items-center w-full absolute left-0 z-50 p-[32px] gap-[64px] flex-grow h-[calc(100vh-168px)] 
+         fixed flex-col justify-start items-center w-full left-0 z-50 p-[32px] gap-[64px] flex-grow h-[calc(100vh-168px)] 
         `}
         aria-label="Menu items"
       >
