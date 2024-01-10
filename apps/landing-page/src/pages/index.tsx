@@ -1,11 +1,15 @@
 import RootLayout from "@/layouts/RootLayout";
 import Image from "next/image";
 
+import FacebookIcon from "@/components/Global/FacebookIcon";
+import LinkedInIcon from "@/components/Global/LinkedinIcon";
+import TwitterIcon from "@/components/Global/TwitterIcon";
+
 export default function Home() {
   return (
     <RootLayout>
-      <div className="w-full p-[32px]">
-        <div className="w-full max-w-main-content mx-auto flex flex-nowrap justify-center items-center h-[600px] gap-[32px] md:justify-between ">
+      <div className="w-full p-[32px] min-h-[calc(100vh-96px)]">
+        <div className="w-full max-w-main-content mx-auto flex flex-nowrap justify-center items-center  h-[600px] gap-[32px] md:justify-between ">
           <div className="flex flex-col items-center justify-center gap-[32px] md:items-start">
             <h1 className="max-w-[350px] text-[32px] text-title-primary text-center font-medium md:text-[44px] md:max-w-[400px] md:text-start lg:text-[48px] lg:max-w-[500px] xl:text-[64px]">
               Simplyfing Your Financial Future.
@@ -126,8 +130,8 @@ export default function Home() {
       </div>
 
       <div className="w-full max-w-main-content mx-auto p-[32px] flex flex-col items-start justify-center gap-[32px] sm:items-center">
-        <div className="w-full flex flex-col items-center justify-center gap-[48px]">
-          <div className="flex flex-col gap-[16px] items-center justify-center">
+        <div className="w-full flex flex-col items-center justify-center gap-[64px]">
+          <div className="flex flex-col gap-[32px] items-center justify-center md:py-[32px]">
             <h1 className="text-title-primary font-bold text-[32px]">
               Expertise. Agility. Anywhere.
             </h1>
@@ -137,16 +141,16 @@ export default function Home() {
               committed, we pride ourselves on delivering excellence.
             </p>
             <div className="flex flex-wrap items-center justify-between gap-[32px]">
-              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center h-[56px] w-[120px] rounded-[16px] p-[8px]">
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center  w-[160px] rounded-[16px] p-[8px]">
                 👀 More
               </button>
-              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center h-[56px] w-[120px] rounded-[16px] p-[8px]">
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center  w-[160px] rounded-[16px] p-[8px]">
                 👋 Contact
               </button>
             </div>
           </div>
 
-          <div className="w-full flex items-center justify-center gap-[48px] bg-[red]">
+          <div className="w-full flex flex-col items-center justify-center gap-[48px] border-t-[2px] border-[text-primary-hover] pt-[32px] flex-wrap sm:flex-row md:justify-between">
             <div>
               <Image
                 src={"/logo.svg"}
@@ -158,10 +162,10 @@ export default function Home() {
             <p className="text-title-primary-hover text-[16px] center">
               © 2024 YourFinance. All Rights Reserved.{" "}
             </p>
-            <div>
-              <p>1</p>
-              <p>1</p>
-              <p>1</p>
+            <div className="flex items-center justify-center gap-[48px] flex-wrap sm:justify-between">
+              <FacebookIcon />
+              <TwitterIcon />
+              <LinkedInIcon />
             </div>
           </div>
         </div>
