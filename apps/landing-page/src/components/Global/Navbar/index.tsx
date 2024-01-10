@@ -6,7 +6,7 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="w-full flex justify-between items-center min-h-16 bg-nav-bg sticky top-0 p-[32px] relative">
+      <nav className=" w-full flex justify-between items-center min-h-16 bg-nav-bg sticky top-0 p-[32px] z-[9]">
         <div className="w-full mx-auto max-w-main-content flex justify-between items-center flex-wrap gap-[48px]">
           <div
             className="flex align-bottom items-center justify-start text-2xl text-title-primary font-bold"

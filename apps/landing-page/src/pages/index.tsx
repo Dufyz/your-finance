@@ -27,8 +27,8 @@ export default function Home() {
 
       <div></div>
 
-      <div className="py-24 sm:py-32">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+      <div className="p-[32px]">
+        <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-2xl lg:text-center">
             <p className="mt-2 text-3xl font-bold tracking-tight text-title-primary sm:text-4xl">
               Innovate. Strategize. Achieve. Grow.
@@ -121,6 +121,48 @@ export default function Home() {
                 </dd>
               </div>
             </dl>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full max-w-main-content mx-auto p-[32px] flex flex-col items-start justify-center gap-[32px] sm:items-center">
+        <div className="w-full flex flex-col items-center justify-center gap-[48px]">
+          <div className="flex flex-col gap-[16px] items-center justify-center">
+            <h1 className="text-title-primary font-bold text-[32px]">
+              Expertise. Agility. Anywhere.
+            </h1>
+            <p className="text-title-primary-hover text-start text-[20px] sm:text-center">
+              Our diverse and driven team propels your financial journey,
+              empowering you to achieve your goals with precision. Agile and
+              committed, we pride ourselves on delivering excellence.
+            </p>
+            <div className="flex flex-wrap items-center justify-between gap-[32px]">
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center h-[56px] w-[120px] rounded-[16px] p-[8px]">
+                👀 More
+              </button>
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center h-[56px] w-[120px] rounded-[16px] p-[8px]">
+                👋 Contact
+              </button>
+            </div>
+          </div>
+
+          <div className="w-full flex items-center justify-center gap-[48px] bg-[red]">
+            <div>
+              <Image
+                src={"/logo.svg"}
+                height={120}
+                width={120}
+                alt="logo icon"
+              />
+            </div>
+            <p className="text-title-primary-hover text-[16px] center">
+              © 2024 YourFinance. All Rights Reserved.{" "}
+            </p>
+            <div>
+              <p>1</p>
+              <p>1</p>
+              <p>1</p>
+            </div>
           </div>
         </div>
       </div>
