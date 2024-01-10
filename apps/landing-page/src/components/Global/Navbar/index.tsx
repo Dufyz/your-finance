@@ -66,10 +66,10 @@ const Navbar = () => {
         </ul>
 
         <div className="flex justify-center items-center gap-[32px] flex-wrap">
-          <button className="w-32 h-7 flex items-center justify-center bg-btn-primary hover:bg-btn-primary-hover text-text-primary font-medium rounded-sm">
+          <button className="w-32 h-7 flex items-center justify-center bg-btn-primary hover:bg-btn-primary-hover text-text-primary font-medium rounded-md">
             Purchase
           </button>
-          <button className="w-32 h-7 flex items-center justify-center bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary font-medium rounded-sm">
+          <button className="w-32 h-7 flex items-center justify-center bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary font-medium rounded-md">
             Login
           </button>
         </div>

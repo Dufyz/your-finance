@@ -1,21 +1,23 @@
 import RootLayout from "@/layouts/RootLayout";
 import Image from "next/image";
 
-import FacebookIcon from "@/components/Global/FacebookIcon";
-import LinkedInIcon from "@/components/Global/LinkedinIcon";
-import TwitterIcon from "@/components/Global/TwitterIcon";
+import PriceCard from "@/components/Global/PriceCard";
+import SocialIcon from "@/components/Global/SocialIcon";
 
 export default function Home() {
   return (
     <RootLayout>
-      <div className="w-full p-[32px] min-h-[calc(100vh-96px)]">
+      <section
+        className="p-[32px] w-full min-h-[calc(100vh-96px)] flex items-center justify-center"
+        id="home"
+      >
         <div className="w-full max-w-main-content mx-auto flex flex-nowrap justify-center items-center  h-[600px] gap-[32px] md:justify-between ">
           <div className="flex flex-col items-center justify-center gap-[32px] md:items-start">
-            <h1 className="max-w-[350px] text-[32px] text-title-primary text-center font-medium md:text-[44px] md:max-w-[400px] md:text-start lg:text-[48px] lg:max-w-[500px] xl:text-[64px]">
+            <h1 className="max-w-[350px] text-[32px] text-title-primary font-bold text-center font-medium md:text-[44px] md:max-w-[400px] md:text-start lg:text-[48px] lg:max-w-[500px] xl:text-[64px]">
               Simplyfing Your Financial Future.
             </h1>
             <button className="h-[48px] w-[164px] p-[16px] text-[16px] font-semibold bg-title-primary flex items-center justify-center text-text-secondary rounded-[8px]">
-              GET START ➞
+              <a href="#about">GET START ➞</a>
             </button>
           </div>
           <div className="hidden items-center justify-center  w-full max-w-[350px] md:flex  lg:max-w-[500px]">
@@ -27,11 +29,12 @@ export default function Home() {
             />
           </div>
         </div>
-      </div>
+      </section>
 
-      <div></div>
-
-      <div className="p-[32px]">
+      <section
+        className="p-[32px] min-h-[75vh] flex items-center justify-center"
+        id="about"
+      >
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-2xl lg:text-center">
             <p className="mt-2 text-3xl font-bold tracking-tight text-title-primary sm:text-4xl">
@@ -127,9 +130,66 @@ export default function Home() {
             </dl>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="w-full max-w-main-content mx-auto p-[32px] flex flex-col items-start justify-center gap-[32px] sm:items-center">
+      <section
+        className="p-[32px] min-h-[100vh] w-full max-w-main-content mx-auto flex flex-col items-start justify-center gap-[48px]"
+        id="plans"
+      >
+        <h1 className="mt-2 text-3xl font-bold tracking-tight text-title-primary sm:text-4xl">
+          Plans & Pricing
+        </h1>
+        <div className="w-full flex flex-col items-center justify-between gap-[32px] md:flex-row">
+          <PriceCard
+            title="Free"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae"
+            price="0.00"
+            features={[
+              "Acesso 24 horas",
+              "Integração com Múltiplas Plataformas",
+              "Relatórios Detalhados",
+              "Suporte Prioritário",
+              "Backup Automático",
+              "Relatórios Detalhados",
+            ]}
+            buttonText="Buy plan"
+          />
+          <PriceCard
+            title={"Standard"}
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae"
+            price="3.99"
+            features={[
+              "Acesso 24 horas",
+              "Integração com Múltiplas Plataformas",
+              "Relatórios Detalhados",
+              "Suporte Prioritário",
+              "Backup Automático",
+              "Relatórios Detalhados",
+            ]}
+            buttonText="Buy plan"
+          />
+          <PriceCard
+            title="Premium"
+            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae"
+            price="9.99"
+            features={[
+              "Acesso 24 horas",
+              "Integração com Múltiplas Plataformas",
+              "Relatórios Detalhados",
+              "Suporte Prioritário",
+              "Backup Automático",
+              "Relatórios Detalhados",
+            ]}
+            buttonText="Buy plan"
+            border
+          />
+        </div>
+      </section>
+
+      <footer
+        className="p-[32px] w-full max-w-main-content mx-auto  flex flex-col items-start justify-center gap-[32px] sm:items-center"
+        id="footer"
+      >
         <div className="w-full flex flex-col items-center justify-center gap-[64px]">
           <div className="flex flex-col gap-[32px] items-center justify-center md:py-[32px]">
             <h1 className="text-title-primary font-bold text-[32px]">
@@ -163,13 +223,37 @@ export default function Home() {
               © 2024 YourFinance. All Rights Reserved.{" "}
             </p>
             <div className="flex items-center justify-center gap-[48px] flex-wrap sm:justify-between">
-              <FacebookIcon />
-              <TwitterIcon />
-              <LinkedInIcon />
+              <SocialIcon>
+                <Image
+                  src={"/icons/facebook.svg"}
+                  alt="facebook icon"
+                  width={24}
+                  height={24}
+                  color="#099268"
+                />
+              </SocialIcon>
+              <SocialIcon>
+                <Image
+                  src={"/icons/twitter.svg"}
+                  alt="facebook icon"
+                  width={24}
+                  height={24}
+                  color="#099268"
+                />
+              </SocialIcon>
+              <SocialIcon>
+                <Image
+                  src={"/icons/LinkedIn.svg"}
+                  alt="facebook icon"
+                  width={24}
+                  height={24}
+                  color="#099268"
+                />
+              </SocialIcon>
             </div>
           </div>
         </div>
-      </div>
+      </footer>
     </RootLayout>
   );
 }
