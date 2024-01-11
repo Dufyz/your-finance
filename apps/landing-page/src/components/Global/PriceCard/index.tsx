@@ -7,6 +7,8 @@ interface IPriceCard {
   features: string[];
   buttonText: string;
   border?: boolean;
+  icon: string;
+  period: string;
 }
 
 const PriceCard = ({
@@ -16,17 +18,26 @@ const PriceCard = ({
   features,
   buttonText,
   border = false,
+  icon,
+  period,
 }: IPriceCard) => {
   //
   return (
     <div
-      className={`bg-bg-primary rounded-lg shadow-lg w-full max-w-[320px] border-[2px] ${
+      className={`bg-bg-primary rounded-lg shadow-lg w-full border-[2px] ${
         border ? " border-title-primary" : ""
       }`}
     >
       <div className="p-[32px] flex flex-col gap-[32px] items-start justify-center">
         <div className="flex flex-col items-start justify-center gap-[8px]">
-          <div className="flex justify-center">
+          <div className="flex items-center justify-center gap-[16px]">
+            <Image
+              width={32}
+              height={32}
+              src={`/icons/${icon}.svg`}
+              alt="check icon"
+              color="#fff"
+            />
             <span className="text-[24px] font-semibold text-title-primary capitalize">
               {title}
             </span>
@@ -39,7 +50,7 @@ const PriceCard = ({
           <span className="text-5xl text-title-primary font-bold">
             ${price}
           </span>
-          <span className="mt-2 text-sm text-gray-500">/month</span>
+          <span className="mt-2 text-sm text-gray-500">/{period}</span>
         </div>
         <div className="w-full flex flex-col items-center">
           <button

@@ -4,6 +4,77 @@ import Image from "next/image";
 import PriceCard from "@/components/Global/PriceCard";
 import SocialIcon from "@/components/Global/SocialIcon";
 
+const pricesCards = {
+  free: {
+    title: "Free",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+    price: "0.00",
+    features: [
+      "Acesso 24 horas",
+      "Integração com Múltiplas Plataformas",
+      "Relatórios Detalhados",
+      "Suporte Prioritário",
+      "Backup Automático",
+      "Relatórios Detalhados",
+    ],
+    buttonText: "Buy plan",
+    icon: "pig-money",
+    period: "month",
+  },
+  monthly: {
+    title: "Monthly",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+    price: "4.99",
+    features: [
+      "Acesso 24 horas",
+      "Integração com Múltiplas Plataformas",
+      "Relatórios Detalhados",
+      "Suporte Prioritário",
+      "Backup Automático",
+      "Relatórios Detalhados",
+    ],
+    buttonText: "Buy plan",
+    icon: "calendar-month",
+    period: "month",
+  },
+  yearly: {
+    title: "Yearly",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+    price: "49.99",
+    features: [
+      "Acesso 24 horas",
+      "Integração com Múltiplas Plataformas",
+      "Relatórios Detalhados",
+      "Suporte Prioritário",
+      "Backup Automático",
+      "Relatórios Detalhados",
+    ],
+    buttonText: "Buy plan",
+    icon: "lifetime",
+    period: "year",
+  },
+  lifetime: {
+    title: "Lifetime",
+    description:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+    price: "149.99",
+    features: [
+      "Acesso 24 horas",
+      "Integração com Múltiplas Plataformas",
+      "Relatórios Detalhados",
+      "Suporte Prioritário",
+      "Backup Automático",
+      "Relatórios Detalhados",
+    ],
+    buttonText: "Buy plan",
+    icon: "lifetime",
+    period: "lifetime",
+  },
+};
+
 export default function Home() {
   return (
     <RootLayout>
@@ -16,8 +87,8 @@ export default function Home() {
             <h1 className="max-w-[350px] text-[32px] text-title-primary font-bold text-center font-medium md:text-[44px] md:max-w-[400px] md:text-start lg:text-[48px] lg:max-w-[500px] xl:text-[64px]">
               Simplyfing Your Financial Future.
             </h1>
-            <button className="h-[48px] w-[164px] p-[16px] text-[16px] font-semibold bg-title-primary flex items-center justify-center text-text-secondary rounded-[8px]">
-              <a href="#about">GET START ➞</a>
+            <button className="h-[48px] w-[164px] p-[16px] text-[16px] font-semibold bg-title-primary flex items-center justify-center text-text-secondary rounded-[8px] hover:bg-title-primary-hover">
+              <a href="#">GET START ➞</a>
             </button>
           </div>
           <div className="hidden items-center justify-center  w-full max-w-[350px] md:flex  lg:max-w-[500px]">
@@ -139,50 +210,11 @@ export default function Home() {
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-title-primary sm:text-4xl">
           Plans & Pricing
         </h1>
-        <div className="w-full flex flex-col items-center justify-between gap-[32px] md:flex-row">
-          <PriceCard
-            title="Free"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae"
-            price="0.00"
-            features={[
-              "Acesso 24 horas",
-              "Integração com Múltiplas Plataformas",
-              "Relatórios Detalhados",
-              "Suporte Prioritário",
-              "Backup Automático",
-              "Relatórios Detalhados",
-            ]}
-            buttonText="Buy plan"
-          />
-          <PriceCard
-            title={"Standard"}
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae"
-            price="3.99"
-            features={[
-              "Acesso 24 horas",
-              "Integração com Múltiplas Plataformas",
-              "Relatórios Detalhados",
-              "Suporte Prioritário",
-              "Backup Automático",
-              "Relatórios Detalhados",
-            ]}
-            buttonText="Buy plan"
-          />
-          <PriceCard
-            title="Premium"
-            description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae"
-            price="9.99"
-            features={[
-              "Acesso 24 horas",
-              "Integração com Múltiplas Plataformas",
-              "Relatórios Detalhados",
-              "Suporte Prioritário",
-              "Backup Automático",
-              "Relatórios Detalhados",
-            ]}
-            buttonText="Buy plan"
-            border
-          />
+        <div className="w-full grid items-center justify-center grid-cols-1 gap-[48px] sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4">
+          <PriceCard {...pricesCards.free} />
+          <PriceCard {...pricesCards.monthly} />
+          <PriceCard {...pricesCards.yearly} border />
+          <PriceCard {...pricesCards.lifetime} border />
         </div>
       </section>
 

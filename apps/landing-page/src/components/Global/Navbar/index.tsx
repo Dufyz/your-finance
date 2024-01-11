@@ -20,22 +20,22 @@ const Navbar = () => {
               aria-label="Menu items"
             >
               <li className="hover:text-text-primary-hover cursor-pointer">
-                Home
+                <a href="#">Home</a>
               </li>
               <li className="hover:text-text-primary-hover cursor-pointer">
-                About
+                <a href="#">About</a>
               </li>
               <li className="hover:text-text-primary-hover cursor-pointer">
-                Contact
+                <a href="#">Contact</a>
               </li>
             </ul>
           </div>
           <div className="hidden justify-around items-center gap-[32px] text-base flex-wrap lg:flex">
             <button className="w-32 h-7 flex items-center justify-center bg-btn-primary hover:bg-btn-primary-hover text-text-primary font-medium rounded-md">
-              Purchase
+              <a href="#">Purchase</a>
             </button>
             <button className="w-32 h-7 flex items-center justify-center bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary font-medium rounded-md">
-              Login
+              <a href="#">Login</a>
             </button>
           </div>
           <div
