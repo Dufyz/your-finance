@@ -1,15 +1,21 @@
 import { useRef, useState } from "react";
 
 const FaqsCard = (props: { faqsList: any; idx: any }) => {
-  const answerElRef = useRef();
+  const answerElRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState(false);
   const [answerH, setAnswerH] = useState("0px");
   const { faqsList, idx } = props;
 
   const handleOpenAnswer = () => {
-    const answerElH = answerElRef?.current?.childNodes[0].offsetHeight;
+    const answerElH = answerElRef.current?.childNodes[0];
+    let height = 0;
+
+    if (answerElH instanceof HTMLElement) {
+      height = answerElH.offsetHeight;
+      setAnswerH(`${height + 20}px`);
+    }
+
     setState(!state);
-    setAnswerH(`${answerElH + 20}px`);
   };
 
   return (
