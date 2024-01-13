@@ -1,5 +1,5 @@
-import { IconMenu2 } from "@tabler/icons-react";
-import Image from "next/image";
+import scrollTo from "@/utils/scrollTo";
+import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -17,14 +17,29 @@ const Navbar = () => {
               className="flex justify-around gap-[48px] text-base flex-wrap"
               aria-label="Menu items"
             >
-              <li className="hover:text-text-primary-hover cursor-pointer">
-                <a href="#">Home</a>
+              <li
+                className="hover:text-text-primary-hover cursor-pointer"
+                onClick={() => scrollTo("About")}
+              >
+                About Us
               </li>
-              <li className="hover:text-text-primary-hover cursor-pointer">
-                <a href="#">About</a>
+              <li
+                className="hover:text-text-primary-hover cursor-pointer"
+                onClick={() => scrollTo("Plans")}
+              >
+                Plans
               </li>
-              <li className="hover:text-text-primary-hover cursor-pointer">
-                <a href="#">Contact</a>
+              <li
+                className="hover:text-text-primary-hover cursor-pointer"
+                onClick={() => scrollTo("FAQs")}
+              >
+                FAQs
+              </li>
+              <li
+                className="hover:text-text-primary-hover cursor-pointer"
+                onClick={() => scrollTo("Contact")}
+              >
+                Contact
               </li>
             </ul>
           </div>
@@ -41,7 +56,11 @@ const Navbar = () => {
             onClick={() => setIsMenuMobileOpen(!isMenuMobileOpen)}
             aria-label="Menu button"
           >
-            <IconMenu2 color="#131827" />
+            {isMenuMobileOpen ? (
+              <IconX color="#131827" />
+            ) : (
+              <IconMenu2 color="#131827" />
+            )}
           </div>
         </div>
       </nav>
@@ -54,11 +73,40 @@ const Navbar = () => {
         aria-label="Menu items"
       >
         <ul className="w-full flex justify-center items-center flex-col gap-[16px] text-[20px] text-text-primary">
-          <li className="hover:text-text-primary-hover cursor-pointer">Home</li>
-          <li className="hover:text-text-primary-hover cursor-pointer">
-            About
+          <li
+            className="hover:text-text-primary-hover cursor-pointer"
+            onClick={() => {
+              scrollTo("About");
+              setIsMenuMobileOpen(false);
+            }}
+          >
+            About Us
           </li>
-          <li className="hover:text-text-primary-hover cursor-pointer">
+          <li
+            className="hover:text-text-primary-hover cursor-pointer"
+            onClick={() => {
+              scrollTo("Plans");
+              setIsMenuMobileOpen(false);
+            }}
+          >
+            Plans
+          </li>
+          <li
+            className="hover:text-text-primary-hover cursor-pointer"
+            onClick={() => {
+              scrollTo("FAQs");
+              setIsMenuMobileOpen(false);
+            }}
+          >
+            FAQs
+          </li>
+          <li
+            className="hover:text-text-primary-hover cursor-pointer"
+            onClick={() => {
+              scrollTo("Contact");
+              setIsMenuMobileOpen(false);
+            }}
+          >
             Contact
           </li>
         </ul>

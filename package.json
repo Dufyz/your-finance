@@ -10,6 +10,7 @@
   "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "@splinetool/runtime": "^1.0.28",
     "prettier": "^3.1.1",
     "turbo": "latest"
   },

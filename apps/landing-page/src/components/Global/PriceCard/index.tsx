@@ -24,7 +24,7 @@ const PriceCard = ({
   //
   return (
     <div
-      className={`bg-bg-primary rounded-lg shadow-lg w-full border-[2px] ${
+      className={`bg-bg-primary rounded-[24px] shadow-lg w-full border-[2px] ${
         border ? " border-title-primary" : ""
       }`}
     >
