@@ -57,23 +57,23 @@ const pricesCards = {
     icon: "lifetime",
     period: "year",
   },
-  lifetime: {
-    title: "Lifetime",
-    description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
-    price: "149.99",
-    features: [
-      "Acesso 24 horas",
-      "Integração com Múltiplas Plataformas",
-      "Relatórios Detalhados",
-      "Suporte Prioritário",
-      "Backup Automático",
-      "Relatórios Detalhados",
-    ],
-    buttonText: "Buy plan",
-    icon: "lifetime",
-    period: "lifetime",
-  },
+  // lifetime: {
+  //   title: "Lifetime",
+  //   description:
+  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+  //   price: "149.99",
+  //   features: [
+  //     "Acesso 24 horas",
+  //     "Integração com Múltiplas Plataformas",
+  //     "Relatórios Detalhados",
+  //     "Suporte Prioritário",
+  //     "Backup Automático",
+  //     "Relatórios Detalhados",
+  //   ],
+  //   buttonText: "Buy plan",
+  //   icon: "lifetime",
+  //   period: "lifetime",
+  // },
 };
 
 const faqsList = [
@@ -232,25 +232,25 @@ export default function Home() {
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-title-primary sm:text-4xl">
           Plans & Pricing
         </h1>
-        <div className="w-full grid items-center justify-center grid-cols-1 gap-[48px] sm:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4">
+        <div className="w-full grid items-center justify-center grid-cols-1 gap-[48px] sm:grid-cols-2  lg:grid-cols-3">
           <PriceCard {...pricesCards.free} />
           <PriceCard {...pricesCards.monthly} />
           <PriceCard {...pricesCards.yearly} border />
-          <PriceCard {...pricesCards.lifetime} border />
+          {/* <PriceCard {...pricesCards.lifetime} border /> */}
         </div>
       </section>
 
-      <section className="leading-relaxed max-w-full -xl mt-12 mx-auto px-4 md:px-8">
-        <div className="space-y-3 text-center">
+      <section className="p-[32px] max-w-main-content mx-auto min-h-[75vh] flex flex-col items-center justify-center gap-[32px]">
+        <div className="space-y-3 text-start w-full">
           <h1 className="text-3xl text-title-primary font-semibold">
             Frequently Asked Questions
           </h1>
-          <p className="text-gray-600 max-w-lg mx-auto text-lg">
+          <p className="text-gray-600 text-lg">
             Answered all frequently asked questions, Still confused? feel free
             to contact us.
           </p>
         </div>
-        <div className="mt-14 max-w-2xl mx-auto">
+        <div className="w-full mx-auto">
           {faqsList.map((item, idx) => (
             <FaqsCard idx={idx} faqsList={item} />
           ))}
@@ -266,16 +266,16 @@ export default function Home() {
             <h1 className="text-title-primary font-bold text-[32px]">
               Expertise. Agility. Anywhere.
             </h1>
-            <p className="text-title-primary-hover text-start text-[20px] sm:text-center">
+            <p className="text-text-primary text-start text-[20px] sm:text-center">
               Our diverse and driven team propels your financial journey,
               empowering you to achieve your goals with precision. Agile and
               committed, we pride ourselves on delivering excellence.
             </p>
             <div className="flex flex-wrap items-center justify-between gap-[32px]">
-              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center  w-[160px] rounded-[16px] p-[8px]">
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
                 👀 More
               </button>
-              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center  w-[160px] rounded-[16px] p-[8px]">
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
                 👋 Contact
               </button>
             </div>
@@ -283,14 +283,9 @@ export default function Home() {
 
           <div className="w-full flex flex-col items-center justify-center gap-[48px] border-t-[2px] border-[text-primary-hover] pt-[32px] flex-wrap sm:flex-row md:justify-between">
             <div>
-              <Image
-                src={"/logo.svg"}
-                height={120}
-                width={120}
-                alt="logo icon"
-              />
+              <Image src={"/logo.svg"} height={80} width={80} alt="logo icon" />
             </div>
-            <p className="text-title-primary-hover text-[16px] center">
+            <p className="text-text-primary text-[16px] center">
               © 2024 YourFinance. All Rights Reserved.{" "}
             </p>
             <div className="flex items-center justify-center gap-[48px] flex-wrap sm:justify-between">

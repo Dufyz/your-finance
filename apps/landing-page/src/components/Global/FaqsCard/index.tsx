@@ -20,7 +20,7 @@ const FaqsCard = (props: { faqsList: any; idx: any }) => {
 
   return (
     <div
-      className="space-y-3 mt-5 overflow-hidden border-b"
+      className="w-full space-y-3 mt-5 overflow-hidden border-b"
       key={idx}
       onClick={handleOpenAnswer}
     >

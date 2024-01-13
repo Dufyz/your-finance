@@ -1,4 +1,5 @@
 import { IconMenu2 } from "@tabler/icons-react";
+import Image from "next/image";
 import { useState } from "react";
 
 const Navbar = () => {
@@ -6,13 +7,10 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className=" w-full flex justify-between items-center min-h-16 bg-nav-bg sticky top-0 p-[32px] z-[9]">
+      <nav className=" w-full flex justify-between items-center min-h-16 bg-nav-bg sticky top-0 p-[24px] z-[9]">
         <div className="w-full mx-auto max-w-main-content flex justify-between items-center flex-wrap gap-[48px]">
-          <div
-            className="flex align-bottom items-center justify-start text-2xl text-title-primary font-bold"
-            aria-label="Logo"
-          >
-            YourFinance
+          <div aria-label="Logo">
+            <img src="/logo.svg" alt="logo icon" />
           </div>
           <div className="hidden justify-around text-nav-primary lg:flex">
             <ul
