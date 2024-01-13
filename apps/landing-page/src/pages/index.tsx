@@ -309,7 +309,7 @@ export default function Home() {
               </SocialIcon>
               <SocialIcon>
                 <Image
-                  src={"/icons/LinkedIn.svg"}
+                  src={"/icons/linkedin.svg"}
                   alt="facebook icon"
                   width={24}
                   height={24}
