@@ -4,6 +4,7 @@ import Image from "next/image";
 import PriceCard from "@/components/Global/PriceCard";
 import SocialIcon from "@/components/Global/SocialIcon";
 import FaqsCard from "@/components/Global/FaqsCard";
+import Head from "next/head";
 
 const pricesCards = {
   free: {
@@ -102,6 +103,11 @@ const faqsList = [
 export default function Home() {
   return (
     <RootLayout>
+      <Head>
+        <title>YourFinance</title>
+        <meta name="description" content="YourFinance" />
+        <link rel="icon" href="/logo.svg" />
+      </Head>
       <section
         className="p-[32px] w-full min-h-[calc(100vh-96px)] flex items-center justify-center"
         id="home"
