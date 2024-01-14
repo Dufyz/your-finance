@@ -9,7 +9,11 @@ const Navbar = () => {
     <>
       <nav className=" w-full flex justify-between items-center min-h-16 bg-nav-bg sticky top-0 p-[24px] z-[9]">
         <div className="w-full mx-auto max-w-main-content flex justify-between items-center flex-wrap gap-[48px]">
-          <div aria-label="Logo">
+          <div
+            aria-label="Logo"
+            onClick={() => scrollTo("Home")}
+            className="cursor-pointer"
+          >
             <img src="/logo.svg" alt="logo icon" />
           </div>
           <div className="hidden justify-around text-nav-primary lg:flex">

@@ -61,8 +61,8 @@ const PriceCard = ({
           </button>
         </div>
         <div className="w-full flex flex-col items-start justify-start gap-[8px]">
-          {features.map((feature) => (
-            <div className="w-full flex gap-[16px]">
+          {features.map((feature, index) => (
+            <div className="w-full flex gap-[16px]" key={index}>
               <Image
                 width={32}
                 height={32}
