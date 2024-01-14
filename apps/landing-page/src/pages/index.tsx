@@ -6,6 +6,8 @@ import SocialIcon from "@/components/Global/SocialIcon";
 import FaqsCard from "@/components/Global/FaqsCard";
 import Head from "next/head";
 import scrollTo from "@/utils/scrollTo";
+import { useEffect } from "react";
+import AOS from "aos";
 
 const pricesCards = {
   free: {
@@ -59,23 +61,6 @@ const pricesCards = {
     icon: "lifetime",
     period: "year",
   },
-  // lifetime: {
-  //   title: "Lifetime",
-  //   description:
-  //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
-  //   price: "149.99",
-  //   features: [
-  //     "Acesso 24 horas",
-  //     "Integração com Múltiplas Plataformas",
-  //     "Relatórios Detalhados",
-  //     "Suporte Prioritário",
-  //     "Backup Automático",
-  //     "Relatórios Detalhados",
-  //   ],
-  //   buttonText: "Buy plan",
-  //   icon: "lifetime",
-  //   period: "lifetime",
-  // },
 };
 
 const faqsList = [
@@ -102,15 +87,25 @@ const faqsList = [
 ];
 
 export default function Home() {
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+    });
+  }, []);
+
   return (
     <RootLayout>
       <Head>
         <title>YourFinance</title>
         <meta name="description" content="YourFinance" />
         <link rel="icon" href="/logo.svg" />
+        <link
+          href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+          rel="stylesheet"
+        />
       </Head>
-      <section className="p-[32px] w-full min-h-[calc(100vh-96px)] flex items-center justify-center">
-        <div className="w-full max-w-main-content mx-auto flex flex-nowrap justify-center items-center gap-[32px] md:justify-between h-[600px]">
+      <section className="p-[32px] w-full h-[calc(60vh-96px)] flex items-center justify-center">
+        <div className="w-full max-w-main-content mx-auto flex flex-nowrap justify-center items-center gap-[32px] md:justify-between h-[400px]">
           <div className="flex flex-col items-center justify-center gap-[32px] md:items-start">
             <h1 className="max-w-[350px] text-[32px] text-title-primary text-center font-medium md:text-[44px] md:max-w-[400px] md:text-start lg:text-[48px] lg:max-w-[500px] xl:text-[64px]">
               Simplyfing Your Financial Future.
@@ -122,9 +117,8 @@ export default function Home() {
               GET START ➞
             </button>
           </div>
-          <div className="hidden items-center justify-center w-full max-w-[400px] md:flex lg:max-w-[700px] h-[100%]">
+          <div className="hidden items-center justify-center w-full max-w-[400px] md:flex lg:max-w-[600px] h-[100%]">
             <Spline scene="https://prod.spline.design/ElYXVrG-jAaLyxfj/scene.splinecode" />
-            {/* <Spline scene="https://prod.spline.design/HY-5EzX86qSMTBHT/scene.splinecode" /> */}
           </div>
         </div>
       </section>
@@ -144,7 +138,10 @@ export default function Home() {
               witness growth.
             </p>
           </div>
-          <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+          <div
+            className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl"
+            data-aos="fade-up"
+          >
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
               <div className="relative pl-16">
                 <dt className="text-base font-semibold leading-7 text-text-primary">
@@ -233,6 +230,7 @@ export default function Home() {
       <section
         className="p-[32px] min-h-[calc(100vh-96px)] w-full max-w-main-content mx-auto flex flex-col items-start justify-center gap-[48px]"
         id="Plans"
+        data-aos="fade-up"
       >
         <h1 className="mt-2 text-3xl font-bold tracking-tight text-title-primary sm:text-4xl">
           Plans & Pricing
@@ -247,6 +245,7 @@ export default function Home() {
       <section
         className="p-[32px] max-w-main-content mx-auto flex flex-col items-center justify-center gap-[32px]"
         id="FAQs"
+        data-aos="fade-up"
       >
         <div className="space-y-3 text-start w-full">
           <h1 className="text-3xl text-title-primary font-semibold">
@@ -267,6 +266,7 @@ export default function Home() {
       <footer
         className="p-[32px] w-full max-w-main-content mx-auto  flex flex-col items-start justify-center gap-[32px] sm:items-center"
         id="Contact"
+        data-aos="fade-up"
       >
         <div className="w-full flex flex-col items-center justify-center gap-[64px]">
           <div className="flex flex-col gap-[32px] items-center justify-center md:py-[32px]">
@@ -278,9 +278,13 @@ export default function Home() {
               empowering you to achieve your goals with precision. Agile and
               committed, we pride ourselves on delivering excellence.
             </p>
-            <div className="flex flex-wrap items-center justify-between gap-[32px]">
+            <div className="flex flex-col flex-wrap items-center justify-between gap-[16px] sm:flex-row">
               <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
                 👀 More
+              </button>
+
+              <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
+                💰 Donate
               </button>
               <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
                 👋 Contact
@@ -327,6 +331,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" />
     </RootLayout>
   );
 }
