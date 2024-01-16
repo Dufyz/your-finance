@@ -1,30 +1,57 @@
+import { IconCheck, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 
 interface IPriceCard {
   title: string;
   price: string;
   description: string;
-  features: string[];
   buttonText: string;
   border?: boolean;
   icon: string;
   period: string;
+  acess: { [key: number]: boolean };
 }
+
+const features = [
+  {
+    id: 1,
+    description: "Basic access to essential features.",
+  },
+  {
+    id: 2,
+    description: "Support for multiple platforms for ultimate flexibility.",
+  },
+  {
+    id: 3,
+    description: "Advanced investment management.",
+  },
+  {
+    id: 4,
+    description: "Detailed and customizable reports.",
+  },
+  {
+    id: 5,
+    description: "Exclusive market insights and future projections.",
+  },
+  {
+    id: 6,
+    description: "Personal financial consulting with AI.",
+  },
+];
 
 const PriceCard = ({
   title,
   price,
   description,
-  features,
   buttonText,
   border = false,
   icon,
   period,
+  acess,
 }: IPriceCard) => {
-  //
   return (
     <div
-      className={`bg-bg-primary rounded-[24px] shadow-lg w-full border-[2px] ${
+      className={`bg-bg-primary rounded-[24px] shadow-lg w-full border-[2px] h-[100%] ${
         border ? " border-title-primary" : ""
       }`}
     >
@@ -63,15 +90,13 @@ const PriceCard = ({
         <div className="w-full flex flex-col items-start justify-start gap-[8px]">
           {features.map((feature, index) => (
             <div className="w-full flex gap-[16px]" key={index}>
-              <Image
-                width={32}
-                height={32}
-                src={"/icons/check.svg"}
-                alt="check icon"
-                color="#fff"
-              />
-              <span className="w-full text-[14px] text-gray-600">
-                {feature}
+              {acess[index + 1] ? (
+                <IconCheck size={32} color="#099268" />
+              ) : (
+                <IconX size={32} color="red" />
+              )}
+              <span className={`w-full text-[14px] text-gray-600`}>
+                {feature.description}
               </span>
             </div>
           ))}

@@ -3,61 +3,56 @@ import Image from "next/image";
 import Spline from "@splinetool/react-spline";
 import PriceCard from "@/components/Global/PriceCard";
 import SocialIcon from "@/components/Global/SocialIcon";
-import FaqsCard from "@/components/Global/FaqsCard";
+import FaqsCard from "@/components/Global/DonateModal/FaqsCard";
 import Head from "next/head";
 import scrollTo from "@/utils/scrollTo";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import DonateModal from "@/components/Global/DonateModal";
+import { i18n } from "@/translate/i18";
 
 const pricesCards = {
-  free: {
-    title: "Free",
+  starter: {
+    title: "Starter",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+      "Start your financial journey with free access to essential features and multi-platform compatibility.",
     price: "0.00",
-    features: [
-      "Acesso 24 horas",
-      "Integração com Múltiplas Plataformas",
-      "Relatórios Detalhados",
-      "Suporte Prioritário",
-      "Backup Automático",
-      "Relatórios Detalhados",
-    ],
+    acess: {
+      1: true,
+      2: true,
+    },
     buttonText: "Buy plan",
     icon: "pig-money",
     period: "month",
   },
-  monthly: {
-    title: "Monthly",
+  investor: {
+    title: "Investor",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+      "Deepen your investment analysis and strategies with advanced tools and customizable reports.",
     price: "4.99",
-    features: [
-      "Acesso 24 horas",
-      "Integração com Múltiplas Plataformas",
-      "Relatórios Detalhados",
-      "Suporte Prioritário",
-      "Backup Automático",
-      "Relatórios Detalhados",
-    ],
+    acess: {
+      1: true,
+      2: true,
+      3: true,
+      4: true,
+    },
     buttonText: "Buy plan",
     icon: "calendar-month",
     period: "month",
   },
-  yearly: {
-    title: "Yearly",
+  professional: {
+    title: "Professional",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam at purus non nunc aliquam vestibulum. Sed vitae",
+      "Enjoy a complete financial consultancy with our intelligent virtual assistant, market insights, and all features.",
     price: "49.99",
-    features: [
-      "Acesso 24 horas",
-      "Integração com Múltiplas Plataformas",
-      "Relatórios Detalhados",
-      "Suporte Prioritário",
-      "Backup Automático",
-      "Relatórios Detalhados",
-    ],
+    acess: {
+      1: true,
+      2: true,
+      3: true,
+      4: true,
+      5: true,
+      6: true,
+    },
     buttonText: "Buy plan",
     icon: "lifetime",
     period: "year",
@@ -116,6 +111,7 @@ export default function Home() {
             <div className="flex flex-col items-center justify-center gap-[32px] md:items-start">
               <h1 className="max-w-[350px] text-[32px] text-title-primary text-center font-medium md:text-[44px] md:max-w-[400px] md:text-start lg:text-[48px] lg:max-w-[500px] xl:text-[64px]">
                 Simplyfing Your Financial Future.
+                {/* {i18n.t("login.title")} */}
               </h1>
               <button
                 className="h-[48px] w-[164px] p-[16px] text-[16px] font-semibold bg-title-primary flex items-center justify-center text-text-secondary rounded-[8px] hover:bg-title-primary-hover"
@@ -244,9 +240,9 @@ export default function Home() {
             Plans & Pricing
           </h1>
           <div className="w-full grid items-center justify-center grid-cols-1 gap-[48px] sm:grid-cols-2  lg:grid-cols-3">
-            <PriceCard {...pricesCards.free} />
-            <PriceCard {...pricesCards.monthly} border />
-            <PriceCard {...pricesCards.yearly} border />
+            <PriceCard {...pricesCards.starter} />
+            <PriceCard {...pricesCards.investor} border />
+            <PriceCard {...pricesCards.professional} border />
           </div>
         </section>
 
@@ -287,9 +283,11 @@ export default function Home() {
                 committed, we pride ourselves on delivering excellence.
               </p>
               <div className="flex flex-col flex-wrap items-center justify-between gap-[16px] sm:flex-row">
-                <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
-                  👀 More
-                </button>
+                <a href="https://dufyz.netlify.app/">
+                  <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
+                    👀 More
+                  </button>
+                </a>
 
                 <button
                   className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]"
@@ -297,11 +295,11 @@ export default function Home() {
                 >
                   💰 Donate
                 </button>
-                <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
-                  <a href="https://linktr.ee/Dufyz" target="_blank">
+                <a href="https://linktr.ee/Dufyz" target="_blank">
+                  <button className="bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary center text-[20px] flex items-center justify-center w-[130px] rounded-[16px] p-[8px] sm:w-[160px] md:w-[180px]">
                     👋 Contact
-                  </a>
-                </button>
+                  </button>
+                </a>
               </div>
             </div>
 
