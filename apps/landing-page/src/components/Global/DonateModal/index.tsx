@@ -1,3 +1,4 @@
+import { i18n } from "@/translate/i18";
 import Image from "next/image";
 import React from "react";
 
@@ -57,14 +58,11 @@ const DonateModal = ({
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
-              <span className="sr-only">Close modal</span>
             </button>
           </div>
           <div className="p-4 md:p-5 space-y- flex flex-col items-center justify-center">
             <p className="text-text-primary text-start text-[20px] sm:text-center">
-              Our diverse and driven team propels your financial journey,
-              empowering you to achieve your goals with precision. Agile and
-              committed, we pride ourselves on delivering excellence.
+              {i18n.t("donate.description")}
             </p>
             <div>
               <Image

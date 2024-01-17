@@ -1,41 +1,40 @@
 import { IconCheck, IconX } from "@tabler/icons-react";
 import Image from "next/image";
+import { i18n } from "@/translate/i18";
 
 interface IPriceCard {
   title: string;
   price: string;
   description: string;
-  buttonText: string;
   border?: boolean;
   icon: string;
-  period: string;
   acess: { [key: number]: boolean };
 }
 
 const features = [
   {
     id: 1,
-    description: "Basic access to essential features.",
+    description: i18n.t("plans.features.1.description"),
   },
   {
     id: 2,
-    description: "Support for multiple platforms for ultimate flexibility.",
+    description: i18n.t("plans.features.2.description"),
   },
   {
     id: 3,
-    description: "Advanced investment management.",
+    description: i18n.t("plans.features.3.description"),
   },
   {
     id: 4,
-    description: "Detailed and customizable reports.",
+    description: i18n.t("plans.features.4.description"),
   },
   {
     id: 5,
-    description: "Exclusive market insights and future projections.",
+    description: i18n.t("plans.features.5.description"),
   },
   {
     id: 6,
-    description: "Personal financial consulting with AI.",
+    description: i18n.t("plans.features.6.description"),
   },
 ];
 
@@ -43,10 +42,8 @@ const PriceCard = ({
   title,
   price,
   description,
-  buttonText,
   border = false,
   icon,
-  period,
   acess,
 }: IPriceCard) => {
   return (
@@ -77,14 +74,16 @@ const PriceCard = ({
           <span className="text-5xl text-title-primary font-bold">
             ${price}
           </span>
-          <span className="mt-2 text-sm text-gray-500">/{period}</span>
+          <span className="mt-2 text-sm text-gray-500">
+            /{i18n.t("plans.period.month")}
+          </span>
         </div>
         <div className="w-full flex flex-col items-center">
           <button
             type="button"
             className="w-full inline-flex items-center justify-center px-5 py-3 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-title-primary hover:bg-opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-title-primary"
           >
-            {buttonText}
+            {i18n.t("plans.button")}
           </button>
         </div>
         <div className="w-full flex flex-col items-start justify-start gap-[8px]">
@@ -95,7 +94,11 @@ const PriceCard = ({
               ) : (
                 <IconX size={32} color="red" />
               )}
-              <span className={`w-full text-[14px] text-gray-600`}>
+              <span
+                className={`w-full text-[14px] text-gray-600 ${
+                  acess[index + 1] ? "" : "line-through"
+                }`}
+              >
                 {feature.description}
               </span>
             </div>

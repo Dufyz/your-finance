@@ -1,3 +1,4 @@
+import { i18n } from "@/translate/i18";
 import scrollTo from "@/utils/scrollTo";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import { useState } from "react";
@@ -25,34 +26,34 @@ const Navbar = () => {
                 className="hover:text-text-primary-hover cursor-pointer"
                 onClick={() => scrollTo("About")}
               >
-                About Us
+                {i18n.t("navbar.home")}
               </li>
               <li
                 className="hover:text-text-primary-hover cursor-pointer"
                 onClick={() => scrollTo("Plans")}
               >
-                Plans
+                {i18n.t("navbar.plans")}
               </li>
               <li
                 className="hover:text-text-primary-hover cursor-pointer"
                 onClick={() => scrollTo("FAQs")}
               >
-                FAQs
+                {i18n.t("navbar.faqs")}
               </li>
               <li
                 className="hover:text-text-primary-hover cursor-pointer"
                 onClick={() => scrollTo("Contact")}
               >
-                Contact
+                {i18n.t("navbar.contact")}
               </li>
             </ul>
           </div>
           <div className="hidden justify-around items-center gap-[32px] text-base flex-wrap lg:flex">
             <button className="w-32 h-7 flex items-center justify-center bg-btn-primary hover:bg-btn-primary-hover text-text-primary font-medium rounded-md">
-              <a href="#">Purchase</a>
+              <a href="#">{i18n.t("navbar.button.purchase")}</a>
             </button>
             <button className="w-32 h-7 flex items-center justify-center bg-btn-secondary hover:bg-btn-secondary-hover text-text-secondary font-medium rounded-md">
-              <a href="#">Login</a>
+              <a href="#">{i18n.t("navbar.button.login")}</a>
             </button>
           </div>
           <div
