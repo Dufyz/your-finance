@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import AOS from "aos";
 import DonateModal from "@/components/Global/DonateModal";
 import { i18n } from "@/translate/i18";
+import Loader from "@/components/Global/Loader";
 
 const pricesCards = {
   starter: {
@@ -75,6 +76,7 @@ const faqsList = [
 
 export default function Home() {
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+  const [shouldShowSpline, setShouldShowSpline] = useState(false);
 
   useEffect(() => {
     AOS.init({
@@ -110,9 +112,25 @@ export default function Home() {
                 {i18n.t("home.button")} ➞
               </button>
             </div>
-            <div className="hidden items-center justify-center w-full max-w-[400px] md:flex lg:max-w-[600px] h-[100%]">
-              <Spline scene="https://prod.spline.design/ElYXVrG-jAaLyxfj/scene.splinecode" />
+            <div
+              className={`hidden items-center justify-center w-full max-w-[400px] md:${
+                shouldShowSpline ? "flex" : ""
+              } lg:max-w-[600px] h-[100%]`}
+            >
+              <Spline
+                scene="https://prod.spline.design/ElYXVrG-jAaLyxfj/scene.splinecode"
+                onLoad={() => {
+                  setTimeout(() => {
+                    setShouldShowSpline(true);
+                  }, 1000);
+                }}
+              />
             </div>
+            {!shouldShowSpline && (
+              <div className="hidden items-center justify-center w-full max-w-[400px] md:flex lg:max-w-[600px] h-[100%]">
+                <Loader />
+              </div>
+            )}
           </div>
         </section>
 
