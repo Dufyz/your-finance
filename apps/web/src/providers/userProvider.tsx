@@ -9,17 +9,33 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const handleGetUser = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    const response = await supabase.from("Users").select("*");
+    console.log("1", process.env.SUPABASE_URL);
+
+    const { data: session, error: sessionError } =
+      await supabase.auth.getUser();
+
+    if (sessionError) {
+      console.log(sessionError);
+    }
+
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", session?.user?.id)
+      .single();
 
     if (error) {
       console.log(error);
     }
 
-    if (response) {
-      console.log(response);
-      setUser(response);
-      // router.push("/");
+    if (data) {
+      console.log(data);
+      setUser(data);
+      router.push("/");
+    }
+
+    if (!data) {
+      router.push("/login");
     }
   };
 
