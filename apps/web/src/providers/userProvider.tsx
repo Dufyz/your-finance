@@ -9,8 +9,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const handleGetUser = async () => {
-    console.log("1", process.env.SUPABASE_URL);
-
     const { data: session, error: sessionError } =
       await supabase.auth.getUser();
 
@@ -29,7 +27,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     if (data) {
-      console.log(data);
       setUser(data);
       router.push("/");
     }
@@ -41,7 +38,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     handleGetUser();
-  }, []);
+  }, [user]);
 
   const value = {
     user,

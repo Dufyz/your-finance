@@ -1,8 +1,14 @@
 import supabase from "@/config/supabase";
+import useUser from "@/hooks/userHook";
 import Image from "next/image";
+import { toast } from "sonner";
+
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 export const Login = () => {
+  const router = useRouter();
+
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -11,6 +17,8 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
+
+  const { setUser } = useUser();
 
   interface ILogin {
     email: string;
@@ -34,8 +42,22 @@ export const Login = () => {
     });
 
     if (error) {
+      toast.error(error.message);
       return error;
     }
+
+    if (data) {
+      const user = await supabase
+        .from("users")
+        .select("*")
+        .eq("id", data.user?.id)
+        .single();
+
+      setUser(user);
+      router.push("/");
+    }
+
+    toast.success("Login successfully");
 
     return data;
   };
@@ -47,9 +69,23 @@ export const Login = () => {
     });
 
     if (error) {
+      toast.error(error.message);
       return error;
     }
 
+    if (data) {
+      const user = await supabase
+        .from("users")
+        .insert([
+          { id: data.user?.id, name, plan_id: 1, plan_expires_at: null },
+        ]);
+
+      setUser(user);
+
+      router.push("/");
+    }
+
+    toast.success("Account created successfully");
     return data;
   };
 
@@ -60,7 +96,17 @@ export const Login = () => {
       return error;
     }
 
+    if (data) {
+      toast.success("Password reset link sent to email", {
+        description: email,
+      });
+    }
+
     return data;
+  };
+
+  const handleGoogleLogin = async () => {
+    toast.error("Google login is not available yet");
   };
 
   return (
@@ -73,7 +119,7 @@ export const Login = () => {
             </h1>
             {isResettingPassword && (
               <span className="text-center text-[16px] text-gray-500">
-                Enter your enail address to get the password reset link
+                Enter your email address to get the password reset link
               </span>
             )}
           </div>
@@ -202,7 +248,10 @@ export const Login = () => {
               </div>
             )}
             {!isResettingPassword && (
-              <div className="w-full flex items-center justify-center gap-[16px] bg-btn-primary h-[48px] rounded-[8px] cursor-pointer hover:bg-btn-primary-hover">
+              <button
+                className="w-full flex items-center justify-center gap-[16px] bg-btn-primary h-[48px] rounded-[8px] cursor-pointer hover:bg-btn-primary-hover"
+                onClick={() => handleGoogleLogin()}
+              >
                 <Image
                   src="/icons/google.svg"
                   width={24}
@@ -212,7 +261,7 @@ export const Login = () => {
                 <span className="text-[#4B5768] text-[16px] font-semibold">
                   Continue with Google
                 </span>
-              </div>
+              </button>
             )}
           </div>
         </div>
