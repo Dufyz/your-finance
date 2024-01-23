@@ -46,17 +46,7 @@ export const Login = () => {
       return error;
     }
 
-    if (data) {
-      const user = await supabase
-        .from("users")
-        .select("*")
-        .eq("id", data.user?.id)
-        .single();
-
-      setUser(user);
-      router.push("/");
-    }
-
+    router.push("/");
     toast.success("Login successfully");
 
     return data;
@@ -73,18 +63,7 @@ export const Login = () => {
       return error;
     }
 
-    if (data) {
-      const user = await supabase
-        .from("users")
-        .insert([
-          { id: data.user?.id, name, plan_id: 1, plan_expires_at: null },
-        ]);
-
-      setUser(user);
-
-      router.push("/");
-    }
-
+    router.push("/");
     toast.success("Account created successfully");
     return data;
   };

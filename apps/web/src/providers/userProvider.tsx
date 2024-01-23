@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
+  // const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
@@ -14,6 +15,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (sessionError) {
       console.log(sessionError);
+      return router.push("/login");
     }
 
     const { data, error } = await supabase
@@ -24,21 +26,17 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (error) {
       console.log(error);
+      return router.push("/login");
     }
 
-    if (data) {
-      setUser(data);
-      router.push("/");
-    }
-
-    if (!data) {
-      router.push("/login");
-    }
+    console.log("antes de setar, qual o data?", data);
+    setUser(data);
+    router.push("/");
   };
 
   useEffect(() => {
     handleGetUser();
-  }, [user]);
+  }, []);
 
   const value = {
     user,

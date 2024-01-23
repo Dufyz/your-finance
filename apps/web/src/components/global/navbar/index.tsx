@@ -1,6 +1,5 @@
 import Image from "next/image";
-import { Avatar } from "../Avatar";
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import supabase from "@/config/supabase";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
@@ -30,11 +29,16 @@ const MainMenuItems = [
   },
   {
     id: 5,
+    name: "Goals",
+    icon: "/icons/goal.svg",
+  },
+  {
+    id: 6,
     name: "Notifications",
     icon: "/icons/notification.svg",
   },
   {
-    id: 6,
+    id: 7,
     name: "Settings",
     icon: "/icons/settings.svg",
   },
