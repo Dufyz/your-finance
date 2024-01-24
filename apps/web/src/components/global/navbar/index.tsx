@@ -10,13 +10,13 @@ import useUser from "@/hooks/userHook";
 const MainMenuItems = [
   {
     id: 1,
-    name: "Home",
-    icon: "/icons/home.svg",
+    name: "Dashboard",
+    icon: "/icons/dashboard.svg",
   },
   {
     id: 2,
-    name: "Dashboard",
-    icon: "/icons/dashboard.svg",
+    name: "Transactions",
+    icon: "/icons/transfer.svg",
   },
   {
     id: 3,

@@ -6,7 +6,7 @@ import { Toaster } from "sonner";
 export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
-      <Toaster position="top-right" />
+      <Toaster position="top-right" closeButton />
       <Component {...pageProps} />
     </UserProvider>
   );
