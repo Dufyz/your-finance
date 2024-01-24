@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { ProfileCard } from "../ProfileCard";
 import NavbarItem from "./navbarItem";
+import useUser from "@/hooks/userHook";
 
 const MainMenuItems = [
   {
@@ -45,6 +46,8 @@ const MainMenuItems = [
 ];
 
 export const Navbar = () => {
+  const { user } = useUser();
+
   const [selectedItem, setSelectedItem] = useState(1);
 
   const router = useRouter();
@@ -78,13 +81,13 @@ export const Navbar = () => {
         </div>
 
         <div className="w-full flex flex-col gap-[16px]">
-          <ProfileCard />
-          {/* <button
+          <ProfileCard user={user} />
+          <button
             className="text-gray-500 hover:bg-[#f2f2f3] p-[12px] rounded-[8px]"
             onClick={() => handleLogout()}
           >
             Logout
-          </button> */}
+          </button>
         </div>
       </div>
     </div>

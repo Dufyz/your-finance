@@ -1,5 +1,4 @@
 import supabase from "@/config/supabase";
-import useUser from "@/hooks/userHook";
 import Image from "next/image";
 import { toast } from "sonner";
 
@@ -17,8 +16,6 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
-
-  const { setUser } = useUser();
 
   interface ILogin {
     email: string;
@@ -63,8 +60,20 @@ export const Login = () => {
       return error;
     }
 
-    router.push("/");
-    toast.success("Account created successfully");
+    const { error: inserteRROR } = await supabase
+      .from("users")
+      .insert([{ id: data?.user?.id, name, plan_id: 1 }]);
+
+    if (inserteRROR) {
+      toast.error(inserteRROR.message);
+      return inserteRROR;
+    }
+
+    setIsCreatingAccount(false);
+
+    toast.success(
+      "Account created successfully, an verification email has been sent to you"
+    );
     return data;
   };
 

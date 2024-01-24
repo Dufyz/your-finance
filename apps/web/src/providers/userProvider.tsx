@@ -2,40 +2,36 @@ import supabase from "@/config/supabase";
 import UserContext from "@/contexts/userContext";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<any>(null);
-  // const [loading, setLoading] = useState<boolean>(true);
 
   const router = useRouter();
 
-  const handleGetUser = async () => {
-    const { data: session, error: sessionError } =
-      await supabase.auth.getUser();
+  const handleSessionSupabase = async () => {
+    const { data: session, error } = await supabase.auth.getSession();
 
-    if (sessionError) {
-      console.log(sessionError);
-      return router.push("/login");
-    }
-
-    const { data, error } = await supabase
+    const { data: user, error: userError } = await supabase
       .from("users")
       .select("*")
-      .eq("id", session?.user?.id)
+      .eq("id", session?.session?.user?.id)
       .single();
 
-    if (error) {
-      console.log(error);
-      return router.push("/login");
+    if (userError || error) {
+      router.push("/login");
+      setUser(null);
+      return;
     }
 
-    console.log("antes de setar, qual o data?", data);
-    setUser(data);
-    router.push("/");
+    setUser(user);
+    return;
   };
 
   useEffect(() => {
-    handleGetUser();
+    supabase.auth.onAuthStateChange((event, session) => {
+      handleSessionSupabase();
+    });
   }, []);
 
   const value = {
