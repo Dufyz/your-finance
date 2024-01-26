@@ -61,7 +61,7 @@ export const Navbar = () => {
   };
 
   return (
-    <div className="w-full max-w-[248px] h-screen bg-[white] py-[16px] flex flex-col gap-[40px] p-[24px]">
+    <div className="w-full max-w-[248px] h-screen bg-[white] py-[16px] flex flex-col gap-[40px] p-[24px] border-r-[2px] border-r-solid border-r-[#eff1f3]">
       <div className="w-full py-[8px]">
         <div className="w-full flex flex-col items-center justify-center gap-[8px]">
           <Image src="/logo.png" width={64} height={64} alt="logo" />
