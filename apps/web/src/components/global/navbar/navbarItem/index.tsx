@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { Dispatch, SetStateAction } from "react";
 
 interface INavbarItem {
@@ -7,18 +8,22 @@ interface INavbarItem {
     name: string;
     icon: string;
     hasNotificantion?: boolean;
+    path: string;
   };
   selected?: boolean;
-  setSelectedItem: Dispatch<SetStateAction<number>>;
 }
 
-const NavbarItem = ({ item, selected, setSelectedItem }: INavbarItem) => {
+const NavbarItem = ({ item, selected }: INavbarItem) => {
+  const router = useRouter();
+
   return (
     <div
       className={`w-full flex gap-[16px] p-[12px] ${
         selected && "bg-[#f2f2f3]"
       } rounded-[8px] cursor-pointer`}
-      onClick={() => setSelectedItem(item.id)}
+      onClick={() => {
+        router.push(item.path);
+      }}
     >
       <Image src={item.icon} width={24} height={24} alt="home icon" />
       <div className="w-full flex items-center justify-between">

@@ -31,6 +31,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     supabase.auth.onAuthStateChange((event, session) => {
       handleSessionSupabase();
+      if (event === "SIGNED_IN") {
+        toast.success("You have been logged in");
+      }
+      if (event === "SIGNED_OUT") {
+        toast.success("You have been logged out");
+      }
     });
   }, []);
 

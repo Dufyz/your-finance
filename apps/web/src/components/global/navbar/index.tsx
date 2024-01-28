@@ -12,53 +12,73 @@ const MainMenuItems = [
     id: 1,
     name: "Dashboard",
     icon: "/icons/dashboard.svg",
+    path: "/",
   },
   {
     id: 2,
     name: "Transactions",
     icon: "/icons/transfer.svg",
+    path: "/",
   },
   {
     id: 3,
     name: "Wallets",
     icon: "/icons/wallet.svg",
+    path: "/",
   },
   {
     id: 4,
     name: "Cards",
     icon: "/icons/credit-card.svg",
+    path: "/",
   },
   {
     id: 5,
     name: "Goals",
     icon: "/icons/goal.svg",
+    path: "/",
   },
   {
     id: 6,
     name: "Notifications",
     icon: "/icons/notification.svg",
-  },
-  {
-    id: 7,
-    name: "Settings",
-    icon: "/icons/settings.svg",
+    path: "/",
   },
 ];
 
 export const Navbar = () => {
   const { user } = useUser();
 
-  const [selectedItem, setSelectedItem] = useState(1);
+  const path = useRouter().pathname;
 
-  const router = useRouter();
+  let selectedItem = 0;
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-
-    router.push("/login");
-
-    toast.success("Logout successfully");
-  };
+  switch (path) {
+    case "/":
+      selectedItem = 1;
+      break;
+    case "/transactions":
+      selectedItem = 2;
+      break;
+    case "/wallets":
+      selectedItem = 3;
+      break;
+    case "/cards":
+      selectedItem = 4;
+      break;
+    case "/goals":
+      selectedItem = 5;
+      break;
+    case "/notifications":
+      selectedItem = 6;
+      break;
+    case "/profile":
+      selectedItem = 0;
+      break;
+    default:
+      selectedItem = 1;
+      break;
+  }
 
   return (
     <div className="w-full max-w-[248px] h-screen bg-[white] py-[16px] flex flex-col gap-[40px] p-[24px] border-r-[2px] border-r-solid border-r-[#eff1f3]">
@@ -75,19 +95,12 @@ export const Navbar = () => {
               key={index}
               item={item}
               selected={selectedItem === item.id}
-              setSelectedItem={setSelectedItem}
             />
           ))}
         </div>
 
         <div className="w-full flex flex-col gap-[16px]">
           <ProfileCard user={user} />
-          <button
-            className="text-gray-500 hover:bg-[#f2f2f3] p-[12px] rounded-[8px]"
-            onClick={() => handleLogout()}
-          >
-            Logout
-          </button>
         </div>
       </div>
     </div>

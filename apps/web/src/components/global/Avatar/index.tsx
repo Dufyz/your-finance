@@ -1,4 +1,9 @@
-export const Avatar = ({ name }: { name: string }) => {
+interface IAvatarProps {
+  name: string;
+  size?: number;
+}
+
+export const Avatar = ({ name }: IAvatarProps) => {
   return (
     <div className="relative inline-flex items-center justify-center min-w-10 min-h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
       <span className="font-medium text-gray-600 dark:text-gray-300">

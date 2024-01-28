@@ -3,7 +3,22 @@ import Image from "next/image";
 import { toast } from "sonner";
 
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+interface ILogin {
+  email: string;
+  password: string;
+}
+
+interface ISingUp {
+  email: string;
+  password: string;
+  name: string;
+}
+
+interface IResetPassword {
+  email: string;
+}
 
 export const Login = () => {
   const router = useRouter();
@@ -17,20 +32,19 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [keepSignedIn, setKeepSignedIn] = useState(false);
 
-  interface ILogin {
-    email: string;
-    password: string;
-  }
+  const handleRedirect = async () => {
+    const { data: session, error } = await supabase.auth.getSession();
 
-  interface ISingUp {
-    email: string;
-    password: string;
-    name: string;
-  }
+    if (error) {
+      toast.error(error.message);
+      router.push("/");
+      return error;
+    }
 
-  interface IResetPassword {
-    email: string;
-  }
+    if (session.session) {
+      router.push("/");
+    }
+  };
 
   const handleLogin = async ({ email, password }: ILogin) => {
     const { data, error } = await supabase.auth.signInWithPassword({
@@ -44,7 +58,6 @@ export const Login = () => {
     }
 
     router.push("/");
-    toast.success("Login successfully");
 
     return data;
   };
@@ -62,7 +75,7 @@ export const Login = () => {
 
     const { error: inserteRROR } = await supabase
       .from("users")
-      .insert([{ id: data?.user?.id, name, plan_id: 1 }]);
+      .insert([{ id: data?.user?.id, name, email, plan_id: 1 }]);
 
     if (inserteRROR) {
       toast.error(inserteRROR.message);
@@ -96,6 +109,10 @@ export const Login = () => {
   const handleGoogleLogin = async () => {
     toast.error("Google login is not available yet");
   };
+
+  useEffect(() => {
+    handleRedirect();
+  }, []);
 
   return (
     <div className="w-full h-screen bg-bg-primary flex flex-col items-center justify-center gap-[32px]">
