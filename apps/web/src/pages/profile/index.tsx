@@ -1,44 +1,29 @@
+import LabelInput from "@/components/global/LabelInput";
 import useUser from "@/hooks/userHook";
 import ProfileLayout from "@/layouts/ProfileLayout";
+import formatDate from "@/utils/formatDate";
 
 export default function Profile() {
   const { user } = useUser();
 
-  console.log("user", user);
-
   return (
     <ProfileLayout>
-      <div className="w-full flex-1 flex flex-col items-start justify-start px-[64px] py-[48px] gap-[48px]">
-        <div className="w-full flex gap-[32px] items-start justify-start">
-          <div className="flex flex-col items-start justify-center gap-[8px] w-[360px]">
-            <label
-              htmlFor=""
-              className="text-[16px] text-gray-800 font-semibold"
-            >
-              First name
-            </label>
-            <input
-              type="text"
-              placeholder="First name"
-              className="w-full h-[48px] py-[12px] px-[16px] rounded-[8px] border-[1px] border-solid border-[#ced4da] bg-transparent text-[16px] text-gray-700 font-bold"
-              value={user?.name}
-            />
-          </div>
-        </div>
+      <div className="w-full flex-1 flex flex-col items-start justify-start gap-[48px]">
         <div>
-          <div className="flex flex-col items-start justify-center gap-[8px] w-[360px]">
-            <label
-              htmlFor=""
-              className="text-[16px] text-gray-800 font-semibold"
-            >
-              Email
-            </label>
-            <input
-              type="text"
-              placeholder="Email"
-              className="w-full h-[48px] py-[12px] px-[16px] rounded-[8px] border-[1px] border-solid border-[#ced4da] bg-transparent text-[16px] text-gray-700 font-bold"
-              value={user?.email}
-            />
+          <h1 className="text-[32px] font-bold">Welcome back 👋</h1>
+        </div>
+        <div className="w-full flex flex-col gap-[32px] items-start justify-start max-w-[792px]">
+          <LabelInput label="Name" value={user?.name} />
+          <LabelInput label="Email" value={user?.email} />
+          <LabelInput label="Phone" value={"(62) 9869-8465"} />
+          <LabelInput
+            label="Member Since"
+            value={formatDate(user?.created_at)}
+          />
+
+          <div className="flex flex-row items-start justify-center gap-[16px] w-full">
+            <LabelInput label="Password" value={"************"} />
+            <LabelInput label="Password" value={"************"} />
           </div>
         </div>
       </div>

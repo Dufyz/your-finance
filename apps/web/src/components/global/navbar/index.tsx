@@ -76,7 +76,7 @@ export const Navbar = () => {
       selectedItem = 0;
       break;
     default:
-      selectedItem = 1;
+      selectedItem = 0;
       break;
   }
 

@@ -58,6 +58,7 @@ export const Login = () => {
     }
 
     router.push("/");
+    toast.success("You have been logged in");
 
     return data;
   };
