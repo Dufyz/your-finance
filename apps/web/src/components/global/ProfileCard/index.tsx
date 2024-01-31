@@ -26,7 +26,7 @@ export const ProfileCard = ({ user }: any) => {
       className={`w-full flex items-center gap-4 hover:bg-[#f2f2f3] py-[12px] px-[8px] rounded-[8px] cursor-pointer`}
       onClick={() => router.push("/profile")}
     >
-      <Avatar name={user?.name} />
+      <Avatar name={user?.name} size="md" />
       <div className="w-full flex flex-col font-medium text-sm">
         <span className="text-gray-900">{displayName}</span>
         <span className="text-gray-400">Starter</span>

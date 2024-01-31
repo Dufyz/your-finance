@@ -9,9 +9,6 @@ export default function Profile() {
   return (
     <ProfileLayout>
       <div className="w-full flex-1 flex flex-col items-start justify-start gap-[48px]">
-        <div>
-          <h1 className="text-[32px] font-bold">Welcome back 👋</h1>
-        </div>
         <div className="w-full flex flex-col gap-[32px] items-start justify-start max-w-[792px]">
           <LabelInput label="Name" value={user?.name} />
           <LabelInput label="Email" value={user?.email} />

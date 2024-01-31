@@ -37,7 +37,6 @@ export const Login = () => {
 
     if (error) {
       toast.error(error.message);
-      router.push("/");
       return error;
     }
 

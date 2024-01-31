@@ -1,7 +1,7 @@
 const LabelInput = ({ label, value }: { label: string; value: string }) => {
   return (
     <div className="flex flex-col items-start justify-center gap-[8px] w-full">
-      <label htmlFor="" className="text-[16px] text-gray-800 font-semibold">
+      <label htmlFor="" className="text-[16px] text-gray-900 font-semibold">
         {label}
       </label>
       <input
