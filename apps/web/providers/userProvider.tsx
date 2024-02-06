@@ -1,6 +1,8 @@
+"use client";
+
 import supabase from "@/config/supabase";
 import UserContext from "@/contexts/userContext";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
@@ -33,6 +35,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       handleSessionSupabase();
       if (event === "SIGNED_OUT") {
         toast.success("You have been logged out");
+        router.push("/login");
       }
     });
   }, []);

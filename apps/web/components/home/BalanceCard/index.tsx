@@ -1,7 +1,7 @@
 import Image from "next/image";
+import { useState } from "react";
 import BalanceCardActionButton from "./BalanceCardActionButton";
 import BankCard from "./BankCard";
-import { useState } from "react";
 
 const actionButtons = [
   {

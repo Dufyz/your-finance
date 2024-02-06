@@ -1,6 +1,7 @@
-import BalanceCard from "@/components/home/BalanceCard";
-import RootLayout from "@/layouts/RootLayout";
+"use client";
 
+import BalanceCard from "@/components/home/BalanceCard";
+import NavbarLayout from "@/layout/RootLayout";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
@@ -54,7 +55,7 @@ export default function Home() {
   };
 
   return (
-    <RootLayout>
+    <NavbarLayout>
       <div className="w-full flex flex-col h-screen p-[32px] gap-[24px]">
         <div className="w-full h-[100%] flex items-start justify-between gap-[48px]">
           <div className="w-full h-[100%] flex items-start justify-between"></div>
@@ -89,6 +90,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-    </RootLayout>
+    </NavbarLayout>
   );
 }

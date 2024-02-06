@@ -1,7 +1,6 @@
-import { Avatar } from "../Avatar";
 import DisplayName from "@/utils/displayName";
 import Loader from "../Loader";
-import { useRouter } from "next/router";
+import { Avatar } from "../Avatar";
 
 export const ProfileCard = ({ user }: any) => {
   const displayName = DisplayName(user?.name);

@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { ProfileCard } from "../ProfileCard";
 import NavbarItem from "./navbarItem";
-import useUser from "@/hooks/userHook";
+import useUser from "../../../hooks/userHook";
+import { usePathname, useRouter } from "next/navigation";
+import supabase from "@/config/supabase";
 
 const MainMenuItems = [
   {
@@ -46,7 +49,7 @@ const MainMenuItems = [
 export const Navbar = () => {
   const { user } = useUser();
 
-  const path = useRouter().pathname;
+  const path = usePathname();
 
   let selectedItem = 0;
 
@@ -98,6 +101,13 @@ export const Navbar = () => {
 
         <div className="w-full flex flex-col gap-[16px]">
           <ProfileCard user={user} />
+          <button
+            onClick={() => {
+              supabase.auth.signOut();
+            }}
+          >
+            Logout
+          </button>
         </div>
       </div>
     </div>

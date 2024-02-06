@@ -1,6 +1,6 @@
 import Navbar from "@/components/global/navbar";
 
-export default function RootLayout({
+export default function NavbarLayout({
   children,
 }: {
   children: React.ReactNode;

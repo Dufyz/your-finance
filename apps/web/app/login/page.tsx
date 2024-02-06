@@ -1,9 +1,11 @@
-import supabase from "@/config/supabase";
+"use client";
+
 import Image from "next/image";
 import { toast } from "sonner";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import supabase from "@/config/supabase";
 
 interface ILogin {
   email: string;

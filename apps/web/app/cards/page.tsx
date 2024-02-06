@@ -1,12 +1,10 @@
-import Card from "@/components/cards/Card";
-import RootLayout from "@/layouts/RootLayout";
+import NavbarLayout from "@/layout/RootLayout";
+import Card from "./components/Card";
 
 export const Cards = () => {
-  const x = 0;
-
   return (
-    <RootLayout>
-      <div className="w-full flex flex-col h-screen p-[32px] gap-12">
+    <NavbarLayout>
+      <div className="w-full flex flex-col h-screen p-[32px] gap-12 overflow-auto">
         <div className="w-full flex flex-row items-center justify-between">
           <div>
             <h1 className="text-3xl">Credit Cards</h1>
@@ -23,9 +21,12 @@ export const Cards = () => {
           <Card />
           <Card />
           <Card />
+          <Card />
+          <Card />
+          <Card />
         </div>
       </div>
-    </RootLayout>
+    </NavbarLayout>
   );
 };
 
