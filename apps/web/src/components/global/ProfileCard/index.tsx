@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 export const ProfileCard = ({ user }: any) => {
   const displayName = DisplayName(user?.name);
-  const router = useRouter();
 
   if (!user) {
     return (
@@ -24,7 +23,6 @@ export const ProfileCard = ({ user }: any) => {
   return (
     <div
       className={`w-full flex items-center gap-4 hover:bg-[#f2f2f3] py-[12px] px-[8px] rounded-[8px] cursor-pointer`}
-      onClick={() => router.push("/profile")}
     >
       <Avatar name={user?.name} size="md" />
       <div className="w-full flex flex-col font-medium text-sm">

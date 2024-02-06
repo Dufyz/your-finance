@@ -1,8 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
-import supabase from "@/config/supabase";
 import { useRouter } from "next/router";
-import { toast } from "sonner";
 import { ProfileCard } from "../ProfileCard";
 import NavbarItem from "./navbarItem";
 import useUser from "@/hooks/userHook";
@@ -30,7 +27,7 @@ const MainMenuItems = [
     id: 4,
     name: "Cards",
     icon: "/icons/credit-card.svg",
-    path: "/",
+    path: "/cards",
   },
   {
     id: 5,
