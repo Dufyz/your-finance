@@ -59,9 +59,7 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
               Keep me signed in
             </label>
           </div>
-          <button className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover" onClick={() => {
-            handleSignIn();
-          }}>
+          <button className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover">
             Login
           </button>
         </div>

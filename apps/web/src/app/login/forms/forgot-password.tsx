@@ -1,10 +1,13 @@
 import { IconEye } from "@tabler/icons-react";
+import useLogin from "../hook/useLogin";
 
 interface IForgotPasswordProps {
   setActiveTab: any;
 }
 
 const ForgotPassword = ({ setActiveTab }: IForgotPasswordProps) => {
+  const {handleForgotPassword} = useLogin();
+
   return (
     <div className="w-full flex flex-col items-start justify-center gap-6">
       <div className="w-full flex flex-col items-center justify-center gap-8">
@@ -41,7 +44,9 @@ const ForgotPassword = ({ setActiveTab }: IForgotPasswordProps) => {
         </div>
         <div className="w-full flex flex-col items-center justify-center gap-8">
           <div className="w-full flex flex-col items-start justify-center gap-6">
-            <button className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover">
+            <button className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover" onClick={() => {
+              handleForgotPassword()
+            }}>
               Password Reset
             </button>
           </div>

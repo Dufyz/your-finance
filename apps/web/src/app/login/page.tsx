@@ -1,9 +1,9 @@
 "use client";
 
-import ForgotPassword from "./tabs/forgot-password";
+import ForgotPassword from "./forms/forgot-password";
 import useLogin from "./hook/useLogin";
-import SignIn from "./tabs/sign-in";
-import SingUp from "./tabs/sign-up";
+import SignIn from "./forms/sign-in";
+import SingUp from "./forms/sign-up";
 
 export const LoginPage = () => {
   const { activeTab, setActiveTab } = useLogin();
