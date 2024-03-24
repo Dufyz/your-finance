@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": false,
+  "trailingComma": "none",
+  "printWidth": 80,
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "arrowParens": "always",
+  "pluginSearchDirs": false
+}
