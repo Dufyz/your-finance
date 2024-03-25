@@ -11,9 +11,8 @@ interface IHandleSignUp {
 interface IHandleSignin {
   email: string;
   password: string;
+  keepSignedIn: boolean;
 }
-
-
 
 const useLogin = () => {
   const [activeTab, setActiveTab] = useState<
@@ -43,13 +42,14 @@ const useLogin = () => {
     }
   };
 
-  const handleSignIn = async ({email, password}: IHandleSignin) => {
+  const handleSignIn = async ({email, password, keepSignedIn}: IHandleSignin) => {
 
     try {
       const body = {
         action: "sign-in",
         email,
         password,
+        keepSignedIn,
       }
 
       await apiWeb.post('/auth', body);

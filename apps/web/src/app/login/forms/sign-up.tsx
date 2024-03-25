@@ -82,7 +82,7 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
       </div>
       <div className="w-full flex flex-col items-center justify-center gap-8">
         <div className="w-full flex flex-col items-start justify-center gap-6">
-          <button type="submit" className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover">
+          <button type="submit" disabled={isSubmitting} className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover">
             Sign Up
           </button>
         </div>
@@ -93,7 +93,7 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
           className="text-gray-400"
           onClick={() => setActiveTab("sign-in")}
         >
-          Already have an account? <span className="text-primary">Login</span>
+          Already have an account? <span className="text-green-700">Login</span>
         </button>
       </div>
     </div>
