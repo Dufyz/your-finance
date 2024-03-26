@@ -113,20 +113,3 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
 };
 
 export default SignIn;
-
-
-{/* <div className="w-full flex-col flex gap-4">
-        <div className="w-full relative flex items-center">
-          <div className="flex-grow border-t border-gray-400"></div>
-          <span className="flex-shrink mx-4 text-gray-400">
-            or sign in with
-          </span>
-          <div className="flex-grow border-t border-gray-400"></div>
-        </div>
-        <button className="w-full flex items-center justify-center gap-4 bg-btn-primary h-12 rounded-2 cursor-pointer hover:bg-btn-primary-hover">
-          <IconBrandGoogleHome size={24} />
-          <span className="text-[#4B5768] text-base font-semibold">
-            Continue with Google
-          </span>
-        </button>
-      </div> */}
