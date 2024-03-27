@@ -8,4 +8,14 @@ const apiWeb = axios.create({
   baseURL: `${baseURL}/api`,
 });
 
+// apiWeb.interceptors.request.use((config) => {
+//   const sessionToken = localStorage.getItem("sessionToken");
+
+//   if (sessionToken) {
+//     config.headers
+//       .Authorization = `Bearer ${sessionToken}`;
+//   }
+  
+// })
+
 export default apiWeb;

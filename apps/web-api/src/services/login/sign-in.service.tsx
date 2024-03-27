@@ -17,5 +17,5 @@ export const SignInService = async ({ email, password }: ISignInService) => {
     throw new Error(error.message);
   }
 
-  return data;
+  return data.session;
 };

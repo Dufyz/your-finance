@@ -46,7 +46,25 @@ export async function POST(request: Request) {
         throw new Error("Unsupported action");
     }
 
-    return NextResponse.json(loginResponse, { status: 200 });
+    const response = NextResponse.json(loginResponse, {
+      status: 200,
+      headers: {
+        ...corsHeaders,
+      },
+    });
+
+    if (!loginResponse?.access_token) return response;
+
+    response.cookies.set("sessionToken", loginResponse.access_token, {
+      expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      path: "/",
+      domain: "localhost",
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "none",
+    });
+
+    return response;
   } catch (error) {
     let status = 500;
     const errorMessage = error.message || "An unexpected error occurred";

@@ -1,5 +1,6 @@
 import apiWeb from "@/config/api-web";
-import { useUserStore } from "@/stores/User";
+import setCookie from "@/utils/set-cookie";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -16,9 +17,7 @@ interface IHandleSignin {
 }
 
 const useLogin = () => {
-  const signUp = useUserStore((state) => state.signUp);
-  const signIn = useUserStore((state) => state.signIn);
-  const logout = useUserStore((state) => state.logout);
+  const router = useRouter();
 
   const [activeTab, setActiveTab] = useState<
     "sign-in" | "sign-up" | "forgot-password"
@@ -33,7 +32,15 @@ const useLogin = () => {
         password,
       }
 
-      await apiWeb.post('/auth', body);
+      const {data:session} = await apiWeb.post('/auth', body);
+
+      setCookie({
+        name: "sessionToken",
+        value: session.access_token,
+        expires_at: new Date(session.expires_at * 1000).toUTCString(),
+      })
+
+      router.push("/login");
 
       toast.success("User created successfully");
     } catch(error){
@@ -48,23 +55,29 @@ const useLogin = () => {
   };
 
   const handleSignIn = async ({email, password, keepSignedIn}: IHandleSignin) => {
+    try {
+      const body = {
+        action: "sign-in",
+        email,
+        password,
+        keepSignedIn,
+      }
 
-    // try {
-    //   const body = {
-    //     action: "sign-in",
-    //     email,
-    //     password,
-    //     keepSignedIn,
-    //   }
+      const {data: session} = await apiWeb.post('/auth', body);
 
-    //   await apiWeb.post('/auth', body);
+      setCookie({
+        name: "sessionToken",
+        value: session.access_token,
+        expires_at: new Date(session.expires_at * 1000).toUTCString(),
+      })
 
-    //   toast.success("Login successfully");
-    // } catch(error){
-    //   console.error(error);
-    //   console.log("error message", error.message)
-    // }
-    
+      router.push("/login");
+
+      toast.success("Login successfully");
+    } catch(error){
+      console.error(error);
+      console.log("error message", error.message)
+    }
   };
 
   const handleForgotPassword = () => {
