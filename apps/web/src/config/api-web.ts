@@ -2,10 +2,8 @@ import axios from "axios";
 
 import { getWebApiUrl } from "@/utils/get-web-api-url";
 
-const baseURL = getWebApiUrl();
-
 const apiWeb = axios.create({
-  baseURL: `${baseURL}/api`,
+  baseURL: `${getWebApiUrl()}/api`,
 });
 
 // apiWeb.interceptors.request.use((config) => {

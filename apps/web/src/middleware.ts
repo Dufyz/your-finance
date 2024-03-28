@@ -4,7 +4,9 @@ import { getUserSupabaseSession } from './utils/get-user-supabase-session'
 export async function middleware(request: NextRequest) {
   const {data, error} = await getUserSupabaseSession(request)
 
-  if(error?.status === 401) {
+  if(error) console.log('Error in middleware:', error)
+
+  if(error?.status === 401 || error?.status === 0) {
     if(request.nextUrl.pathname !== '/login') {
       const url = request.nextUrl.clone()
       url.pathname = '/login'

@@ -6,7 +6,7 @@ const LeftNavbarLayout = ({ children} : {
     return (
        <div className="w-full bg-gray-100 flex items-start justify-start">
         <LeftNavbar />
-        <div className="w-full flex-1 h-screen p-4 bg-red-500">
+        <div className="w-full flex-1 h-screen p-4">
             {children}
         </div>
        </div>
