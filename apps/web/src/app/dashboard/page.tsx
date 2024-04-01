@@ -1,9 +1,12 @@
+import LeftNavbarLayout from "@/layout/left-navbar-layout";
 
 export default async function DashboardPage() {
 
   return (
-    <div>
+  <LeftNavbarLayout>
+      <div>
         <p>dashboard</p>
     </div>
+  </LeftNavbarLayout>
   )
 }

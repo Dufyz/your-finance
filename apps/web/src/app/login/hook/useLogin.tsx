@@ -1,4 +1,5 @@
 import apiWeb from "@/config/api-web";
+import getCookie from "@/utils/get-cookie";
 import setCookie from "@/utils/set-cookie";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -44,7 +45,7 @@ const useLogin = () => {
 
       toast.success("User created successfully");
     } catch(error){
-      const errorStatus = error.response.status;
+      const errorStatus = error?.response?.status;
 
       if(errorStatus === 409){
         toast.error("User already registered");
@@ -76,7 +77,7 @@ const useLogin = () => {
       toast.success("Login successfully");
     } catch(error){
       console.error(error);
-      console.log("error message", error.message)
+      console.log("error message", error?.message)
     }
   };
 
@@ -87,9 +88,28 @@ const useLogin = () => {
   };
 
   const handleLogout = () => {
-    // TODO implement
+    try {
+      const sessionToken = getCookie({
+        name: "sessionToken",
+      });
 
-    toast.info("Not implemented yet.")
+      // apiWeb.post('/auth', {
+      //   action: "sign-out",
+      //   sessionToken,
+      //   })
+
+      setCookie({
+        name: "sessionToken",
+        value: "",
+        expires_at: new Date().toUTCString(),
+      })
+
+      router.push("/login");
+
+      toast.info("Logout successfully");
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return {

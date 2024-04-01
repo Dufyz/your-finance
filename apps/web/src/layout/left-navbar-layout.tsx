@@ -6,7 +6,7 @@ const LeftNavbarLayout = ({ children} : {
     return (
        <div className="w-full bg-gray-100 flex items-start justify-start">
         <LeftNavbar />
-        <div className="w-full flex-1 h-screen p-4">
+        <div className="w-full flex-1 h-screen px-12 py-12 overflow-auto">
             {children}
         </div>
        </div>

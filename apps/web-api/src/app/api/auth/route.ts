@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { corsHeaders } from "@/middleware";
 import { SignInService } from "@/services/login/sign-in.service";
 import { SignUpService } from "@/services/login/sign-up.service";
+import { SignOutService } from "@/services/login/sign-out.service";
 
 export async function OPTIONS(request: Request) {
   return new Response(null, {
@@ -39,8 +40,10 @@ export async function POST(request: Request) {
       case "sign-in":
         loginResponse = await SignInService(body);
         break;
+      // case "sign-out":
+      //   loginResponse = await SignOutService(body);
       case "forgot-password":
-        // loginResponse = await SignInService(body);
+        loginResponse = await SignOutService(body);
         break;
       default:
         throw new Error("Unsupported action");

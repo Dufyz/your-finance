@@ -10,7 +10,7 @@ export const LoginPage = () => {
 
   return (
     <div className="w-full h-screen bg-bg-primary flex flex-col items-center justify-center gap-8">
-      <div className="w-full max-w-[400px] flex flex-col items-center justify-center">
+      <div className="w-full max-w-sm flex flex-col items-center justify-center">
         <div className="w-full flex flex-col items-center justify-center gap-12 p-8">
           <div className="w-full flex flex-col items-center justify-center gap-4">
             <h1 className="text-3xl text-green-700 font-bold sm:text-4xl">
