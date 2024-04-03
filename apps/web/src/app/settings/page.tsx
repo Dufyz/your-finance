@@ -41,23 +41,24 @@ import Plan from "./tabs/plan";
     return (
       <LeftNavbarLayout>
          <div className="flex min-h-screen w-full flex-col">
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 md:gap-8">
+      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 md:gap-8 ">
         <div className="mx-auto grid w-full max-w-6xl gap-2">
           <h1 className="text-4xl text-green-700 font-semibold">Settings</h1>
         </div>
-        <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
+        <div className="bg-red-500 mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
         <div className="flex flex-col gap-8 items-start justify-center">
         <nav className="grid gap-4 text-sm text-muted-foreground">
-            <Link href="?tab=general" className="font-semibold text-primary">
+            <Link href="?tab=general" className={`${tabUrlParam === "general" && "font-semibold text-primary"}`}>
               General
             </Link>
-            <Link href="?tab=security">Security</Link>
-            <Link href="?tab=plan">Plan</Link>
-            <Link href="?tab=payment-method">Payment method</Link>
+            <Link href="?tab=security" className={`${tabUrlParam === "security" && "font-semibold text-primary"}`}>Security</Link>
+            <Link href="?tab=plan" className={`${tabUrlParam === "plan" && "font-semibold text-primary"}`}>Plan</Link>
+            <Link href="?tab=payment-method" className={`${tabUrlParam === "payment-method" && "font-semibold text-primary"}`}>Payment method</Link>
           </nav>
             <Logout />
         </div>
-          {
+        <div className="flex w-full min-w-80">
+        {
             tabUrlParam === "general" && <General />
           }
           {
@@ -69,6 +70,7 @@ import Plan from "./tabs/plan";
           {
             tabUrlParam === "payment-method" && <div>Payment Method</div>
           }
+        </div>
         </div>
       </main>
     </div>

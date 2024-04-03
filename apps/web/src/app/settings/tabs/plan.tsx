@@ -7,40 +7,32 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Checkbox } from "@/components/ui/checkbox"
+import { IconCheck, IconRosetteDiscountCheck, IconX } from "@tabler/icons-react"
 
 const plansFeatures = {
   pro: {
-features : {
-  unlimitedBudgets: true,
-  unlimitedCategories: true,
-  unlimitedTransactions: true,
-  unlimitedGoals: true,
-  unlimitedAccounts: true,
-  unlimitedReports: true,
-  unlimitedAttachments: true,
-  prioritySupport: true,
-  customCategories: true,
-  customGoals: true,
-  customReports: true,
-  customAttachments: true,
-},
+    features: {
+      unlimitedBudgets: true,
+      unlimitedTransactions: true,
+      unlimitedGoals: true,
+      unlimitedReports: true,
+      unlimitedAttachments: true,
+      unlimitedCategories: true,
+      customCategories: true,
+      prioritySupport: true,
+    },
   },
   free: {
-features: {
-  unlimitedBudgets: false,
-  unlimitedCategories: false,
-  unlimitedTransactions: false,
-  unlimitedGoals: false,
-  unlimitedAccounts: false,
-  unlimitedReports: false,
-  unlimitedAttachments: false,
-  prioritySupport: false,
-  customCategories: false,
-  customGoals: false,
-  customReports: false,
-  customAttachments: false,
-  },
+    features: {
+      unlimitedBudgets: true,
+      unlimitedTransactions: true,
+      unlimitedGoals: true,
+      unlimitedReports: true,
+      unlimitedAttachments: false,
+      unlimitedCategories: false,
+      customCategories: false,
+      prioritySupport: false,
+    },
   },
 }
 
@@ -59,32 +51,74 @@ const features = {
   customAttachments: "Custom Attachments",
 }
 
-export default async function Plan() {
-  return (
-    <div className="grid gap-6">
-    <Card>
-      <CardHeader>
-        <CardTitle>Pro</CardTitle>
-        <CardDescription>
-          The pro plan is for thos who want to take their finances to the next level.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ul className="w-full flex flex-col gap-2 items-start justify-center">
-          <li className="flex items-center justify-center gap-2">
-            <Checkbox checked/>
-            <span className="text-sm text-gray-700">
-              Unlimited Budgets
+export default function Plan() {
+  const renderFeatureList = (featuresList: typeof plansFeatures.pro.features | typeof plansFeatures.free.features, planType: 'pro' | 'free') => (
+    <ul className="w-full flex flex-col gap-2 items-start justify-center flex-1 h-full">
+      {Object.keys(featuresList).map((feature) => {
+        const isChecked = plansFeatures[planType as keyof typeof plansFeatures].features[feature as keyof typeof plansFeatures[typeof planType]['features']];
+        
+        return(
+          <li key={feature} className="flex items-center gap-2">
+            {isChecked ? (
+              <IconCheck />
+            ) : (
+              <IconX />
+            )}
+            <span className={`text-sm ${!isChecked && "line-through"} text-muted-foreground`}>
+              {features[feature as keyof typeof features]}
             </span>
           </li>
-          
-        </ul>
-      </CardContent>
-      <CardFooter className="border-t px-6 py-4">
-        <Button>Save</Button>
-      </CardFooter>
-    </Card>
-    
-  </div>
-  )
+        )})}
+    </ul>
+  );
+
+  return (
+    <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch flex-wrap">
+      <Card className="min-w-80 flex-1 shadow-lg transform transition duration-500 hover:scale-105">
+        <CardHeader className="m-0 flex flex-col items-start justify-center gap-2">
+          <CardTitle className="w-full flex items-center justify-between gap-4">
+            <div>
+              <h1>
+              Pro
+              </h1>
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <IconRosetteDiscountCheck color="#15803d"/>
+              <span className="text-base text-green-700">Current plan</span>
+            </div>
+          </CardTitle>
+          <CardDescription>
+            For those who want to have full control of their finances and have access to all features.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col items-start justify-center gap-6 flex-1">
+          <div className="">
+            <span className="text-4xl font-semibold text-green-700">$9.99</span><span className="text-xl text-muted-foreground">/month</span>
+          </div>
+          {renderFeatureList(plansFeatures.pro.features, 'pro')}
+        </CardContent>
+        <CardFooter>
+          <Button disabled>Choose PRO</Button>
+        </CardFooter>
+      </Card>
+
+      <Card className="min-w-80 flex-1 shadow-lg transform transition duration-500 hover:scale-105">
+      <CardHeader className="m-0 flex flex-col items-start justify-center gap-2">
+          <CardTitle>Free</CardTitle>
+          <CardDescription>
+            For those who want to start managing their finances and have a better control.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="flex flex-col items-start justify-center gap-6">
+          <div className="">
+            <span className="text-4xl font-semibold text-green-700">$0.00</span><span className="text-xl text-gray-500">/month</span>
+          </div>
+          {renderFeatureList(plansFeatures.free.features, 'free')}
+        </CardContent>
+        <CardFooter>
+          <Button>Choose FREE</Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
 }
