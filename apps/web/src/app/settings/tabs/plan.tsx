@@ -8,57 +8,83 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Input } from "@/components/ui/input"
+
+const plansFeatures = {
+  pro: {
+features : {
+  unlimitedBudgets: true,
+  unlimitedCategories: true,
+  unlimitedTransactions: true,
+  unlimitedGoals: true,
+  unlimitedAccounts: true,
+  unlimitedReports: true,
+  unlimitedAttachments: true,
+  prioritySupport: true,
+  customCategories: true,
+  customGoals: true,
+  customReports: true,
+  customAttachments: true,
+},
+  },
+  free: {
+features: {
+  unlimitedBudgets: false,
+  unlimitedCategories: false,
+  unlimitedTransactions: false,
+  unlimitedGoals: false,
+  unlimitedAccounts: false,
+  unlimitedReports: false,
+  unlimitedAttachments: false,
+  prioritySupport: false,
+  customCategories: false,
+  customGoals: false,
+  customReports: false,
+  customAttachments: false,
+  },
+  },
+}
+
+const features = {
+  unlimitedBudgets: "Unlimited Budgets",
+  unlimitedCategories: "Unlimited Categories",
+  unlimitedTransactions: "Unlimited Transactions",
+  unlimitedGoals: "Unlimited Goals",
+  unlimitedAccounts: "Unlimited Accounts",
+  unlimitedReports: "Unlimited Reports",
+  unlimitedAttachments: "Unlimited Attachments",
+  prioritySupport: "Priority Support",
+  customCategories: "Custom Categories",
+  customGoals: "Custom Goals",
+  customReports: "Custom Reports",
+  customAttachments: "Custom Attachments",
+}
 
 export default async function Plan() {
-
   return (
     <div className="grid gap-6">
     <Card>
       <CardHeader>
         <CardTitle>Pro</CardTitle>
         <CardDescription>
-          Used to identify your store in the marketplace.
+          The pro plan is for thos who want to take their finances to the next level.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <form>
-          <Input placeholder="Store Name" />
-        </form>
+        <ul className="w-full flex flex-col gap-2 items-start justify-center">
+          <li className="flex items-center justify-center gap-2">
+            <Checkbox checked/>
+            <span className="text-sm text-gray-700">
+              Unlimited Budgets
+            </span>
+          </li>
+          
+        </ul>
       </CardContent>
       <CardFooter className="border-t px-6 py-4">
         <Button>Save</Button>
       </CardFooter>
     </Card>
-    <Card>
-      <CardHeader>
-        <CardTitle>Free</CardTitle>
-        <CardDescription>
-          The directory within your project, in which your plugins are
-          located.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <form className="flex flex-col gap-4">
-          <Input
-            placeholder="Project Name"
-            defaultValue="/content/plugins"
-          />
-          <div className="flex items-center space-x-2">
-            <Checkbox id="include" defaultChecked />
-            <label
-              htmlFor="include"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Allow administrators to change the directory.
-            </label>
-          </div>
-        </form>
-      </CardContent>
-      <CardFooter className="border-t px-6 py-4">
-        <Button>Save</Button>
-      </CardFooter>
-    </Card>
+    
   </div>
   )
 }
