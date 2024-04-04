@@ -1,12 +1,13 @@
 import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
-import ChangeEmail from "../components/payment-method/change-email";
-import ChangeName from "../components/payment-method/change-name";
-import ChangePassword from "../components/payment-method/change-password";
-import Change2FA from "../components/payment-method/change-2fa";
-import DeleteAccount from "../components/payment-method/delete-account";
-import ChangeAppearance from "../components/payment-method/change-apperance";
-import ChangeLanguage from "../components/payment-method/change-language";
+import ChangeEmail from "../components/my-account/change-email";
+import ChangeName from "../components/my-account/change-name";
+import ChangePassword from "../components/my-account/change-password";
+import Change2FA from "../components/my-account/change-2fa";
+import DeleteAccount from "../components/my-account/delete-account";
+import ChangeAppearance from "../components/my-account/change-apperance";
+import ChangeLanguage from "../components/my-account/change-language";
+import ChangeCountry from "../components/my-account/change-country";
+import ChangeCurrency from "../components/my-account/change-currency";
 
 const MyAccount = () => {
 
@@ -73,7 +74,7 @@ const MyAccount = () => {
          <span className="text-muted-foreground">Brazil</span>
          </div>
          <div>
-           <button className="bg-gray-800  hover:bg-gray-900  text-white  text-sm p-2 rounded-md">Change country</button>
+           <ChangeCountry />
          </div>
        </div>
        <div className="w-full flex items-center justify-between">
@@ -82,7 +83,7 @@ const MyAccount = () => {
          <span className="text-muted-foreground">GBP (£)</span>
          </div>
          <div>
-           <button className="bg-gray-800  hover:bg-gray-900  text-white  text-sm p-2 rounded-md">Change currency</button>
+           <ChangeCurrency />
          </div>
        </div>
        <div className="w-full flex items-center justify-between">
