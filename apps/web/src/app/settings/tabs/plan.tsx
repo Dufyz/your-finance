@@ -8,48 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { IconCheck, IconRosetteDiscountCheck, IconX } from "@tabler/icons-react"
+import { features, plansFeatures } from "../data/plans";
 
-const plansFeatures = {
-  pro: {
-    features: {
-      unlimitedBudgets: true,
-      unlimitedTransactions: true,
-      unlimitedGoals: true,
-      unlimitedReports: true,
-      unlimitedAttachments: true,
-      unlimitedCategories: true,
-      customCategories: true,
-      prioritySupport: true,
-    },
-  },
-  free: {
-    features: {
-      unlimitedBudgets: true,
-      unlimitedTransactions: true,
-      unlimitedGoals: true,
-      unlimitedReports: true,
-      unlimitedAttachments: false,
-      unlimitedCategories: false,
-      customCategories: false,
-      prioritySupport: false,
-    },
-  },
-}
-
-const features = {
-  unlimitedBudgets: "Unlimited Budgets",
-  unlimitedCategories: "Unlimited Categories",
-  unlimitedTransactions: "Unlimited Transactions",
-  unlimitedGoals: "Unlimited Goals",
-  unlimitedAccounts: "Unlimited Accounts",
-  unlimitedReports: "Unlimited Reports",
-  unlimitedAttachments: "Unlimited Attachments",
-  prioritySupport: "Priority Support",
-  customCategories: "Custom Categories",
-  customGoals: "Custom Goals",
-  customReports: "Custom Reports",
-  customAttachments: "Custom Attachments",
-}
 
 export default function Plan() {
   const renderFeatureList = (featuresList: typeof plansFeatures.pro.features | typeof plansFeatures.free.features, planType: 'pro' | 'free') => (
@@ -74,7 +34,7 @@ export default function Plan() {
 
   return (
     <div className="flex flex-col md:flex-row gap-6 justify-center items-stretch flex-wrap">
-      <Card className="min-w-80 flex-1 shadow-lg transform transition duration-500 hover:scale-105">
+      <Card className="flex-1 shadow-lg transform transition duration-500 hover:scale-105">
         <CardHeader className="m-0 flex flex-col items-start justify-center gap-2">
           <CardTitle className="w-full flex items-center justify-between gap-4">
             <div>
@@ -102,7 +62,7 @@ export default function Plan() {
         </CardFooter>
       </Card>
 
-      <Card className="min-w-80 flex-1 shadow-lg transform transition duration-500 hover:scale-105">
+      <Card className="flex-1 shadow-lg transform transition duration-500 hover:scale-105">
       <CardHeader className="m-0 flex flex-col items-start justify-center gap-2">
           <CardTitle>Free</CardTitle>
           <CardDescription>

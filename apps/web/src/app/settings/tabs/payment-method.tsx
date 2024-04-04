@@ -1,9 +1,12 @@
+import PaymentMethodCard from "../components/payment-method/payment-method-card";
 
-export default async function PaymentMethod() {
+const PaymentMethod = () => {
 
     return (
         <div>
-          <p>PaymentMethod</p>
+          <PaymentMethodCard />
       </div>
     )
   }
+
+  export default PaymentMethod;
