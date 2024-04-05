@@ -61,7 +61,7 @@ export default function Week() {
                           </TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="secondary">
-                              Received
+                              Revenue
                             </Badge>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
