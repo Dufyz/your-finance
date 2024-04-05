@@ -8,8 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-
-
 import {
   Table,
   TableBody,
@@ -19,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { TabsContent } from "@/components/ui/tabs"
-import { IconDotsVertical } from "@tabler/icons-react"
+import ToolsTransaction from "./tools-transaction"
 
 export default function Week() {
 
@@ -70,7 +68,9 @@ export default function Week() {
                             2023-06-23
                           </TableCell>
                           <TableCell className="hidden md:table-cell">$5.00</TableCell>
-                          <TableCell className="flex items-end justify-end"><IconDotsVertical size={24} /></TableCell>
+                          <TableCell className="flex items-center justify-end">
+                            <ToolsTransaction />
+                          </TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>
