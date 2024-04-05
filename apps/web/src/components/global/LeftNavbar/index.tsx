@@ -22,9 +22,9 @@ const LeftNavbar = () => {
           <LeftNavbarItem icon={<IconTransfer size={24} color="#166534" />} label="Transactions" route="/transactions"/>
           <LeftNavbarItem icon={<IconWallet size={24} color="#166534" />} label="Wallets" route="/wallets"/>
           <LeftNavbarItem icon={<IconCreditCard size={24} color="#166534" />} label="Cards" route="/cards"/>
-          <LeftNavbarItem icon={<IconFileInvoice size={24} color="#166534" />} label="Invoices" route="/invoices"/>
-          <LeftNavbarItem icon={<IconTargetArrow size={24} color="#166534" />} label="Goals" route="/goals"/>
-          <LeftNavbarItem icon={<IconManualGearbox size={24} color="#166534" />} label="Categories" route="/categories"/>
+          <LeftNavbarItem icon={<IconFileInvoice size={24} color="#166534" />} label="Invoices" route="/invoices" disabled/>
+          <LeftNavbarItem icon={<IconTargetArrow size={24} color="#166534" />} label="Goals" route="/goals" disabled/>
+          <LeftNavbarItem icon={<IconManualGearbox size={24} color="#166534" />} label="Categories" route="/categories" disabled/>
           </div>
           <div className="w-full flex flex-col items-start justify-start gap-2">
           <LeftNavbarItem icon={<IconHeadset size={24} color="#166534" />} label="Support" route="/support"/>

@@ -68,7 +68,7 @@ export default function Week() {
                             2023-06-23
                           </TableCell>
                           <TableCell className="hidden md:table-cell">$5.00</TableCell>
-                          <TableCell className="flex items-center justify-end">
+                          <TableCell className="h-[72px] flex items-center justify-end">
                             <ToolsTransaction />
                           </TableCell>
                         </TableRow>

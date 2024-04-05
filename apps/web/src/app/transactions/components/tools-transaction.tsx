@@ -1,53 +1,60 @@
-import {
-    Cloud,
-    CreditCard,
-    Github,
-    Keyboard,
-    LifeBuoy,
-    LogOut,
-    Mail,
-    MessageSquare,
-    Plus,
-    PlusCircle,
-    Settings,
-    User,
-    UserPlus,
-    Users,
-  } from "lucide-react"
-  
-  import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuGroup,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
-import { IconDotsVertical, IconEdit, IconTrash } from "@tabler/icons-react"
-  
-  export default function ToolsTransaction() {
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <IconDotsVertical size={24} />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56">
-        <DropdownMenuItem className="flex gap-2">
-            <IconEdit size={16} />
-            <span>Edit</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem className="flex gap-2">
-            <IconTrash size={16} />
-            <span>Delete</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    )
+"use client"
+
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import {  IconDotsVertical } from "@tabler/icons-react";
+
+import { useRef, useState } from "react";
+import EditTransaction from "./edit-transaction";
+
+import "./styles.css";
+import DeleTransaction from "./delete-transaction";
+
+
+export default function ToolsTransaction() {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [hasOpenDialog, setHasOpenDialog] = useState(false);
+  const dropdownTriggerRef = useRef(null);
+  const focusRef = useRef(null);
+
+  function handleDialogItemSelect() {
+    focusRef.current = dropdownTriggerRef.current;
   }
-  
+
+  function handleDialogItemOpenChange(open) {
+    setHasOpenDialog(open);
+    if (open === false) {
+      setDropdownOpen(false);
+    }
+  }
+
+  return (
+    <DropdownMenu.Root open={dropdownOpen} onOpenChange={setDropdownOpen}>
+      <DropdownMenu.Trigger asChild className="">
+        <IconDotsVertical size={16} />
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content
+        className="DropdownMenuContent"
+        sideOffset={5}
+        hidden={hasOpenDialog}
+        onCloseAutoFocus={(event) => {
+          if (focusRef.current) {
+            focusRef.current.focus();
+            focusRef.current = null;
+            event.preventDefault();
+          }
+        }}
+      >
+       
+        <EditTransaction handleDialogItemOpenChange={handleDialogItemOpenChange}  handleDialogItemSelect={handleDialogItemSelect}/>
+        
+        <DropdownMenu.Separator className="DropdownMenuSeparator" />
+
+        <DeleTransaction handleDialogItemOpenChange={handleDialogItemOpenChange}  handleDialogItemSelect={handleDialogItemSelect}/>
+
+        <DropdownMenu.Arrow className="DropdownMenuArrow" />
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
+  );
+}
+
+
