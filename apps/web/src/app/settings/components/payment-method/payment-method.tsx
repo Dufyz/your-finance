@@ -1,4 +1,4 @@
-import PaymentMethodCard from "../components/payment-method/payment-method-card";
+import PaymentMethodCard from "./payment-method-card";
 
 const PaymentMethod = () => {
 

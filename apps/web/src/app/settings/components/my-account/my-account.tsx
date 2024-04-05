@@ -1,13 +1,13 @@
 import { Separator } from "@/components/ui/separator";
-import ChangeEmail from "../components/my-account/change-email";
-import ChangeName from "../components/my-account/change-name";
-import ChangePassword from "../components/my-account/change-password";
-import Change2FA from "../components/my-account/change-2fa";
-import DeleteAccount from "../components/my-account/delete-account";
-import ChangeAppearance from "../components/my-account/change-apperance";
-import ChangeLanguage from "../components/my-account/change-language";
-import ChangeCountry from "../components/my-account/change-country";
-import ChangeCurrency from "../components/my-account/change-currency";
+import ChangeEmail from "./change-email";
+import ChangeName from "./change-name";
+import ChangePassword from "./change-password";
+import Change2FA from "./change-2fa";
+import DeleteAccount from "./delete-account";
+import ChangeAppearance from "./change-apperance";
+import ChangeLanguage from "./change-language";
+import ChangeCountry from "./change-country";
+import ChangeCurrency from "./change-currency";
 
 const MyAccount = () => {
 

@@ -8,7 +8,7 @@ export async function middleware(request: NextRequest) {
 
   if(error) console.log('Error in middleware:', error)
 
-  if(error?.status === 401 || error?.status === 0) {
+  if(error?.status === 401 || error?.status === 0 || error) {
     if(request.nextUrl.pathname !== '/login') {
       const url = request.nextUrl.clone()
       url.pathname = '/login'

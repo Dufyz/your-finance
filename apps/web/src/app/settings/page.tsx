@@ -6,9 +6,9 @@ import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import { Logout } from "./components/logout";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import Plan from "./tabs/plan";
-import PaymentMethod from "./tabs/payment-method";
-import MyAccount from "./tabs/my-account";
+import Plan from "./components/plan";
+import PaymentMethod from "./components/payment-method/payment-method";
+import MyAccount from "./components/my-account/my-account";
 
  const ProfilePage = () => {
   const router = useRouter();
