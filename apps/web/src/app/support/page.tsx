@@ -61,8 +61,11 @@ export default function SupportPage() {
             </div>
           </div>
           <div className="sm:col-span-2">
+          <label htmlFor="category" className="block text-sm font-semibold leading-6 text-gray-900">
+              Reason for contact
+            </label>
           <Select>
-      <SelectTrigger className="w-full">
+      <SelectTrigger className="w-full" name='category'>
         <SelectValue placeholder="Select a category" />
       </SelectTrigger>
       <SelectContent>

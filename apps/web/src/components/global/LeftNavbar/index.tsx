@@ -6,7 +6,7 @@ import Image from "next/image";
 
 const LeftNavbar = () => {
     return (
-        <div className="w-full max-w-[232px] h-screen bg-[#f6f7fb] border-r sticky top-0 p-4 gap-4 flex flex-col items-start justify-start shadow-lg">
+        <div className="w-full max-w-[232px] max-w h-screen bg-[#f6f7fb] border-r sticky top-0 p-4 gap-4 flex flex-col items-start justify-start shadow-lg">
           <div className="w-full flex flex-col items-center justify-center">
           <div>
               <Image src="/logo.png" alt="logo" width={72} height={72} />
