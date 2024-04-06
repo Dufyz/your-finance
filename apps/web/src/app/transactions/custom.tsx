@@ -24,7 +24,7 @@ export default function Custom() {
         <TabsContent value="custom">
                 <Card>
                   <CardHeader className="px-7 w-full flex gap-4 flex-wrap items-start justify-between flex-row">
-                   <div className="flex gap-2 flex-col">
+                   <div className="flex gap-[6px] flex-col">
                    <CardTitle>History</CardTitle>
                     <CardDescription>
                       Here you can see all the transactions you made between the selected dates.
