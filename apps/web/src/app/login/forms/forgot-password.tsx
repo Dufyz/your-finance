@@ -10,49 +10,60 @@ interface IForgotPasswordProps {
 
 const ForgotPasswordSchema = z.object({
   email: z.string().email()
-})
+});
 
-type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>
+type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
 
 const ForgotPassword = ({ setActiveTab }: IForgotPasswordProps) => {
-  const {handleForgotPassword} = useLogin();
+  const { handleForgotPassword } = useLogin();
 
-  const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<ForgotPasswordSchemaType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm<ForgotPasswordSchemaType>({
     resolver: zodResolver(ForgotPasswordSchema),
     defaultValues: {
       email: ""
     }
-  })
+  });
 
   return (
-    <div className="w-full flex flex-col items-start justify-center gap-6">
-      <form 
-      onSubmit={handleSubmit(handleForgotPassword)}
-       className="w-full flex flex-col items-center justify-center gap-8">
-        <div className="w-full flex flex-col items-center justify-center gap-6">
-          <div className="w-full flex flex-col items-start justify-center gap-2">
-            <label htmlFor="" className="text-gray-800 text-base font-bold">
+    <div className="flex w-full flex-col items-start justify-center gap-6">
+      <form
+        onSubmit={handleSubmit(handleForgotPassword)}
+        className="flex w-full flex-col items-center justify-center gap-8"
+      >
+        <div className="flex w-full flex-col items-center justify-center gap-6">
+          <div className="flex w-full flex-col items-start justify-center gap-2">
+            <label htmlFor="" className="text-base font-bold text-gray-800">
               Email Adress
             </label>
-            {errors.email?.message && (<FormError message={errors.email.message} />)}
+            {errors.email?.message && (
+              <FormError message={errors.email.message} />
+            )}
             <input
               {...register("email")}
               type="email"
               placeholder="Email"
-              className="w-full h-12 py-3 px-4 rounded-[8px] border border-solid border-gray-600"
+              className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
             />
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center gap-8">
-          <div className="w-full flex flex-col items-start justify-center gap-6">
-            <button type="submit" disabled={isSubmitting} className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover" >
+        <div className="flex w-full flex-col items-center justify-center gap-8">
+          <div className="flex w-full flex-col items-start justify-center gap-6">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="hover:bg-primary-hover w-full rounded-[8px] bg-primary px-3 py-4 font-bold text-white"
+            >
               Recover
             </button>
           </div>
         </div>
       </form>
 
-      <div className="w-full text-base font-semibold cursor-pointer flex items-center justify-center px-8">
+      <div className="flex w-full cursor-pointer items-center justify-center px-8 text-base font-semibold">
         <button
           className="text-gray-400"
           onClick={() => setActiveTab("sign-in")}

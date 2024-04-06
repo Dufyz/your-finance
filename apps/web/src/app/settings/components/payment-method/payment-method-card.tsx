@@ -1,9 +1,22 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
 import { IconBrandApple, IconBrandPaypal } from "@tabler/icons-react";
 
 const PaymentMethodCard = () => {
@@ -120,7 +133,7 @@ const PaymentMethodCard = () => {
         <Button className="w-full">Continue</Button>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
 export default PaymentMethodCard;

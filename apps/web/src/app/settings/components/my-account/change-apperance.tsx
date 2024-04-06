@@ -1,11 +1,7 @@
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch";
 
 const ChangeAppearance = () => {
+  return <Switch />;
+};
 
-
-    return (
-        <Switch />
-    )
-}
-
-export default ChangeAppearance
+export default ChangeAppearance;

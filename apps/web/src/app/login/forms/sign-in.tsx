@@ -13,21 +13,17 @@ const SignInSchema = z.object({
   email: z.string().email(),
   password: z.string().min(6, "Password must have at least 6 characters"),
   keepSignedIn: z.boolean()
-})
+});
 
-type SignInSchemaType = z.infer<typeof SignInSchema>
+type SignInSchemaType = z.infer<typeof SignInSchema>;
 
 const SignIn = ({ setActiveTab }: ISignInProps) => {
-
-  const {handleSignIn} = useLogin();
+  const { handleSignIn } = useLogin();
 
   const {
-    register, 
+    register,
     handleSubmit,
-    formState: {
-      errors,
-      isSubmitting  
-    }
+    formState: { errors, isSubmitting }
   } = useForm<SignInSchemaType>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -35,46 +31,51 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
       password: "",
       keepSignedIn: false
     }
-  })
+  });
 
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-8">
-      <form 
-      onSubmit={handleSubmit(handleSignIn)}
-      className="w-full flex flex-col items-center justify-center gap-6">
-        <div className="w-full flex flex-col items-start justify-center gap-2">
-          <label htmlFor="" className="text-gray-800 text-base font-bold">
+    <div className="flex w-full flex-col items-center justify-center gap-8">
+      <form
+        onSubmit={handleSubmit(handleSignIn)}
+        className="flex w-full flex-col items-center justify-center gap-6"
+      >
+        <div className="flex w-full flex-col items-start justify-center gap-2">
+          <label htmlFor="" className="text-base font-bold text-gray-800">
             Email Adress
           </label>
-          {errors.email?.message && (<FormError message={errors.email.message} />)}
+          {errors.email?.message && (
+            <FormError message={errors.email.message} />
+          )}
           <input
-          {...register("email")}
+            {...register("email")}
             type="email"
             placeholder="Email"
-            className="w-full h-12 py-3 px-4 rounded-[8px] border border-solid border-gray-600"
+            className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
           />
         </div>
-        <div className="w-full flex flex-col items-start justify-center gap-2">
-          <div className="w-full flex items-start justify-between flex-wrap gap-4">
-            <label htmlFor="" className="text-gray-800 text-base font-bold">
+        <div className="flex w-full flex-col items-start justify-center gap-2">
+          <div className="flex w-full flex-wrap items-start justify-between gap-4">
+            <label htmlFor="" className="text-base font-bold text-gray-800">
               Password
             </label>
             <button
-              className="text-sm text-green-700 cursor-pointer"
+              className="cursor-pointer text-sm text-green-700"
               onClick={() => setActiveTab("forgot-password")}
             >
               Forgot password?
             </button>
           </div>
 
-          {errors.password?.message && (<FormError message={errors.password.message} />)}
+          {errors.password?.message && (
+            <FormError message={errors.password.message} />
+          )}
 
-          <div className="w-full relative">
+          <div className="relative w-full">
             <input
-            {...register("password")}
+              {...register("password")}
               type={"password"}
               placeholder="Password"
-              className="w-full h-12 py-3 px-4 rounded-[8px] border border-solid border-gray-600"
+              className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
             />
             <IconEye
               size={24}
@@ -82,25 +83,29 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
             />
           </div>
         </div>
-        <div className="w-full flex flex-col items-center justify-center gap-8">
-        <div className="w-full flex flex-col items-start justify-center gap-6">
-          <div className="flex items-center justify-center gap-4">
-            <input
-            {...register("keepSignedIn")}
-              type="checkbox"
-              className="w-5 h-5 bg-primary rounded-[4px] accent-primary"
-            />
-            <label htmlFor="" className="text-base">
-              Keep me signed in
-            </label>
+        <div className="flex w-full flex-col items-center justify-center gap-8">
+          <div className="flex w-full flex-col items-start justify-center gap-6">
+            <div className="flex items-center justify-center gap-4">
+              <input
+                {...register("keepSignedIn")}
+                type="checkbox"
+                className="h-5 w-5 rounded-[4px] bg-primary accent-primary"
+              />
+              <label htmlFor="" className="text-base">
+                Keep me signed in
+              </label>
+            </div>
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="hover:bg-primary-hover w-full rounded-[8px] bg-primary px-3 py-4 font-bold text-white"
+            >
+              Login
+            </button>
           </div>
-          <button type="submit" disabled={isSubmitting} className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover">
-            Login
-          </button>
         </div>
-      </div>
       </form>
-      <div className="w-full text-base font-semibold cursor-pointer flex items-center justify-center px-8">
+      <div className="flex w-full cursor-pointer items-center justify-center px-8 text-base font-semibold">
         <button
           className="text-green-700"
           onClick={() => setActiveTab("sign-up")}

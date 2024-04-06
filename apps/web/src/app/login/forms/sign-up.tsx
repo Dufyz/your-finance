@@ -12,66 +12,77 @@ interface ISignUpProps {
 const SignUpSchema = z.object({
   name: z.string().min(3, "Name must have at least 3 characters"),
   email: z.string().email(),
-  password: z.string().min(6, "Password must have at least 6 characters"),
-})
+  password: z.string().min(6, "Password must have at least 6 characters")
+});
 
-type SignUpSchemaType = z.infer<typeof SignUpSchema>
+type SignUpSchemaType = z.infer<typeof SignUpSchema>;
 
 const SingUp = ({ setActiveTab }: ISignUpProps) => {
-  const {handleSingUp} = useLogin();
+  const { handleSingUp } = useLogin();
 
-  const {handleSubmit, register, formState: {
-    errors, isSubmitting
-  }} = useForm<SignUpSchemaType>({
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting }
+  } = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
       name: "",
       email: "",
-      password: "",
+      password: ""
     }
-  })
+  });
 
   return (
-    <div className="w-full flex flex-col items-center justify-center gap-8">
-     <form className="w-full flex flex-col items-center justify-center gap-6" onSubmit={handleSubmit(handleSingUp)}>
-     <div className="w-full flex flex-col items-center justify-center gap-6">
-        <div className="w-full flex flex-col items-start justify-center gap-2">
-          <label htmlFor="" className="text-gray-800 text-base font-bold">
-            Name
-          </label>
-          {errors.name?.message && (<FormError message={errors.name.message} />)}
-          <input
-          {...register("name")}
-            type="text"
-            placeholder="Name"
-            className="w-full h-12 py-3 px-4 rounded-[8px] border border-solid border-gray-600"
-          />
-        </div>
-        <div className="w-full flex flex-col items-start justify-center gap-2">
-          <label htmlFor="" className="text-gray-800 text-4 font-bold">
-            Email Adress
-          </label>
-          {errors.email?.message && (<FormError message={errors.email.message} />)}
-          <input
-          {...register("email")}
-            type="email"
-            placeholder="Email"
-            className="w-full h-12 py-3 px-4 rounded-[8px] border border-solid border-gray-600"
-          />
-        </div>
-          <div className="w-full flex flex-col items-start justify-center gap-2">
-            <div className="w-full flex items-start justify-between flex-wrap gap-4">
-              <label htmlFor="" className="text-gray-800 text-base font-bold">
+    <div className="flex w-full flex-col items-center justify-center gap-8">
+      <form
+        className="flex w-full flex-col items-center justify-center gap-6"
+        onSubmit={handleSubmit(handleSingUp)}
+      >
+        <div className="flex w-full flex-col items-center justify-center gap-6">
+          <div className="flex w-full flex-col items-start justify-center gap-2">
+            <label htmlFor="" className="text-base font-bold text-gray-800">
+              Name
+            </label>
+            {errors.name?.message && (
+              <FormError message={errors.name.message} />
+            )}
+            <input
+              {...register("name")}
+              type="text"
+              placeholder="Name"
+              className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
+            />
+          </div>
+          <div className="flex w-full flex-col items-start justify-center gap-2">
+            <label htmlFor="" className="text-4 font-bold text-gray-800">
+              Email Adress
+            </label>
+            {errors.email?.message && (
+              <FormError message={errors.email.message} />
+            )}
+            <input
+              {...register("email")}
+              type="email"
+              placeholder="Email"
+              className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
+            />
+          </div>
+          <div className="flex w-full flex-col items-start justify-center gap-2">
+            <div className="flex w-full flex-wrap items-start justify-between gap-4">
+              <label htmlFor="" className="text-base font-bold text-gray-800">
                 Password
               </label>
             </div>
-            {errors.password?.message && (<FormError message={errors.password.message} />)}
-            <div className="w-full relative">
+            {errors.password?.message && (
+              <FormError message={errors.password.message} />
+            )}
+            <div className="relative w-full">
               <input
-              {...register("password")}
+                {...register("password")}
                 type={"password"}
                 placeholder="Password"
-                className="w-full h-12 py-3 px-4 rounded-[8px] border border-solid border-gray-600"
+                className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
               />
               <IconEye
                 size={24}
@@ -79,16 +90,20 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
               />
             </div>
           </div>
-      </div>
-      <div className="w-full flex flex-col items-center justify-center gap-8">
-        <div className="w-full flex flex-col items-start justify-center gap-6">
-          <button type="submit" disabled={isSubmitting} className="w-full bg-primary py-4 px-3 rounded-[8px] text-white font-bold hover:bg-primary-hover">
-            Sign Up
-          </button>
         </div>
-      </div>
-     </form>
-      <div className="w-full text-base font-semibold cursor-pointer flex items-center justify-center px-6">
+        <div className="flex w-full flex-col items-center justify-center gap-8">
+          <div className="flex w-full flex-col items-start justify-center gap-6">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="hover:bg-primary-hover w-full rounded-[8px] bg-primary px-3 py-4 font-bold text-white"
+            >
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </form>
+      <div className="flex w-full cursor-pointer items-center justify-center px-6 text-base font-semibold">
         <button
           className="text-gray-400"
           onClick={() => setActiveTab("sign-in")}

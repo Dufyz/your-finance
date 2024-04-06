@@ -1,9 +1,5 @@
-const FormError = ({message}: {
-    message: string
-}) => {
-    return (
-        <span className="text-red-500 text-sm">{message}</span>
-    )
-}
+const FormError = ({ message }: { message: string }) => {
+  return <span className="text-sm text-red-500">{message}</span>;
+};
 
-export default FormError
+export default FormError;

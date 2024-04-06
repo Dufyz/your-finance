@@ -1,25 +1,24 @@
 import {
-    Dialog,
-    DialogClose,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTrigger,
-  } from "@/components/ui/dialog"
-  import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
-  
-  const Change2FA = () => {
-    return (
-      <Dialog>
-        <DialogTrigger asChild>
-         <Switch />
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTrigger
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 
-        </DialogTrigger>
-        
-        <DialogContent className="sm:max-w-md">
+const Change2FA = () => {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Switch />
+      </DialogTrigger>
+
+      <DialogContent className="sm:max-w-md">
         <DialogHeader />
-          {/* <div className="w-full flex flex-col items-start justify-start gap-4">
+        {/* <div className="w-full flex flex-col items-start justify-start gap-4">
           <div className="w-full flex items-center justify-start">
               <p className="text-sm">Your current email is: <span className="font-bold text-sm">guilherme@your-finance.com</span></p>
           </div>
@@ -34,16 +33,19 @@ import { Switch } from "@/components/ui/switch"
             </div>
           </div>
           </div> */}
-          <DialogFooter className="sm:justify-start">
-            <DialogClose asChild className="w-full">
-              <button type="button" className="bg-green-700 p-2 rounded-md text-white">
-                Close
-              </button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    )
-  }
-  
-  export default Change2FA
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild className="w-full">
+            <button
+              type="button"
+              className="rounded-md bg-green-700 p-2 text-white"
+            >
+              Close
+            </button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default Change2FA;

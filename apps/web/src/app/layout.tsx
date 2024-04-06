@@ -9,37 +9,38 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Your Finance",
-  description: "",
+  description: ""
 };
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const shouldShowInitialLoader = false;
 
-  if(shouldShowInitialLoader) {
+  if (shouldShowInitialLoader) {
     return (
       <html lang="en">
-    <body className={inter.className}>
-      <div className="w-full h-screen flex items-center justify-center">
-        <div className="flex flex-col gap-8 items-center justify-start relative">
-        <div className="bottom-[70px] absolute">
-          <Image src="/logo.png" width={120} height={120} alt="logo" />
-        </div>
-        <div>
-        <ProgressBar progress={80} />
-        </div>
-        <div className="">
-          <span className="text-sm text-gray-400">Carregando a porra toda</span>
-        </div>
-        </div>
-      </div>
-    </body>
-  </html>
-    )
+        <body className={inter.className}>
+          <div className="flex h-screen w-full items-center justify-center">
+            <div className="relative flex flex-col items-center justify-start gap-8">
+              <div className="absolute bottom-[70px]">
+                <Image src="/logo.png" width={120} height={120} alt="logo" />
+              </div>
+              <div>
+                <ProgressBar progress={80} />
+              </div>
+              <div className="">
+                <span className="text-sm text-gray-400">
+                  Carregando a porra toda
+                </span>
+              </div>
+            </div>
+          </div>
+        </body>
+      </html>
+    );
   }
 
   return (

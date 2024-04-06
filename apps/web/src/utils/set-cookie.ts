@@ -1,4 +1,3 @@
-
 const setCookie = ({name, value, expires_at}: {
     name: string;
     value: string;

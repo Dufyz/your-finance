@@ -1,14 +1,13 @@
-"use client"
+"use client";
 
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import {  IconDotsVertical } from "@tabler/icons-react";
+import { IconDotsVertical } from "@tabler/icons-react";
 
 import { useRef, useState } from "react";
 import EditTransaction from "./edit-transaction";
 
 import "../styles/tools-transaction.css";
 import DeleTransaction from "./delete-transaction";
-
 
 export default function ToolsTransaction() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -44,17 +43,20 @@ export default function ToolsTransaction() {
           }
         }}
       >
-       
-        <EditTransaction handleDialogItemOpenChange={handleDialogItemOpenChange}  handleDialogItemSelect={handleDialogItemSelect}/>
-        
+        <EditTransaction
+          handleDialogItemOpenChange={handleDialogItemOpenChange}
+          handleDialogItemSelect={handleDialogItemSelect}
+        />
+
         <DropdownMenu.Separator className="DropdownMenuSeparator" />
 
-        <DeleTransaction handleDialogItemOpenChange={handleDialogItemOpenChange}  handleDialogItemSelect={handleDialogItemSelect}/>
+        <DeleTransaction
+          handleDialogItemOpenChange={handleDialogItemOpenChange}
+          handleDialogItemSelect={handleDialogItemSelect}
+        />
 
         <DropdownMenu.Arrow className="DropdownMenuArrow" />
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   );
 }
-
-

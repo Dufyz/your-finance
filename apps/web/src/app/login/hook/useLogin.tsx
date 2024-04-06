@@ -24,60 +24,64 @@ const useLogin = () => {
     "sign-in" | "sign-up" | "forgot-password"
   >("sign-in");
 
-  const handleSingUp = async ({name, email, password}: IHandleSignUp) => {
+  const handleSingUp = async ({ name, email, password }: IHandleSignUp) => {
     try {
       const body = {
         action: "sign-up",
         name,
         email,
-        password,
-      }
+        password
+      };
 
-      const {data:session} = await apiWeb.post('/auth', body);
+      const { data: session } = await apiWeb.post("/auth", body);
 
       setCookie({
         name: "sessionToken",
         value: session.access_token,
-        expires_at: new Date(session.expires_at * 1000).toUTCString(),
-      })
+        expires_at: new Date(session.expires_at * 1000).toUTCString()
+      });
 
       router.push("/login");
 
       toast.success("User created successfully");
-    } catch(error){
+    } catch (error) {
       const errorStatus = error?.response?.status;
 
-      if(errorStatus === 409){
+      if (errorStatus === 409) {
         toast.error("User already registered");
       }
-      
+
       console.error(error);
     }
   };
 
-  const handleSignIn = async ({email, password, keepSignedIn}: IHandleSignin) => {
+  const handleSignIn = async ({
+    email,
+    password,
+    keepSignedIn
+  }: IHandleSignin) => {
     try {
       const body = {
         action: "sign-in",
         email,
         password,
-        keepSignedIn,
-      }
+        keepSignedIn
+      };
 
-      const {data: session} = await apiWeb.post('/auth', body);
+      const { data: session } = await apiWeb.post("/auth", body);
 
       setCookie({
         name: "sessionToken",
         value: session.access_token,
-        expires_at: new Date(session.expires_at * 1000).toUTCString(),
-      })
+        expires_at: new Date(session.expires_at * 1000).toUTCString()
+      });
 
       router.push("/login");
 
       toast.success("Login successfully");
-    } catch(error){
+    } catch (error) {
       console.error(error);
-      console.log("error message", error?.message)
+      console.log("error message", error?.message);
     }
   };
 
@@ -90,7 +94,7 @@ const useLogin = () => {
   const handleLogout = () => {
     try {
       const sessionToken = getCookie({
-        name: "sessionToken",
+        name: "sessionToken"
       });
 
       // apiWeb.post('/auth', {
@@ -101,8 +105,8 @@ const useLogin = () => {
       setCookie({
         name: "sessionToken",
         value: "",
-        expires_at: new Date().toUTCString(),
-      })
+        expires_at: new Date().toUTCString()
+      });
 
       router.push("/login");
 
@@ -110,7 +114,7 @@ const useLogin = () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   return {
     activeTab,
@@ -118,7 +122,7 @@ const useLogin = () => {
     handleSignIn,
     handleSingUp,
     handleForgotPassword,
-    handleLogout,
+    handleLogout
   };
 };
 

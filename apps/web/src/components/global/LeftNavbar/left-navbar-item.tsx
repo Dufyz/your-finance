@@ -9,15 +9,20 @@ interface ILeftNavbarItemProps {
   disabled?: boolean;
 }
 
-const LeftNavbarItem = ({icon, label, route, disabled}: ILeftNavbarItemProps) => {
+const LeftNavbarItem = ({
+  icon,
+  label,
+  route,
+  disabled
+}: ILeftNavbarItemProps) => {
   const router = useRouter();
   const currentPathname = usePathname();
-  
+
   const isItemSelected = currentPathname === route;
 
   return (
     <button
-      className={`w-full flex items-center justify-start gap-3 p-2 rounded-md ${isItemSelected && "bg-gray-200 border border-solid border-gray-300"} ${disabled && "opacity-50 cursor-default"} ${!disabled && "hover:bg-gray-200 hover:border-gray-300"}`}
+      className={`flex w-full items-center justify-start gap-3 rounded-md p-2 ${isItemSelected && "border border-solid border-gray-300 bg-gray-200"} ${disabled && "cursor-default opacity-50"} ${!disabled && "hover:border-gray-300 hover:bg-gray-200"}`}
       onClick={() => {
         if (!disabled) {
           router.push(route);
@@ -25,14 +30,12 @@ const LeftNavbarItem = ({icon, label, route, disabled}: ILeftNavbarItemProps) =>
       }}
       disabled={disabled}
     >
+      <div>{icon}</div>
       <div>
-        {icon}
-      </div>
-      <div>
-        <h1 className="text-sm text-gray-800 font-semibold">{label}</h1>
+        <h1 className="text-sm font-semibold text-gray-800">{label}</h1>
       </div>
     </button>
   );
-}
+};
 
 export default LeftNavbarItem;
