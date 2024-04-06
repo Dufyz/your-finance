@@ -17,18 +17,22 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { TabsContent } from "@/components/ui/tabs"
-import ToolsTransaction from "./tools-transaction"
+import DateRangePicker from "./components/date-range-picker"
 
-export default function Week() {
-
+export default function Custom() {
     return (
-        <TabsContent value="week">
+        <TabsContent value="custom">
                 <Card>
-                  <CardHeader className="px-7">
-                    <CardTitle>History</CardTitle>
+                  <CardHeader className="px-7 w-full flex gap-4 flex-wrap items-start justify-between flex-row">
+                   <div className="flex gap-2 flex-col">
+                   <CardTitle>History</CardTitle>
                     <CardDescription>
-                      Here you can see all the transactions you made this week.
+                      Here you can see all the transactions you made between the selected dates.
                     </CardDescription>
+                   </div>
+                   <div>
+                    <DateRangePicker />
+                   </div>
                   </CardHeader>
                   <CardContent>
                     <Table>
@@ -44,8 +48,7 @@ export default function Week() {
                           <TableHead className="hidden md:table-cell">
                             Date
                           </TableHead>
-                          <TableHead className="hidden md:table-cell">Amount</TableHead>
-                          <TableHead className="text-right">Edit</TableHead>
+                          <TableHead className="text-right">Amount</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -61,16 +64,13 @@ export default function Week() {
                           </TableCell>
                           <TableCell className="hidden sm:table-cell">
                             <Badge className="text-xs" variant="secondary">
-                              Revenue
+                              Received
                             </Badge>
                           </TableCell>
                           <TableCell className="hidden md:table-cell">
                             2023-06-23
                           </TableCell>
-                          <TableCell className="hidden md:table-cell">$5.00</TableCell>
-                          <TableCell className="h-[72px] flex items-center justify-end">
-                            <ToolsTransaction />
-                          </TableCell>
+                          <TableCell className="text-right">$5.00</TableCell>
                         </TableRow>
                       </TableBody>
                     </Table>

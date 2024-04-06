@@ -6,7 +6,7 @@ import {  IconDotsVertical } from "@tabler/icons-react";
 import { useRef, useState } from "react";
 import EditTransaction from "./edit-transaction";
 
-import "./styles.css";
+import "../styles/tools-transaction.css";
 import DeleTransaction from "./delete-transaction";
 
 

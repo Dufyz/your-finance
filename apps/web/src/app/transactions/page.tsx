@@ -1,6 +1,6 @@
 
 import LeftNavbarLayout from "@/layout/left-navbar-layout"
-import Tabs from "./components/tabs";
+import Tabs from "./tabs";
 
 export default function TransactionsPage() {
   return (

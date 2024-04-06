@@ -3,7 +3,7 @@ import {
     TabsList,
     TabsTrigger,
   } from "@/components/ui/tabs"
-import CreateTransaction from "./create-transaction"
+import CreateTransaction from "./components/create-transaction"
 import Week from "./week"
 import Month from "./month";
 import Year from "./year";

@@ -17,7 +17,7 @@ export default function DeleTransaction({
   >
     <Dialog.Title className="DialogTitle">Are you absolutely sure?</Dialog.Title>
 
-    <Dialog.Description className="DialogDescription">
+    <Dialog.Description className="DialogDescription !text-muted-foreground">
       This action cannot be undone. This will permanently delete this transaction data from our servers.
     </Dialog.Description>
 
