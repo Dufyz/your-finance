@@ -90,12 +90,22 @@ const CreateTransaction = () => {
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="space-y-1">
-              <Label htmlFor="name">Name</Label>
-              <Input id="name" defaultValue="Pedro Duarte" />
+              <Label htmlFor="description">Description</Label>
+              <Input id="description" placeholder="Describe your transaction" />
             </div>
             <div className="space-y-1">
-              <Label htmlFor="username">Username</Label>
-              <Input id="username" defaultValue="@peduarte" />
+              <Label htmlFor="username">Category</Label>
+              <Select defaultValue="itau">
+            <SelectTrigger className="w-full border-none h-[unset]">
+              <SelectValue placeholder="Select a wallet" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="itau" className="py-2">Education
+                </SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
             </div>
           </CardContent>
         </Card>
