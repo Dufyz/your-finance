@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getUserSupabaseSession } from './utils/get-user-supabase-session'
 
 export async function middleware(request: NextRequest) {
-  const {data, error} = await getUserSupabaseSession(request)
-  // const data = true;
-  // const error = false;
+  // const {data, error} = await getUserSupabaseSession(request)
+  const data = true;
+  const error = false;
 
   if(error) console.log('Error in middleware:', error)
 
