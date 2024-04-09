@@ -25,7 +25,6 @@ const createUserStore = (set: any, get: () => UserStore) => ({
     phone: "",
     plan_id: 1,
     plan_expires_at: new Date(),
-    last_login_at: null,
     created_at: new Date(),
     updated_at: new Date(),
 
@@ -37,8 +36,6 @@ const createUserStore = (set: any, get: () => UserStore) => ({
 
     signIn: async () => {
         // TODO
-
-        console.log("UserStore signIn")
     },
 
     logout: async () => {

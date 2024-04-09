@@ -1,8 +1,8 @@
-CREATE TABLE payments (
+CREATE TABLE banks (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users (id),
-    plan_id INT REFERENCES plans (id),
-    amount FLOAT NOT NULL,
+    name TEXT NOT NULL,
+    code TEXT NOT NULL,
+    logo TEXT NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
-);
+)

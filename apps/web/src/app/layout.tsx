@@ -42,6 +42,7 @@ export default function RootLayout({
       </html>
     );
   }
+  console.log("a página foi carregada");  
 
   return (
     <html lang="en">
