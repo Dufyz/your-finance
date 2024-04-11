@@ -1,9 +1,9 @@
-CREATE TABLE cards (
+CREATE TABLE Cards (
     id SERIAL PRIMARY KEY,
-    user_id ID REFERENCES users (id) NOT NULL,
-    bank_id INT REFERENCES banks (id),
+    user_id INT REFERENCES Users (id) NOT NULL,
+    bank_id INT REFERENCES Banks (id),
     nickaname TEXT NOT NULL,
-    isMain BOOLEAN NOT NULL DEFAULT FALSE,
+    is_main BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );

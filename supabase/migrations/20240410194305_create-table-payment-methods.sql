@@ -1,0 +1,3 @@
+CREATE TABLE PaymentMethods (
+    id SERIAL PRIMARY KEY
+)

@@ -27,10 +27,9 @@ export const SignUpService = async ({
   }
 
   const { data, error } = await supabase.from("users").insert({
-    id: authData?.user?.id,
+    auth_id: authData?.user?.id,
     name,
     email,
-    plan_id: 1,
     created_at: new Date(),
     updated_at: new Date(),
   });

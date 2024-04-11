@@ -8,8 +8,11 @@ import ChangeAppearance from "./change-apperance";
 import ChangeLanguage from "./change-language";
 import ChangeCountry from "./change-country";
 import ChangeCurrency from "./change-currency";
+import getUser from "@/fetchs/user/getUser";
 
-const MyAccount = () => {
+export default async function MyAccount() {
+  const user = await getUser()
+
   return (
     <main className="flex w-full flex-col items-center justify-start gap-16">
       <section className="w-full">
@@ -19,17 +22,17 @@ const MyAccount = () => {
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Name</h3>
-              <span className="text-muted-foreground">Guilherme Thomaz</span>
+              <span className="text-muted-foreground">{user.name}</span>
             </div>
             <div>
-              <ChangeName />
+              <ChangeName user={user} />
             </div>
           </div>
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Email</h3>
               <span className="text-muted-foreground">
-                guilherme@your-finance.com
+                {user.email}
               </span>
             </div>
             <div>
@@ -75,7 +78,7 @@ const MyAccount = () => {
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Country</h3>
-              <span className="text-muted-foreground">Brazil</span>
+              <span className="text-muted-foreground">{user.country}</span>
             </div>
             <div>
               <ChangeCountry />
@@ -84,7 +87,7 @@ const MyAccount = () => {
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Currency</h3>
-              <span className="text-muted-foreground">GBP (£)</span>
+              <span className="text-muted-foreground">{user.currency}</span>
             </div>
             <div>
               <ChangeCurrency />
@@ -93,7 +96,7 @@ const MyAccount = () => {
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Languange</h3>
-              <p className="text-muted-foreground">English</p>
+              <p className="text-muted-foreground">{user.language}</p>
             </div>
             <div>
               <ChangeLanguage />
@@ -103,7 +106,7 @@ const MyAccount = () => {
             <div>
               <h3 className="font-bold">Time zone</h3>
               <p className="text-muted-foreground">
-                (GMT-03:00) America/Sao_Paulo (GMT-3)
+                {user.time_zone}
               </p>
             </div>
             <div>
@@ -147,5 +150,3 @@ const MyAccount = () => {
     </main>
   );
 };
-
-export default MyAccount;

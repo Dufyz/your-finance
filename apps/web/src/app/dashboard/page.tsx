@@ -7,7 +7,7 @@ import RecentTransactions from "./recent-transactions";
 import Goals from "./goals";
 import DateRangePicker from "./components/date-range-picker";
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
   return (
     <LeftNavbarLayout>
       <div className="flex w-full flex-col">

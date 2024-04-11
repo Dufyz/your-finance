@@ -75,7 +75,7 @@ const LeftNavbar = () => {
         <LeftNavbarItem
           icon={<IconSettings size={24} color="#166534" />}
           label="Settings"
-          route="/settings"
+          route="/settings?tab=my-account"
         />
       </div>
     </div>

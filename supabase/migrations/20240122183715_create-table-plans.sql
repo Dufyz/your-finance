@@ -1,4 +1,4 @@
-create table plans (
+create table Plans (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL UNIQUE,
     price FLOAT NOT NULL,

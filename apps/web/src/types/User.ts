@@ -1,6 +1,6 @@
 export type User = {
     id: number;
-    authId: string;
+    authId: number;
     name: string;
     email: string;
     phone?: string;

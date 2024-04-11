@@ -44,6 +44,9 @@ const useLogin = () => {
       router.push("/login");
 
       toast.success("User created successfully");
+
+      setActiveTab("sign-in")
+
     } catch (error) {
       const errorStatus = error?.response?.status;
 

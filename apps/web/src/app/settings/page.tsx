@@ -34,6 +34,7 @@ const ProfilePage = () => {
       tabUrlParam !== "plan" &&
       tabUrlParam !== "payment-method"
     ) {
+
       updateUrlParam({
         param: "tab",
         value: "my-account"
