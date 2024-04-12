@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { corsHeaders } from "@/middleware";
-import { SignInService } from "@/services/login/sign-in.service";
-import { SignUpService } from "@/services/login/sign-up.service";
-import { SignOutService } from "@/services/login/sign-out.service";
+import { SignUpService } from "@/services/auth/sign-up.service";
+import { SignInService } from "@/services/auth/sign-in.service";
+import { SignOutService } from "@/services/auth/sign-out.service";
 
 export async function OPTIONS(request: Request) {
   return new Response(null, {

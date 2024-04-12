@@ -26,7 +26,7 @@ export async function PATCH(request: NextRequest) {
     try {
         const user = await PatchUser({
             id,
-            name
+            name,
         })
 
         return NextResponse.json(user, {

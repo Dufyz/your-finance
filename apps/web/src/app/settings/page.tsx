@@ -1,46 +1,18 @@
-"use client";
-
 import Link from "next/link";
 
 import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import { Logout } from "./components/logout";
-import { useSearchParams, useRouter } from "next/navigation";
-import { useEffect } from "react";
 import Plan from "./components/plan";
 import PaymentMethod from "./components/payment-method/payment-method";
 import MyAccount from "./components/my-account/my-account";
+import { Suspense } from "react";
 
-const ProfilePage = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const tabUrlParam = searchParams.get("tab");
-
-  const updateUrlParam = ({
-    param,
-    value
-  }: {
-    param: string;
-    value: string;
-  }) => {
-    const searchParams = new URLSearchParams(window.location.search);
-    searchParams.set(param, value);
-    router.push("settings?tab=my-account");
+export default async function ProfilePage({ searchParams }: {
+  searchParams: {
+    tab: "my-account" | "plan" | "payment-method";
   };
-
-  useEffect(() => {
-    if (
-      tabUrlParam !== "my-account" &&
-      tabUrlParam !== "plan" &&
-      tabUrlParam !== "payment-method"
-    ) {
-
-      updateUrlParam({
-        param: "tab",
-        value: "my-account"
-      });
-    }
-  }, [tabUrlParam]);
+}) {
+  const tabUrlParam = searchParams?.tab || "my-account";
 
   return (
     <LeftNavbarLayout>
@@ -74,9 +46,21 @@ const ProfilePage = () => {
               <Logout />
             </div>
             <div className="flex w-full flex-wrap">
-              {tabUrlParam === "my-account" && <MyAccount />}
-              {tabUrlParam === "plan" && <Plan />}
-              {tabUrlParam === "payment-method" && <PaymentMethod />}
+              {tabUrlParam === "my-account" && (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <MyAccount />
+                </Suspense>
+              )}
+              {tabUrlParam === "plan" && (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Plan />
+                </Suspense>
+              )}
+              {tabUrlParam === "payment-method" && (
+                <Suspense fallback={<div>Loading...</div>}>
+                  <PaymentMethod />
+                </Suspense>
+              )}
             </div>
           </div>
         </main>
@@ -84,5 +68,3 @@ const ProfilePage = () => {
     </LeftNavbarLayout>
   );
 };
-
-export default ProfilePage;

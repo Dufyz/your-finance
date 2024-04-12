@@ -10,6 +10,7 @@ import ChangeCountry from "./change-country";
 import ChangeCurrency from "./change-currency";
 import getUser from "@/fetchs/user/getUser";
 
+
 export default async function MyAccount() {
   const user = await getUser()
 
@@ -25,10 +26,10 @@ export default async function MyAccount() {
               <span className="text-muted-foreground">{user.name}</span>
             </div>
             <div>
-              <ChangeName user={user} />
+              <ChangeName userData={user} />
             </div>
           </div>
-          <div className="flex w-full items-center justify-between">
+          {/* <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Email</h3>
               <span className="text-muted-foreground">
@@ -39,6 +40,7 @@ export default async function MyAccount() {
               <ChangeEmail />
             </div>
           </div>
+          */}
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Password</h3>

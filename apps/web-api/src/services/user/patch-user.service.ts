@@ -1,5 +1,4 @@
 import supabase from "@/config/supabase";
-import { revalidateTag } from "next/cache";
 
 interface IPatchUserService {
   id: number;
@@ -9,7 +8,9 @@ interface IPatchUserService {
 export const PatchUser = async ({ id, name }: IPatchUserService) => {
   const { data, error } = await supabase.from("users").update({ name }).eq("id", id).single();
 
-  if (error) {
+  await supabase.auth.
+
+    if(error) {
     console.log("error", error);
 
     throw new Error(error.message);

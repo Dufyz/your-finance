@@ -3,12 +3,12 @@
 import { User } from "@/types/User";
 import { create } from "zustand";
 
-type UserStore =  {
+type UserStore = {
     user: User & {
         isAuth: boolean;
     }
 
-    create: ({user}: {
+    setUser: ({ user }: {
         user: User
     }) => void;
 
@@ -27,7 +27,7 @@ type UserStore =  {
 
 const createUserStore = (set: any, get: () => UserStore) => ({
     user: {
-        id: 0,
+        id: -1,
         authId: 0,
         name: "",
         email: "",
@@ -39,10 +39,10 @@ const createUserStore = (set: any, get: () => UserStore) => ({
         updated_at: new Date(),
     },
 
-    create: async ({user}: {
+    setUser: async ({ user }: {
         user: User
     }) => {
-        set({user: {...user, isAuth: true}});
+        set({ user: { ...user, isAuth: true } });
     },
 
     // signUp: async () => {

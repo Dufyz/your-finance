@@ -9,9 +9,12 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import patchUser from "@/fetchs/user/patchUser";
+import { useUserStore } from "@/stores/User";
 import { User } from "@/types/User";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const ChangeNameSchema = z.object({
@@ -21,18 +24,48 @@ const ChangeNameSchema = z.object({
 
 type ChangeNameSchemaType = z.infer<typeof ChangeNameSchema>;
 
-const ChangeName = ({ user }: { user: User }) => {
+export default function ChangeName({ userData }: { userData: User }) {
+  const user = useUserStore((state) => state.user);
+  const setUser = useUserStore((state) => state.setUser);
+
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<ChangeNameSchemaType>({
     resolver: zodResolver(ChangeNameSchema),
-    defaultValues: {
+    values: {
       id: user.id,
-      name: user.name
+      name: user.name,
     }
   })
+
+  const handleChangeName = ({ id, name }: {
+    id: number;
+    name: string;
+  }) => {
+    const newUser = {
+      ...user,
+      id,
+      name,
+    }
+
+    try {
+      setUser({ user: newUser });
+
+      patchUser({ id, name });
+
+      toast.success("Name updated successfully");
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while updating your name");
+    }
+  }
+
+  useEffect(() => {
+    setUser({ user: userData });
+  }, [])
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -42,10 +75,7 @@ const ChangeName = ({ user }: { user: User }) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader />
-        <form action={(formData: FormData) => {
-          formData.append('id', user.id.toString());
-          patchUser(formData);
-        }} className="flex gap-4 flex-col items-start justify-center">
+        <form onSubmit={handleSubmit(handleChangeName)} className="flex gap-4 flex-col items-start justify-center">
           <div className="flex w-full flex-col items-start justify-start gap-4">
             <div className="flex w-full items-center justify-start">
               <p className="text-sm">
@@ -74,5 +104,3 @@ const ChangeName = ({ user }: { user: User }) => {
     </Dialog>
   );
 };
-
-export default ChangeName;

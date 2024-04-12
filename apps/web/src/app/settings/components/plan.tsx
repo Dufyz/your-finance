@@ -14,7 +14,7 @@ import {
 } from "@tabler/icons-react";
 import { features, plansFeatures } from "../data/plans";
 
-export default function Plan() {
+export default async function Plan() {
   const renderFeatureList = (
     featuresList:
       | typeof plansFeatures.pro.features
@@ -25,7 +25,7 @@ export default function Plan() {
       {Object.keys(featuresList).map((feature) => {
         const isChecked =
           plansFeatures[planType as keyof typeof plansFeatures].features[
-            feature as keyof (typeof plansFeatures)[typeof planType]["features"]
+          feature as keyof (typeof plansFeatures)[typeof planType]["features"]
           ];
 
         return (

@@ -2,18 +2,23 @@
 
 import { revalidateTag } from "next/cache";
 
-export default async function patchUser(formData: any) {
+interface IPatchUser {
+  id: number;
+  name?: string;
+  email?: string;
+}
+
+export default async function patchUser({ id, name, email }: IPatchUser) {
   "use server"
 
-  const id = Number(formData.get("id"));
-  const name = formData.get("name");
+  const body = JSON.stringify({ id, name, email });
 
   await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json"
     },
-    body: JSON.stringify({ id, name })
+    body
   })
 
   revalidateTag("user")
