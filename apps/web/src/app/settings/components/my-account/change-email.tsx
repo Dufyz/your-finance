@@ -3,15 +3,14 @@
 import FormError from "@/components/global/form-error";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import patchUser from "@/fetchs/user/patchUser";
-import validatePassword from "@/fetchs/user/validatePassword";
 import { useUserStore } from "@/stores/User";
+import isPasswordValid from "@/utils/is-password-valid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -47,8 +46,7 @@ export default function ChangeEmail() {
   }) => {
     try {
 
-      patchUser({ id, email });
-
+      await patchUser({ id, email });
 
       setUser({
         user: {
@@ -69,29 +67,20 @@ export default function ChangeEmail() {
     email: string;
     password: string;
   }) => {
+    console.log(id, email, password);
+
     if (isValidatingPassword) {
-      try {
-        await validatePassword({ id, email: user.email, password })
+      const isValid = await isPasswordValid({ id, email: user.email, password });
+
+      if (isValid)
         setIsValidatingPassword(false);
-      } catch (
-      error
-      ) {
-        console.log(error?.message);
 
-        if (error?.message.includes("Invalid credentials")) {
-          toast.error("Invalid credentials. Please try again.");
-          return
-        }
-
-        toast.error("Error validating password. Please try again.");
-      } finally {
-        return
-      }
+      return
     }
 
     if (!isValidatingPassword) {
       try {
-        handleChangeEmail({ id, email, password });
+        handleChangeEmail({ id, email });
       } catch (error) {
         console.log(error?.message);
         toast.error("Error changing email. Please try again.");

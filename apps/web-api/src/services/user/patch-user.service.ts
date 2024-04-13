@@ -4,20 +4,35 @@ interface IPatchUserService {
   id: number;
   name?: string;
   email?: string;
+  password?: string;
+  currency?: string;
 }
 
-export const PatchUser = async ({ id, name, email }: IPatchUserService) => {
-  const { error } = await supabase.from("users").update({ name, email }).eq("id", id).single();
+export const PatchUser = async ({ id, name, email, password, currency }: IPatchUserService) => {
+  const { error } = await supabase.from("users").update({ name, email, currency }).eq("id", id).single();
+  const { data: user, error: errorUser } = await supabase.from("users").select("*").eq("id", id).single();
+
+  const auth_id = user?.auth_id;
 
   if (email) {
-    const { data: oldUser } = await supabase.from("users").select("*").eq("id", id).single();
+    const { error: errorAdmin } = await supabase.auth.admin.updateUserById(auth_id, { email })
 
-    const { error: errorAuth } = await supabase.auth.admin.updateUserById(oldUser.auth_id, { email })
+    if (errorAdmin) {
+      console.log("errorAdmin", errorAdmin);
 
-    if (errorAuth) {
-      console.log("error", errorAuth);
+      throw new Error(errorAdmin.message);
+    }
+  }
 
-      throw new Error(errorAuth.message);
+  if (password) {
+    const { error: errorAdmin } = await supabase.auth.admin.updateUserById(auth_id, {
+      password
+    });
+
+    if (errorAdmin) {
+      console.log("errorAdmin", errorAdmin);
+
+      throw new Error(errorAdmin.message);
     }
   }
 
@@ -25,6 +40,12 @@ export const PatchUser = async ({ id, name, email }: IPatchUserService) => {
     console.log("error", error);
 
     throw new Error(error.message);
+  }
+
+  if (errorUser) {
+    console.log("errorUser", errorUser);
+
+    throw new Error(errorUser.message);
   }
 
   return true;

@@ -8,9 +8,12 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import patchUser from "@/fetchs/user/patchUser";
 import { useUserStore } from "@/stores/User";
+import isPasswordValid from "@/utils/is-password-valid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const ChangePasswordSchema = z.object({
@@ -35,13 +38,26 @@ export default function ChangePassword() {
     }
   });
 
-  const handleChangePassword = ({ id, password, new_password, confirm_password }: {
+  const handleChangePassword = async ({ id, password, new_password, confirm_password }: {
     id: number;
     password: string;
     new_password: string;
     confirm_password: string;
   }) => {
-    console.log(password, new_password, confirm_password)
+    if (new_password !== confirm_password) {
+      toast.error("Passwords do not match. Please try again.");
+      return;
+    }
+
+    const isPwdValid = isPasswordValid({ id, email: user.email, password });
+
+    if (!isPwdValid) {
+      return;
+    }
+
+    await patchUser({ id, password: new_password });
+
+    toast.success("Password changed successfully.");
   }
 
   return (
@@ -57,8 +73,7 @@ export default function ChangePassword() {
         <div className="flex w-full flex-col items-start justify-start gap-4">
           <div className="flex w-full items-center justify-start">
             <p className="text-sm">
-              Use a password at least 15 letters long, or at least 8 characters
-              long with both letters and numbers.
+              Use a password at least 6 letters long.
             </p>
           </div>
           <form onSubmit={handleSubmit(handleChangePassword)} className="flex w-full flex-col  items-start justify-center gap-4 space-x-2">
@@ -98,7 +113,7 @@ export default function ChangePassword() {
               </div>
             </div>
             <button
-              type="button"
+              type="submit"
               className="w-full rounded-md bg-green-700 p-2 text-white"
             >
               Save

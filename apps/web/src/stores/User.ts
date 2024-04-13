@@ -28,15 +28,20 @@ type UserStore = {
 const createUserStore = (set: any, get: () => UserStore) => ({
     user: {
         id: -1,
-        authId: 0,
+        authId: "",
         name: "",
         email: "",
         phone: "",
+        country: "Brazil",
+        currency: "BRL",
+        language: "Portuguese",
+        time_zone: "America/Sao_Paulo",
         plan_id: 1,
-        isAuth: false,
         plan_expires_at: new Date(),
         created_at: new Date(),
         updated_at: new Date(),
+
+        isAuth: false,
     },
 
     setUser: async ({ user }: {

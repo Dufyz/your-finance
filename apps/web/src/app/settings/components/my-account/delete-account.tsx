@@ -27,12 +27,12 @@ const DeleteAccount = () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex w-full !flex-col gap-4">
-          <AlertDialogCancel className="ml-0 flex w-full flex-1 bg-green-700 text-white hover:bg-green-800 hover:text-white sm:!ml-0">
-            Cancel
-          </AlertDialogCancel>
           <AlertDialogAction className="ml-0 flex w-full flex-1 sm:!ml-0">
             Continue
           </AlertDialogAction>
+          <AlertDialogCancel className="ml-0 flex w-full flex-1 bg-green-700 text-white hover:bg-green-800 hover:text-white sm:!ml-0">
+            Cancel
+          </AlertDialogCancel>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

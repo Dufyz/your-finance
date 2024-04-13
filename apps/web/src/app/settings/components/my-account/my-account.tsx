@@ -4,17 +4,21 @@ import ChangeName from "./change-name";
 import ChangePassword from "./change-password";
 import Change2FA from "./change-2fa";
 import DeleteAccount from "./delete-account";
-import ChangeAppearance from "./change-apperance";
+import ChangeTheme from "./change-theme";
 import ChangeLanguage from "./change-language";
 import ChangeCountry from "./change-country";
 import ChangeCurrency from "./change-currency";
 import getUser from "@/fetchs/user/getUser";
+import { currencys } from "@/data/currencys";
 
 
 export default async function MyAccount() {
   //TODO Implementar features comentadas
 
   const user = await getUser()
+
+  const userCurrency = currencys.find((currency) => currency.cc === user.currency);
+  const userCurrencyString = `${userCurrency?.cc} (${userCurrency?.symbol})`;
 
 
   return (
@@ -107,7 +111,7 @@ export default async function MyAccount() {
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Currency</h3>
-              <span className="text-muted-foreground">{user.currency}</span>
+              <span className="text-muted-foreground">{userCurrencyString}</span>
             </div>
             <div>
               <ChangeCurrency />
@@ -122,34 +126,34 @@ export default async function MyAccount() {
               <ChangeLanguage />
             </div>
           </div> */}
-          <div className="flex w-full items-center justify-between">
+          {/* <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Time zone</h3>
               <p className="text-muted-foreground">
                 {user.time_zone}
               </p>
             </div>
-            {/* <div>
+            <div>
               <button className="rounded-md  bg-gray-800  p-2  text-sm text-white hover:bg-gray-900">
                 Change timezone
               </button>
-            </div> */}
-          </div>
+            </div>
+          </div> */}
           <div className="flex w-full items-center justify-between">
             <div>
-              <h3 className="font-bold">Appearance</h3>
+              <h3 className="font-bold">Appearence theme</h3>
               <span className="text-muted-foreground">
-                Switch between dark mode and light mode
+                Switch between light mode and dark mode
               </span>
             </div>
             <div>
-              <ChangeAppearance />
+              <ChangeTheme />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full">
+      {/* <section className="w-full">
         <h1 className="text-bold text-2xl text-black">Danger Zone</h1>
         <Separator className="my-4" />
         <div className="flex flex-col items-start justify-center gap-8">
@@ -166,7 +170,7 @@ export default async function MyAccount() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
     </main>
   );
 };

@@ -40,7 +40,7 @@ export default function ChangeName({ userData }: { userData: User }) {
     }
   })
 
-  const handleChangeName = ({ id, name }: {
+  const handleChangeName = async ({ id, name }: {
     id: number;
     name: string;
   }) => {
@@ -53,7 +53,7 @@ export default function ChangeName({ userData }: { userData: User }) {
     try {
       setUser({ user: newUser });
 
-      patchUser({ id, name });
+      await patchUser({ id, name });
 
       toast.success("Name updated successfully");
     } catch (error) {

@@ -12,6 +12,8 @@ export default async function ProfilePage({ searchParams }: {
     tab: "my-account" | "plan" | "payment-method";
   };
 }) {
+  //TODO Implementar features comentadas
+
   const tabUrlParam = searchParams?.tab || "my-account";
 
   return (
@@ -30,7 +32,7 @@ export default async function ProfilePage({ searchParams }: {
                 >
                   My Account
                 </Link>
-                <Link
+                {/* <Link
                   href="?tab=plan"
                   className={`${tabUrlParam === "plan" && "font-semibold text-primary"}`}
                 >
@@ -41,7 +43,7 @@ export default async function ProfilePage({ searchParams }: {
                   className={`${tabUrlParam === "payment-method" && "font-semibold text-primary"}`}
                 >
                   Payment method
-                </Link>
+                </Link> */}
               </nav>
               <Logout />
             </div>
@@ -51,7 +53,7 @@ export default async function ProfilePage({ searchParams }: {
                   <MyAccount />
                 </Suspense>
               )}
-              {tabUrlParam === "plan" && (
+              {/* {tabUrlParam === "plan" && (
                 <Suspense fallback={<div>Loading...</div>}>
                   <Plan />
                 </Suspense>
@@ -60,7 +62,7 @@ export default async function ProfilePage({ searchParams }: {
                 <Suspense fallback={<div>Loading...</div>}>
                   <PaymentMethod />
                 </Suspense>
-              )}
+              )} */}
             </div>
           </div>
         </main>

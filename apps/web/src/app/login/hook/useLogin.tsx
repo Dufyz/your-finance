@@ -35,17 +35,15 @@ const useLogin = () => {
 
       const { data: session } = await apiWeb.post("/auth", body);
 
+      toast.success("User created successfully");
+
+      setActiveTab("sign-in");
+
       setCookie({
         name: "sessionToken",
         value: session.access_token,
         expires_at: new Date(session.expires_at * 1000).toUTCString()
       });
-
-      router.push("/login");
-
-      toast.success("User created successfully");
-
-      setActiveTab("sign-in")
 
     } catch (error) {
       const errorStatus = error?.response?.status;
@@ -84,7 +82,8 @@ const useLogin = () => {
       toast.success("Login successfully");
     } catch (error) {
       console.error(error);
-      console.log("error message", error?.message);
+
+      toast.error("Invalid credentials. Please try again.");
     }
   };
 
