@@ -14,7 +14,6 @@ interface IHandleSignUp {
 interface IHandleSignin {
   email: string;
   password: string;
-  keepSignedIn: boolean;
 }
 
 const useLogin = () => {
@@ -59,14 +58,12 @@ const useLogin = () => {
   const handleSignIn = async ({
     email,
     password,
-    keepSignedIn
   }: IHandleSignin) => {
     try {
       const body = {
         action: "sign-in",
         email,
         password,
-        keepSignedIn
       };
 
       const { data: session } = await apiWeb.post("/auth", body);
@@ -88,8 +85,6 @@ const useLogin = () => {
   };
 
   const handleForgotPassword = () => {
-    // TODO implement
-
     toast.info("Not implemented yet");
   };
 

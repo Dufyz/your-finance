@@ -13,7 +13,6 @@ interface ISignInProps {
 const SignInSchema = z.object({
   email: z.string().email().toLowerCase(),
   password: z.string().min(6, "Password must have at least 6 characters"),
-  keepSignedIn: z.boolean()
 });
 
 type SignInSchemaType = z.infer<typeof SignInSchema>;
@@ -32,7 +31,6 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
     defaultValues: {
       email: "",
       password: "",
-      keepSignedIn: false
     }
   });
 
@@ -89,16 +87,6 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
         </div>
         <div className="flex w-full flex-col items-center justify-center gap-8">
           <div className="flex w-full flex-col items-start justify-center gap-6">
-            <div className="flex items-center justify-center gap-4">
-              <input
-                {...register("keepSignedIn")}
-                type="checkbox"
-                className="h-5 w-5 rounded-[4px] bg-primary accent-primary"
-              />
-              <label htmlFor="" className="text-base">
-                Keep me signed in
-              </label>
-            </div>
             <button
               type="submit"
               disabled={isSubmitting}
