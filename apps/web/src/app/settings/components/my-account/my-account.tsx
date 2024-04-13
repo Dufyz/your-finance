@@ -12,7 +12,10 @@ import getUser from "@/fetchs/user/getUser";
 
 
 export default async function MyAccount() {
+  //TODO Implementar features comentadas
+
   const user = await getUser()
+
 
   return (
     <main className="flex w-full flex-col items-center justify-start gap-16">
@@ -29,7 +32,7 @@ export default async function MyAccount() {
               <ChangeName userData={user} />
             </div>
           </div>
-          {/* <div className="flex w-full items-center justify-between">
+          <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Email</h3>
               <span className="text-muted-foreground">
@@ -40,7 +43,22 @@ export default async function MyAccount() {
               <ChangeEmail />
             </div>
           </div>
-          */}
+
+          {/* <div>
+            <div>
+              <label htmlFor="">Nome</label>
+              <input type="text" />
+            </div>
+
+            <div>
+              <label htmlFor="">email</label>
+              <input type="text" />
+            </div>
+          </div>
+          <div>
+            <button>Submit</button>
+          </div> */}
+
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Password</h3>
@@ -55,7 +73,7 @@ export default async function MyAccount() {
         </div>
       </section>
 
-      <section className="w-full">
+      {/* <section className="w-full">
         <h1 className="text-bold text-2xl text-black">Security</h1>
         <Separator className="my-4" />
         <div className="flex flex-col items-start justify-center gap-8">
@@ -71,13 +89,13 @@ export default async function MyAccount() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       <section className="w-full">
         <h1 className="text-bold text-2xl text-black">Settings</h1>
         <Separator className="my-4" />
         <div className="flex flex-col items-start justify-center gap-8">
-          <div className="flex w-full items-center justify-between">
+          {/* <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Country</h3>
               <span className="text-muted-foreground">{user.country}</span>
@@ -85,7 +103,7 @@ export default async function MyAccount() {
             <div>
               <ChangeCountry />
             </div>
-          </div>
+          </div> */}
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Currency</h3>
@@ -95,7 +113,7 @@ export default async function MyAccount() {
               <ChangeCurrency />
             </div>
           </div>
-          <div className="flex w-full items-center justify-between">
+          {/* <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Languange</h3>
               <p className="text-muted-foreground">{user.language}</p>
@@ -103,7 +121,7 @@ export default async function MyAccount() {
             <div>
               <ChangeLanguage />
             </div>
-          </div>
+          </div> */}
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Time zone</h3>
@@ -111,11 +129,11 @@ export default async function MyAccount() {
                 {user.time_zone}
               </p>
             </div>
-            <div>
+            {/* <div>
               <button className="rounded-md  bg-gray-800  p-2  text-sm text-white hover:bg-gray-900">
                 Change timezone
               </button>
-            </div>
+            </div> */}
           </div>
           <div className="flex w-full items-center justify-between">
             <div>

@@ -21,12 +21,13 @@ export async function GET(request: NextRequest) {
 }
 
 export async function PATCH(request: NextRequest) {
-    const { id, name } = await request.json();
+    const { id, name, email } = await request.json();
 
     try {
         const user = await PatchUser({
             id,
             name,
+            email
         })
 
         return NextResponse.json(user, {

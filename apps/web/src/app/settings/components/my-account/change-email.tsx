@@ -3,6 +3,7 @@
 import FormError from "@/components/global/form-error";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTrigger
@@ -19,15 +20,14 @@ import { z } from "zod";
 
 const ChangeEmailSchema = z.object({
   id: z.number(),
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("Invalid email address").toLowerCase(),
   password: z.string().min(6, "Password must have at least 6 characters"),
 })
 
 type ChangeEmailSchemaType = z.infer<typeof ChangeEmailSchema>;
 
 export default function ChangeEmail() {
-  // TODO - Implement the change email feature (Supabase Client vs Supabase Server is the challenge here)
-
+  const setUser = useUserStore((state) => state.setUser);
   const user = useUserStore((state) => state.user);
 
   const [isValidatingPassword, setIsValidatingPassword] = useState(true);
@@ -46,7 +46,17 @@ export default function ChangeEmail() {
     email: string;
   }) => {
     try {
+
       patchUser({ id, email });
+
+
+      setUser({
+        user: {
+          ...user,
+          email
+        }
+      })
+
       toast.success("Email changed successfully.");
     } catch (error) {
       console.log(error?.message);
@@ -61,7 +71,7 @@ export default function ChangeEmail() {
   }) => {
     if (isValidatingPassword) {
       try {
-        await validatePassword({ id, email, password })
+        await validatePassword({ id, email: user.email, password })
         setIsValidatingPassword(false);
       } catch (
       error
@@ -109,7 +119,7 @@ export default function ChangeEmail() {
             <p className="text-sm">
               Your current email is:{" "}
               <span className="text-sm font-bold">
-                guilherme@your-finance.com
+                {user.email}
               </span>
             </p>
           </div>
@@ -145,12 +155,17 @@ export default function ChangeEmail() {
                 </>
               )}
             </div>
+
+
             <button
               type="submit"
               className="w-full rounded-md bg-green-700 p-2 text-white"
             >
-              Continue
+              {
+                isValidatingPassword ? "Continuar" : "Save"
+              }
             </button>
+
           </form>
         </div>
 

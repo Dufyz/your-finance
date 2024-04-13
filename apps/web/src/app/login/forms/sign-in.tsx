@@ -10,7 +10,7 @@ interface ISignInProps {
 }
 
 const SignInSchema = z.object({
-  email: z.string().email(),
+  email: z.string().email().toLowerCase(),
   password: z.string().min(6, "Password must have at least 6 characters"),
   keepSignedIn: z.boolean()
 });
