@@ -1,9 +1,9 @@
 export type Wallet = {
     id: number;
     user_id: number;
-    bank_id: number;
+    bank_id?: number;
     nickname: string;
-    type: "Savings" | "Checking" | "Wallet";
+    type: "saving" | "current" | "wallet";
     intial_balance: number;
     current_balance: number;
     isMain: boolean;

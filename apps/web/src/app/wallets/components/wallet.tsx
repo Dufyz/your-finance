@@ -3,8 +3,11 @@ import * as React from "react";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import Image from "next/image";
 import EditWallet from "./edit-wallet";
+import { Wallet as WalletType } from "@/types/Wallet";
 
-export default function Wallet() {
+export default function Wallet({ wallet }: {
+  wallet: WalletType;
+}) {
   return (
     <Card className="shadow-md">
       <CardContent className="p-6">

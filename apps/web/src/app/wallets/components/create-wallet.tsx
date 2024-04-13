@@ -31,7 +31,7 @@ export default function CreateWallet() {
     <Dialog>
       <DialogTrigger asChild>
         <div
-          className="flex h-full w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
+          className="flex h-full w-full min-h-64 cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
           onMouseEnter={() => setIconColor("#166534")}
           onMouseLeave={() => setIconColor("#15803d")}
         >
@@ -40,7 +40,7 @@ export default function CreateWallet() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <DialogHeader>
-          <div className="space-y-1">
+          <div className="pt-4">
             <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
               <Button className="flex flex-1 bg-muted-foreground">
                 Current

@@ -46,6 +46,7 @@ const LeftNavbar = () => {
           icon={<IconCreditCard size={24} color="#166534" />}
           label="Cards"
           route="/cards"
+          disabled
         />
         <LeftNavbarItem
           icon={<IconFileInvoice size={24} color="#166534" />}

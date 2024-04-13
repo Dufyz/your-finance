@@ -6,6 +6,7 @@ import Plan from "./components/plan";
 import PaymentMethod from "./components/payment-method/payment-method";
 import MyAccount from "./components/my-account/my-account";
 import { Suspense } from "react";
+import MyAccountSkeleton from "./components/my-account/skeleton";
 
 export default async function ProfilePage({ searchParams }: {
   searchParams: {
@@ -49,7 +50,7 @@ export default async function ProfilePage({ searchParams }: {
             </div>
             <div className="flex w-full flex-wrap">
               {tabUrlParam === "my-account" && (
-                <Suspense fallback={<div>Loading...</div>}>
+                <Suspense fallback={<MyAccountSkeleton />}>
                   <MyAccount />
                 </Suspense>
               )}

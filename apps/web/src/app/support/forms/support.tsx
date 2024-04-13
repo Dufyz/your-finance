@@ -11,31 +11,12 @@ import {
 } from "@/components/ui/select";
 
 import { Switch } from "@/components/ui/switch";
+import { supportCategories } from "@/data/support-categories";
 import submitSupportForm from "@/fetchs/support/submit-support-form";
 import { User } from "@/types/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "sonner";
 import { z } from "zod";
-
-const supportCategories = [
-    {
-        id: 1,
-        name: "My account"
-    },
-    {
-        id: 2,
-        name: "Payment method"
-    },
-    {
-        id: 3,
-        name: "Plan"
-    },
-    {
-        id: 4,
-        name: "Other"
-    }
-];
 
 const SupportFormSchema = z.object({
     user_id: z.number().int(),
@@ -135,7 +116,10 @@ export default function SupportForm({ user }: {
                                 </SelectTrigger>
                                 <SelectContent>
                                     <SelectGroup>
-                                        {supportCategories.map((category) => (
+                                        {supportCategories.map((category: {
+                                            id: number;
+                                            name: string;
+                                        }) => (
                                             <SelectItem
                                                 key={category.id}
                                                 value={`${category.id}`}
