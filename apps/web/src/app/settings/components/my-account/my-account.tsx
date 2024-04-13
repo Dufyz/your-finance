@@ -47,22 +47,13 @@ export default async function MyAccount() {
               <ChangeEmail />
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* <div>
-            <div>
-              <label htmlFor="">Nome</label>
-              <input type="text" />
-            </div>
-
-            <div>
-              <label htmlFor="">email</label>
-              <input type="text" />
-            </div>
-          </div>
-          <div>
-            <button>Submit</button>
-          </div> */}
-
+      <section className="w-full">
+        <h1 className="text-bold text-2xl text-black">Security</h1>
+        <Separator className="my-4" />
+        <div className="flex flex-col items-start justify-center gap-8">
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Password</h3>
@@ -74,14 +65,7 @@ export default async function MyAccount() {
               <ChangePassword />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* <section className="w-full">
-        <h1 className="text-bold text-2xl text-black">Security</h1>
-        <Separator className="my-4" />
-        <div className="flex flex-col items-start justify-center gap-8">
-          <div className="flex w-full items-center justify-between">
+          {/* <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">2-set verification</h3>
               <span className="flex max-w-2xl text-wrap text-start text-muted-foreground">
@@ -91,23 +75,14 @@ export default async function MyAccount() {
             <div>
               <Change2FA />
             </div>
-          </div>
+          </div> */}
         </div>
-      </section> */}
+      </section>
 
       <section className="w-full">
         <h1 className="text-bold text-2xl text-black">Settings</h1>
         <Separator className="my-4" />
         <div className="flex flex-col items-start justify-center gap-8">
-          {/* <div className="flex w-full items-center justify-between">
-            <div>
-              <h3 className="font-bold">Country</h3>
-              <span className="text-muted-foreground">{user.country}</span>
-            </div>
-            <div>
-              <ChangeCountry />
-            </div>
-          </div> */}
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Currency</h3>
@@ -124,19 +99,6 @@ export default async function MyAccount() {
             </div>
             <div>
               <ChangeLanguage />
-            </div>
-          </div> */}
-          {/* <div className="flex w-full items-center justify-between">
-            <div>
-              <h3 className="font-bold">Time zone</h3>
-              <p className="text-muted-foreground">
-                {user.time_zone}
-              </p>
-            </div>
-            <div>
-              <button className="rounded-md  bg-gray-800  p-2  text-sm text-white hover:bg-gray-900">
-                Change timezone
-              </button>
             </div>
           </div> */}
           <div className="flex w-full items-center justify-between">

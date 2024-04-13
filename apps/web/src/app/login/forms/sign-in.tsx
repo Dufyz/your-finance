@@ -4,6 +4,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormError from "@/components/global/form-error";
+import { useState } from "react";
 
 interface ISignInProps {
   setActiveTab: any;
@@ -18,6 +19,8 @@ const SignInSchema = z.object({
 type SignInSchemaType = z.infer<typeof SignInSchema>;
 
 const SignIn = ({ setActiveTab }: ISignInProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const { handleSignIn } = useLogin();
 
   const {
@@ -73,13 +76,14 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
           <div className="relative w-full">
             <input
               {...register("password")}
-              type={"password"}
+              type={showPassword ? "text" : "password"}
               placeholder="Password"
               className="h-12 w-full rounded-[8px] border border-solid border-gray-600 px-4 py-3"
             />
             <IconEye
               size={24}
               className="absolute right-4 top-3 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
             />
           </div>
         </div>

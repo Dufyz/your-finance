@@ -6,6 +6,8 @@ import SignIn from "./forms/sign-in";
 import SingUp from "./forms/sign-up";
 
 export const LoginPage = () => {
+  //TODO implementar forgot password
+
   const { activeTab, setActiveTab } = useLogin();
 
   return (

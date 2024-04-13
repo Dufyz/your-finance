@@ -77,7 +77,7 @@ export default function SupportForm({ user }: {
     return (
         <form
             onSubmit={handleSubmit(handleSubmitSupportForm)}
-            className="mx-auto mt-16 max-w-xl sm:mt-20"
+            className="mx-auto max-w-xl w-full"
         >
             <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                 <div className="sm:col-span-2">

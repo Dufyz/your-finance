@@ -7,7 +7,7 @@ export default async function SupportPage() {
 
   return (
     <LeftNavbarLayout>
-      <>
+      <div className="w-full flex flex-col items-start justify-start gap-12">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tight text-green-700 sm:text-4xl">
             Support contact
@@ -18,7 +18,7 @@ export default async function SupportPage() {
           </p>
         </div>
         <SupportForm user={user} />
-      </>
+      </div>
     </LeftNavbarLayout>
   );
 }
