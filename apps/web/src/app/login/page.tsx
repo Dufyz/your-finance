@@ -1,9 +1,9 @@
 "use client";
 
-import ForgotPassword from "./forms/forgot-password";
+import ForgotPassword from "./components/forgot-password";
 import useLogin from "./hook/useLogin";
-import SignIn from "./forms/sign-in";
-import SingUp from "./forms/sign-up";
+import SignIn from "./components/sign-in";
+import SingUp from "./components/sign-up";
 
 export const LoginPage = () => {
   //TODO implementar forgot password

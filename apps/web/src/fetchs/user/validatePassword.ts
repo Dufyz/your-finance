@@ -5,7 +5,7 @@ export default async function validatePassword({ id, email, password }: {
 }) {
     const body = JSON.stringify({ id, email, password });
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/user/validate-password`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/auth/validate-password`, {
         method: 'POST',
         body,
     });

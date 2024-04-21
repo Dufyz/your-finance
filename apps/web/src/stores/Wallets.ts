@@ -13,31 +13,24 @@ const createWalletsStore = (set: any, get: () => WalletsStore) => ({
     wallets: [],
 
     addWallet: (wallet: Wallet) => {
-        const { wallets } = get();
-
-        set({
-            wallets: [...wallets, wallet]
-        })
+        set((state: WalletsStore) => ({
+            wallets: [...state.wallets, wallet]
+        }));
     },
 
     removeWallet: (wallet: Wallet) => {
-        const { wallets } = get();
-
-        set({
-            wallets: wallets.filter(w => w.id !== wallet.id)
-        })
+        set((state: WalletsStore) => ({
+            wallets: state.wallets.filter(w => w.id !== wallet.id)
+        }));
     },
 
     updateWallet: (wallet: Wallet) => {
-        const { wallets } = get();
-
-        set({
-            wallets: wallets.map(w => w.id === wallet.id ? wallet : w)
-        })
-    },
-
+        set((state: WalletsStore) => ({
+            wallets: state.wallets.map(w => w.id === wallet.id ? wallet : w)
+        }));
+    }
 });
 
-export const useWalletsStore = create((set, get) => ({
-    ...createWalletsStore
+export const useWalletsStore = create<WalletsStore>((set, get) => ({
+    ...createWalletsStore(set, get)
 }))

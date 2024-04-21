@@ -1,6 +1,6 @@
 import getUser from "@/fetchs/user/getUser";
 import LeftNavbarLayout from "@/layout/left-navbar-layout";
-import SupportForm from "./forms/support";
+import SupportForm from "./components/support";
 
 export default async function SupportPage() {
   const user = await getUser()
