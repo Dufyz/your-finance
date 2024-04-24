@@ -17,6 +17,9 @@ export const deleteTransaction = async ({
     });
 
     revalidateTag("get-week-transactions");
+    revalidateTag("get-month-transactions");
+    revalidateTag("get-year-transactions");
+    revalidateTag("get-custom-transactions");
 
     if (!response.ok) {
         throw new Error("Error deleting transaction.");

@@ -1,14 +1,14 @@
 "use server";
 
-export const getWeekTransactions = async ({
+export const getYearTransactions = async ({
     user_id
 }: {
     user_id: number;
 }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions?user_id=${user_id}&tab=week`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions?user_id=${user_id}&tab=year`, {
         method: "GET",
         next: {
-            tags: ["get-week-transactions"]
+            tags: ["get-year-transactions"]
         }
     });
 

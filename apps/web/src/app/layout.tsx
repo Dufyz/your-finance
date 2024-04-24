@@ -19,7 +19,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <Toaster position="top-center" />
+      <Toaster position="top-center" closeButton/>
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

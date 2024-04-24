@@ -1,13 +1,18 @@
 import CreateTransaction from "@/services/transactions/create-transaction.service";
 import DeleteTransaction from "@/services/transactions/delete-transaction.service";
+import PatchTransaction from "@/services/transactions/patch-transaction.service";
+import ShowCustomTransactions from "@/services/transactions/show-custom-transactions.service";
+import ShowMonthTransactions from "@/services/transactions/show-month-transactions.service";
 import ShowWeekTransactions from "@/services/transactions/show-week-transactions.service";
+import ShowYearTransactions from "@/services/transactions/show-year-transactions.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-    //TODO - get user id from request
+    const user_id = Number(request.nextUrl.searchParams.get("user_id"));
+    const tab = request.nextUrl.searchParams.get("tab");
 
-    const user_id = 1;
-    const tab = "week";
+    const date_from = request.nextUrl.searchParams.get("date_from");
+    const date_to = request.nextUrl.searchParams.get("date_to");
 
     if(tab !== "week" && tab !== "month" && tab !== "year" && tab !== "custom") {
         return NextResponse.json({
@@ -24,6 +29,23 @@ export async function GET(request: NextRequest) {
             case "week":
                 transactions = await ShowWeekTransactions({
                     user_id
+                });
+                break;
+            case "month":
+                transactions = await ShowMonthTransactions({
+                    user_id
+                });
+                break;
+            case "year":
+                transactions = await ShowYearTransactions({
+                    user_id
+                });
+                break;
+            case "custom":
+                transactions = await ShowCustomTransactions({
+                    user_id,
+                    date_from: new Date(date_from || ""),
+                    date_to: new Date(date_to || "")
                 });
                 break;
         }
@@ -61,6 +83,33 @@ export async function POST(request: NextRequest) {
     } catch (error) {
         return NextResponse.json({
             message: "Error creating transaction"
+        }, {
+            status: 500
+        });
+    }
+}
+
+export async function PATCH(request: NextRequest) {
+    const { id, wallet_id, card_id, category_id, value, description, type, transaction_date } = await request.json();
+
+    try {
+        const transaction = await PatchTransaction({
+            id,
+            wallet_id,
+            card_id,
+            category_id,
+            value,
+            description,
+            type,
+            transaction_date
+        });
+
+        return NextResponse.json(transaction, {
+            status: 200
+        });
+    } catch (error) {
+        return NextResponse.json({
+            message: "Error updating transaction"
         }, {
             status: 500
         });

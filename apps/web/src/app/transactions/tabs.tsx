@@ -3,7 +3,7 @@ import {
   TabsList,
   TabsTrigger
 } from "@/components/ui/tabs";
-import CreateTransaction from "./components/create-transaction";
+import CreateTransaction from "./components/create/create-transaction";
 import Week from "./week";
 import Month from "./month";
 import Year from "./year";
@@ -11,9 +11,9 @@ import Custom from "./custom";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 
-export default function Tabs({wallets, user}: {
-  user: User,
-  wallets: Wallet[]
+export default function Tabs({ wallets, user }: {
+  wallets: Wallet[];
+  user: User;
 }) {
   return (
     <TabsComponent defaultValue="week">
@@ -25,13 +25,13 @@ export default function Tabs({wallets, user}: {
           <TabsTrigger value="custom">Custom</TabsTrigger>
         </TabsList>
         <div className="ml-auto flex flex-col items-center gap-2">
-          <CreateTransaction wallets={wallets} user={user}/>
+          <CreateTransaction wallets={wallets} user={user} />
         </div>
       </div>
-      <Week wallets={wallets} user={user}/>
-      {/* <Month /> */}
-      {/* <Year /> */}
-      {/* <Custom /> */}
+      <Week wallets={wallets} user={user} />
+      <Month wallets={wallets} user={user} />
+      <Year wallets={wallets} user={user} />
+      <Custom wallets={wallets} user={user} />
     </TabsComponent>
   );
 }

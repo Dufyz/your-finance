@@ -2,9 +2,10 @@
 
 import { revalidateTag } from "next/cache";
 
-export const postTransaction = async ({ user_id, wallet_id, category_id, value, description, type, transaction_date }: {
-    user_id: number;
-    wallet_id: number;
+export const patchTransaction = async ({ id, wallet_id, card_id, category_id, value, description, type, transaction_date }: {
+    id: number;
+    wallet_id?: number;
+    card_id?: number;
     category_id: number;
     value: number;
     description: string;
@@ -12,11 +13,11 @@ export const postTransaction = async ({ user_id, wallet_id, category_id, value, 
     transaction_date: Date;
 }) => {
     const body = JSON.stringify({
-        user_id, wallet_id, category_id, value, description, type, transaction_date
+        id, wallet_id, card_id, category_id, value, description, type, transaction_date
     })
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions`, {
-        method: "POST",
+        method: "PATCH",
         body,
     });
 

@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/badge";
 
 import {
@@ -18,8 +20,51 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import DateRangePicker from "./components/date-range-picker";
+import { Wallet } from "@/types/Wallet";
+import { User } from "@/types/User";
+import { currencys } from "@/data/currencys";
+import { Transaction } from "@/types/Transaction";
+import { transactionCategories } from "@/data/transaction-categories";
+import FormatMoney from "@/utils/format-money";
+import ToolsTransaction from "./components/tools-transaction";
+import { useEffect, useState } from "react";
+import { DateRange } from "react-day-picker";
+import { subDays } from "date-fns";
+import { getCustomTransactions } from "@/fetchs/transactions/getCustomTransactions";
+import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
 
-export default function Custom() {
+export default function Custom({ wallets, user }: {
+  wallets: Wallet[];
+  user: User;
+}) {
+  // TODO revalidate the transactions when some transaction is created or updated
+  
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: subDays(new Date(), 1),
+    to: new Date()
+  });
+
+  const currencyCC = currencys.find(currency => currency.cc === user.currency)?.cc || currencys.find(currency => currency.cc === "USD")?.cc;
+
+  const handleDateChange = async () => {
+    if (!date?.to || !date?.from) return;
+
+    const transactions = await getCustomTransactions({
+      user_id: user.id,
+      date_from: date.from,
+      date_to: date.to
+    });
+
+    setTransactions(transactions);
+  };
+
+  useEffect(() => {
+    handleDateChange();
+  }, [JSON.stringify(date)]);
+
+
   return (
     <TabsContent value="custom">
       <Card>
@@ -32,7 +77,7 @@ export default function Custom() {
             </CardDescription>
           </div>
           <div>
-            <DateRangePicker />
+            <DateRangePicker date={date} setDate={setDate} />
           </div>
         </CardHeader>
         <CardContent>
@@ -43,28 +88,42 @@ export default function Custom() {
                 <TableHead className="hidden sm:table-cell">Category</TableHead>
                 <TableHead className="hidden sm:table-cell">Type</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="text-right">Amount</TableHead>
+                <TableHead className="hidden md:table-cell">Amount</TableHead>
+                <TableHead className="text-right">Edit</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Restaurante Universitario</div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    Itaú Unibanco
-                  </div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">Food</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge className="text-xs" variant="secondary">
-                    Received
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  2023-06-23
-                </TableCell>
-                <TableCell className="text-right">$5.00</TableCell>
-              </TableRow>
+              {transactions.map((transaction: Transaction, index: number) => {
+                const wallet = wallets.find(wallet => wallet.id === transaction.wallet_id) || { nickname: "Unknown" };
+
+                const category = transactionCategories.find(category => category.id === transaction.category_id) || { name: "Unknown" };
+
+                return (
+                  <TableRow key={index}>
+                    <TableCell>
+                      <div className="font-medium">{transaction.description}</div>
+                      <div className="hidden text-sm text-muted-foreground md:inline">
+                        {wallet.nickname}
+                      </div>
+                    </TableCell>
+                    <TableCell className="hidden sm:table-cell">{category.name}</TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      <Badge className="text-xs" variant="secondary">
+                        {capitalizeFirstLetter(transaction.type)}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      {new Date(transaction.transaction_date).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell className="hidden md:table-cell">
+                      <FormatMoney value={transaction.value} currency={currencyCC} />
+                    </TableCell>
+                    <TableCell className="flex h-[72px] items-center justify-end">
+                      <ToolsTransaction transaction={transaction} wallets={wallets} user={user} />
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </CardContent>

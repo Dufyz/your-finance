@@ -2,24 +2,20 @@
 
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogFooter,
   DialogHeader,
   DialogTrigger
 } from "@/components/ui/dialog";
 
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { IconPlus } from "@tabler/icons-react";
-import TabCreateWalletTransaction from "./tab-create-wallet-transaction";
-import TabCreateCardTransaction from "./tab-create-card-transaction";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
+import CreateWalletTransaction from "./create-wallet-transaction";
 
-
-const CreateTransaction = ({wallets, user}: {
+const CreateTransaction = ({ wallets, user }: {
   user: User,
   wallets: Wallet[]
 }) => {
@@ -42,11 +38,16 @@ const CreateTransaction = ({wallets, user}: {
         <Tabs defaultValue="account" className="w-full">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="wallet">Wallet</TabsTrigger>
-            <TabsTrigger value="card">Card</TabsTrigger>
+            {/* <TabsTrigger value="card">Card</TabsTrigger> */}
           </TabsList>
 
-          <TabCreateWalletTransaction wallets={wallets} user={user}/>
-          <TabCreateCardTransaction />
+          <TabsContent value="wallet">
+            <CreateWalletTransaction wallets={wallets} user={user} />
+          </TabsContent>
+
+          {/* <TabsContent value="card">
+            <TabCreateCardTransaction />
+          </TabsContent> */}
 
         </Tabs>
       </DialogContent>
