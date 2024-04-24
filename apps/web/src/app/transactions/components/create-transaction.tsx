@@ -15,9 +15,14 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IconPlus } from "@tabler/icons-react";
 import TabCreateWalletTransaction from "./tab-create-wallet-transaction";
 import TabCreateCardTransaction from "./tab-create-card-transaction";
+import { Wallet } from "@/types/Wallet";
+import { User } from "@/types/User";
 
 
-const CreateTransaction = () => {
+const CreateTransaction = ({wallets, user}: {
+  user: User,
+  wallets: Wallet[]
+}) => {
 
   return (
     <Dialog>
@@ -40,20 +45,10 @@ const CreateTransaction = () => {
             <TabsTrigger value="card">Card</TabsTrigger>
           </TabsList>
 
-          <TabCreateWalletTransaction />
+          <TabCreateWalletTransaction wallets={wallets} user={user}/>
           <TabCreateCardTransaction />
 
         </Tabs>
-        <DialogFooter className="sm:justify-start">
-          <DialogClose asChild className="w-full">
-            <button
-              type="button"
-              className="rounded-md bg-green-700 p-2 text-white"
-            >
-              Save
-            </button>
-          </DialogClose>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

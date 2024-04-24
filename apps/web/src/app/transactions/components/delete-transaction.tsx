@@ -1,13 +1,31 @@
 import DialogItem from "@/components/global/dialog-item";
+import { deleteTransaction } from "@/fetchs/transactions/deleteTransaction";
+import { Transaction } from "@/types/Transaction";
 import * as Dialog from "@radix-ui/react-dialog";
+import { toast } from "sonner";
 
-export default function DeleTransaction({
+export default function DeleteTransaction({
   handleDialogItemSelect,
-  handleDialogItemOpenChange
+  handleDialogItemOpenChange,
+  transaction
 }: {
   handleDialogItemSelect: any;
   handleDialogItemOpenChange: any;
+  transaction: Transaction
 }) {
+
+  const handleDeleteTransaction = async () => {
+    try {
+      await deleteTransaction({
+        id: transaction.id
+      });
+
+      toast.success("Transaction deleted successfully.");
+    } catch (error) {
+      console.error(error);
+      toast.error("An error occurred while deleting the transaction.");
+    }
+  }
   return (
     <DialogItem
       triggerChildren="Delete"
@@ -29,9 +47,11 @@ export default function DeleTransaction({
             Cancel
           </button>
         </Dialog.Close>
-        <button className="DialogButton flex w-full flex-1 items-center justify-center rounded-md bg-red-600 p-3 px-6  text-white hover:bg-red-700">
-          Delete
-        </button>
+        <Dialog.Close asChild>
+          <button onClick={handleDeleteTransaction} className="DialogButton flex w-full flex-1 items-center justify-center rounded-md bg-red-600 p-3 px-6  text-white hover:bg-red-700">
+            Delete
+          </button>
+        </Dialog.Close>
       </div>
     </DialogItem>
   );

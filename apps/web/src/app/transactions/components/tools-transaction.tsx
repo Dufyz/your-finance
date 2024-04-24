@@ -7,9 +7,12 @@ import { useRef, useState } from "react";
 import EditTransaction from "./edit-transaction";
 
 import "../styles/tools-transaction.css";
-import DeleTransaction from "./delete-transaction";
+import DeleteTransaction from "./delete-transaction";
+import { Transaction } from "@/types/Transaction";
 
-export default function ToolsTransaction() {
+export default function ToolsTransaction({ transaction }: {
+  transaction: Transaction
+}) {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [hasOpenDialog, setHasOpenDialog] = useState(false);
   const dropdownTriggerRef = useRef(null);
@@ -50,9 +53,10 @@ export default function ToolsTransaction() {
 
         <DropdownMenu.Separator className="DropdownMenuSeparator" />
 
-        <DeleTransaction
+        <DeleteTransaction
           handleDialogItemOpenChange={handleDialogItemOpenChange}
           handleDialogItemSelect={handleDialogItemSelect}
+          transaction={transaction}
         />
 
         <DropdownMenu.Arrow className="DropdownMenuArrow" />

@@ -21,7 +21,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { banks } from "@/data/banks";
@@ -67,6 +67,11 @@ export default function CreateWallet({ user }: {
 
   const { handleSubmit, control, register, reset, setValue, getValues, formState: { errors } } = form;
 
+  const typeFieldValue = useWatch({
+    control,
+    name: "type",
+  });
+
   const handleCreateWallet = async ({
     user_id, bank_id, initial_balance, nickname, is_main, type
   }: CreateWalletSchemaType) => {
@@ -108,13 +113,13 @@ export default function CreateWallet({ user }: {
             <DialogHeader className="w-full">
               <div className="pt-4">
                 <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
-                  <Button className={`flex flex-1 ${getValues().type === "current" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "current")}>
+                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "current")}>
                     Current
                   </Button>
-                  <Button className={`flex flex-1 ${getValues().type === "saving" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "saving")}>
+                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "saving")}>
                     Savings
                   </Button>
-                  <Button className={`flex flex-1 ${getValues().type === "wallet" ? "" : "bg-muted-foreground"}`} onClick={() => {
+                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`} onClick={() => {
                     setValue("type", "wallet");
                     setValue("bank_id", 0)
                   }}>Wallet</Button>
@@ -123,7 +128,7 @@ export default function CreateWallet({ user }: {
             </DialogHeader>
 
             <div className="w-full flex flex-col gap-4">
-              {getValues().type !== "wallet" && (
+              {typeFieldValue !== "wallet" && (
                 <>
                   {errors.bank_id?.message && (
                     <FormError message={errors.bank_id.message} />

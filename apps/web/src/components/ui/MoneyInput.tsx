@@ -52,9 +52,10 @@ export default function MoneyInput(props: TextInputProps) {
                 const _change = field.onChange;
 
                 return (
-                    <FormItem>
-                        <FormControl>
+                    <FormItem className="w-full">
+                        <FormControl >
                             <Input
+                                className="w-full"
                                 placeholder={props.placeholder}
                                 type="text"
                                 {...field}

@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getUserSupabaseSession } from './utils/get-user-supabase-session'
+import { createClient } from '@supabase/supabase-js'
 
 export async function middleware(request: NextRequest) {
-  const {data, error} = await getUserSupabaseSession(request)
+  //TODO - Check refresh token and refresh session; Need also to change token in cookies
+
+  const sessionToken = request.cookies.get('sessionToken')?.value || ""
+  const refreshToken = request.cookies.get('refreshToken')?.value || ""
+
+  const {data, error} = await getUserSupabaseSession(request, sessionToken)
 
   if(error) console.log('Error in middleware:', error)
 
@@ -14,6 +20,14 @@ export async function middleware(request: NextRequest) {
       return NextResponse.redirect(url)
     }
   }
+
+  // const supabase = createClient(
+  //   process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  //   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!);
+
+  // const teste =  await supabase.auth.refreshSession({
+  //   refresh_token: refreshToken
+  // })
 
   if(request.nextUrl.pathname === "/login" && data.user !== null) {
     const url = request.nextUrl.clone()

@@ -1,10 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function getUserSupabaseSession(request: NextRequest) {
-  const sessionToken = request.cookies.get('sessionToken')?.value
-
-
+export async function getUserSupabaseSession(request: NextRequest, sessionToken: string | undefined) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,

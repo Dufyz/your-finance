@@ -18,8 +18,25 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import ToolsTransaction from "./components/tools-transaction";
+import { getWeekTransactions } from "@/fetchs/transactions/getWeekTransactions";
+import { User } from "@/types/User";
+import { Transaction } from "@/types/Transaction";
+import { banks } from "@/data/banks";
+import { Wallet } from "@/types/Wallet";
+import { transactionCategories } from "@/data/transaction-categories";
+import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
+import FormatMoney from "@/utils/format-money";
+import { currencys } from "@/data/currencys";
 
-export default function Week() {
+export default async function Week({wallets, user}: {
+  wallets: Wallet[];
+  user: User;
+}) {
+
+  const transactions = await getWeekTransactions({user_id: user.id});
+
+  const currencyCC = currencys.find(currency => currency.cc === user.currency)?.cc || currencys.find(currency => currency.cc === "USD")?.cc;
+
   return (
     <TabsContent value="week">
       <Card>
@@ -42,27 +59,37 @@ export default function Week() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <div className="font-medium">Restaurante Universitario</div>
-                  <div className="hidden text-sm text-muted-foreground md:inline">
-                    Itaú Unibanco
-                  </div>
-                </TableCell>
-                <TableCell className="hidden sm:table-cell">Food</TableCell>
-                <TableCell className="hidden sm:table-cell">
-                  <Badge className="text-xs" variant="secondary">
-                    Revenue
-                  </Badge>
-                </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  2023-06-23
-                </TableCell>
-                <TableCell className="hidden md:table-cell">$5.00</TableCell>
-                <TableCell className="flex h-[72px] items-center justify-end">
-                  <ToolsTransaction />
-                </TableCell>
-              </TableRow>
+              {transactions.map((transaction: Transaction, index: number) => {
+                const wallet = wallets.find(wallet => wallet.id === transaction.wallet_id) || {nickname: "Unknown"};
+
+                const category = transactionCategories.find(category => category.id === transaction.category_id) || {name: "Unknown"};
+
+                return (
+                  <TableRow key={index}>
+                  <TableCell>
+                    <div className="font-medium">{transaction.description}</div>
+                    <div className="hidden text-sm text-muted-foreground md:inline">
+                      {wallet.nickname}
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">{category.name}</TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    <Badge className="text-xs" variant="secondary">
+                      {capitalizeFirstLetter(transaction.type)}
+                    </Badge>
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    {new Date(transaction.transaction_date).toLocaleDateString()}
+                  </TableCell>
+                  <TableCell className="hidden md:table-cell">
+                    <FormatMoney value={transaction.value}  currency={currencyCC}/>
+                  </TableCell>
+                  <TableCell className="flex h-[72px] items-center justify-end">
+                    <ToolsTransaction transaction={transaction}/>
+                  </TableCell>
+                </TableRow>
+                )
+              })}
             </TableBody>
           </Table>
         </CardContent>

@@ -4,6 +4,7 @@ import ShowWallets from "@/services/wallets/show-wallest.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
+    //TODO - get user id from request
 
     try {
         const wallets = await ShowWallets({

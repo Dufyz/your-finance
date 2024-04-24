@@ -2,13 +2,13 @@ import { currencys } from "@/data/currencys";
 
 export default function FormatMoney({
     value,
-    currency
+    currency = "USD"
 }: {
     value: number,
-    currency: string
+    currency? : string
 }) {
 
-    const currencyCC = currencys.find((c) => c.cc === currency)?.cc || "USD";
+    const currencyCC = currencys.find((c) => c.cc === currency)?.cc;
 
     return (
         <span>
