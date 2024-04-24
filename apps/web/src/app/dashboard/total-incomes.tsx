@@ -1,11 +1,10 @@
 import { InfoCard } from "./components/InfoCard";
 
-
-export default function TotalExpenses() {
+export default function TotalIncomes() {
   return (
     <InfoCard.Root>
     <InfoCard.Header>
-      <InfoCard.Title>Total Expenses</InfoCard.Title>
+      <InfoCard.Title>Total Incomes</InfoCard.Title>
     </InfoCard.Header>
     <InfoCard.Content>
     <div className="text-2xl font-bold">$1,000</div>
