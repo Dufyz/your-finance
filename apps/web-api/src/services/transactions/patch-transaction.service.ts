@@ -1,4 +1,6 @@
 import supabase from "@/config/supabase";
+import DeleteTransaction from "./delete-transaction.service";
+import CreateTransaction from "./create-transaction.service";
 
 interface IPatchTransactionService {
     id: number;
@@ -12,20 +14,34 @@ interface IPatchTransactionService {
 }
 
 export default async function PatchTransaction({ id, wallet_id, card_id, category_id, value, description, type, transaction_date }: IPatchTransactionService) {
-    const { data, error } = await supabase.from("transactions").update({
-        wallet_id,
-        card_id,
-        category_id,
-        value,
-        description,
-        type,
-        transaction_date
-    }).eq("id", id);
+    const { data: oldTransaction, error: errorOldTransaction } = await supabase.from("transactions").select("*").eq("id", id).single();
 
-    if (error) {
-        console.log("error", error);
-        throw new Error(error.message);
+    if (errorOldTransaction) {
+        console.log("error", errorOldTransaction);
+        throw new Error(errorOldTransaction.message);
     }
 
-    return data;
+    try {
+        await DeleteTransaction({
+            id
+        });
+
+        const newTransaction = await CreateTransaction({
+            user_id: oldTransaction.user_id,
+            wallet_id,
+            card_id,
+            category_id,
+            value,
+            description,
+            type,
+            transaction_date,
+            created_at: oldTransaction.created_at
+        });
+
+        return newTransaction;
+
+    } catch (error) {
+        console.log("error", error);
+        throw new Error(error?.message);
+    }
 }

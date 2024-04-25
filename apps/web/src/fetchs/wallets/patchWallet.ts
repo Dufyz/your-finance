@@ -34,7 +34,14 @@ export default async function patchWallet({
         body,
     });
 
-    revalidateTag("get-wallets")
+    revalidateTag("get-week-transactions");
+    revalidateTag("get-month-transactions");
+    revalidateTag("get-year-transactions");
+    revalidateTag("get-custom-transactions");
+    revalidateTag("get-last-transactions");
+
+    revalidateTag("get-wallets");
+    revalidateTag("get-totals");
 
     if (!response.ok) {
         throw new Error("Error updating wallet");

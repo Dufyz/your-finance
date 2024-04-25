@@ -5,10 +5,37 @@ interface IDeleteTransactionService {
 }
 
 export default async function DeleteTransaction({ id }: IDeleteTransactionService) {
-    const {  error } = await supabase.from("transactions").delete().eq("id", id);
+    const {data: transaction, error: errorTransactions} = await supabase.from("transactions").select("*").eq("id", id).single();
 
-    if (error) {
-        console.log("error", error);
-        throw new Error(error.message);
+    if (errorTransactions) {
+        console.log("error", errorTransactions);
+        throw new Error(errorTransactions.message);
+    }
+
+   const isWallet = transaction.wallet_id !== null;
+
+   if(isWallet) {
+        const {data: wallet, error: errorWallet} = await supabase.from("wallets").select("*").eq("id", transaction.wallet_id).single();
+
+        if (errorWallet) {
+            console.log("error", errorWallet);
+            throw new Error(errorWallet.message);
+        }
+
+        const current_balance = transaction.type === "income" ? wallet.current_balance - transaction.value : wallet.current_balance + transaction.value;
+
+        const { error: updateError } = await supabase.from("wallets").update({ current_balance }).eq("id", transaction.wallet_id);
+
+        if (updateError) {
+            console.log("error", updateError);
+            throw new Error(updateError.message);
+        }
+   }
+
+    const { error: deleteError } = await supabase.from("transactions").delete().eq("id", id);
+
+    if (deleteError) {
+        console.log("error", deleteError);
+        throw new Error(deleteError.message);
     }
 }

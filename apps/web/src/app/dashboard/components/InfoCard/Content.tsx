@@ -7,7 +7,7 @@ export default function Content({
     children: ReactNode
 }) {
     return (
-        <CardContent>
+        <CardContent className="flex flex-col items-start justify-start gap-2">
             {children}
       </CardContent>
     )

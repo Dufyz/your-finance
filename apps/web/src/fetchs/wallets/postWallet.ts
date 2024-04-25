@@ -24,7 +24,7 @@ export const postWallet = async ({ user_id, bank_id, nickname, type, initial_bal
         body,
     });
 
-    revalidateTag("get-wallets")
+    revalidateTag("get-wallets");
 
     if (!response.ok) {
         throw new Error("Error creating wallet");

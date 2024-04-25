@@ -58,7 +58,6 @@ const LeftNavbar = () => {
           icon={<IconTargetArrow size={24} color="#166534" />}
           label="Goals"
           route="/goals"
-          disabled
         />
         <LeftNavbarItem
           icon={<IconManualGearbox size={24} color="#166534" />}

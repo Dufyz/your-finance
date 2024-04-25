@@ -10,7 +10,7 @@ export default function Goals() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Goals</CardTitle>
-        <Button asChild size="sm" className="ml-auto gap-1">
+        <Button asChild size="sm" className="ml-auto gap-1" disabled>
           <Link href="#">
             View All
             <ArrowUpRight className="h-4 w-4" />

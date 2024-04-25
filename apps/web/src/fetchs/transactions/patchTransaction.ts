@@ -25,6 +25,11 @@ export const patchTransaction = async ({ id, wallet_id, card_id, category_id, va
     revalidateTag("get-month-transactions");
     revalidateTag("get-year-transactions");
     revalidateTag("get-custom-transactions");
+    revalidateTag("get-last-transactions");
+
+    revalidateTag("get-wallets");
+    revalidateTag("get-cards");
+    revalidateTag("get-totals");
 
     if (!response.ok) {
         throw new Error("Error creating transaction");

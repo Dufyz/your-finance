@@ -2,7 +2,7 @@ import FormatMoney from "@/utils/format-money";
 import { InfoCard } from "./components/InfoCard";
 import { getNumberWithSignal } from "@/utils/get-number-with-signal";
 
-export default function TotalInvoices({
+export default function TotalBalance({
   total,
   currencyCC,
 }: {
@@ -15,7 +15,7 @@ export default function TotalInvoices({
   return (
     <InfoCard.Root>
       <InfoCard.Header>
-        <InfoCard.Title>Total Invoices</InfoCard.Title>
+        <InfoCard.Title>Total Balance</InfoCard.Title>
       </InfoCard.Header>
       <InfoCard.Content>
         <div>

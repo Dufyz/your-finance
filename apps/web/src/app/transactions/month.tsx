@@ -53,7 +53,7 @@ export default async function Month({ wallets, user }: {
                 <TableHead className="hidden sm:table-cell">Category</TableHead>
                 <TableHead className="hidden sm:table-cell">Type</TableHead>
                 <TableHead className="hidden md:table-cell">Date</TableHead>
-                <TableHead className="hidden md:table-cell">Amount</TableHead>
+                <TableHead className="hidden md:table-cell">Value</TableHead>
                 <TableHead className="text-right">Edit</TableHead>
               </TableRow>
             </TableHeader>
