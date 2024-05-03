@@ -46,7 +46,9 @@ const CreateWalletSchema = z.object({
 
 type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 
-export default function CreateWallet() {
+export default function CreateExpenseCategoryGoal({user}: {
+  user: User
+}) {
   const [iconColor, setIconColor] = useState("#15803d");
 
   const addWallet = useWalletsStore((state) => state.addWallet);
