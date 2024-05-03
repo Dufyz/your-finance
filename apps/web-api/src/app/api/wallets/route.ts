@@ -1,4 +1,5 @@
 import CreateWallet from "@/services/wallets/create-wallet.service";
+import DeleteWallet from "@/services/wallets/delete-wallet.service";
 import PatchWallet from "@/services/wallets/patch-wallet.service";
 import ShowWallets from "@/services/wallets/show-wallest.service";
 import { NextRequest, NextResponse } from "next/server";
@@ -62,6 +63,24 @@ export async function PATCH(request: NextRequest) {
             status: 200,
         })
 
+    } catch (error) {
+        return NextResponse.json({ message: error.message }, {
+            status: 400,
+        })
+    }
+}
+
+export async function DELETE(request: NextRequest) {
+    const {id} = await request.json();
+
+    try {
+        await DeleteWallet({
+            id
+        });
+
+        return NextResponse.json({ message: "Wallet deleted" }, {
+            status: 200,
+        })
     } catch (error) {
         return NextResponse.json({ message: error.message }, {
             status: 400,

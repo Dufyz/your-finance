@@ -100,7 +100,7 @@ export default function CreateWallet({ user }: {
     <Dialog>
       <DialogTrigger asChild>
         <div
-          className="flex h-full w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
+          className="flex h-full min-h-44 w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
           onMouseEnter={() => setIconColor("#166534")}
           onMouseLeave={() => setIconColor("#15803d")}
         >

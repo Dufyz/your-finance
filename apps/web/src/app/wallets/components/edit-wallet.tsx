@@ -29,6 +29,7 @@ import { banks } from "@/data/banks";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { toast } from "sonner";
 import patchWallet from "@/fetchs/wallets/patchWallet";
+import { DeleteWallet } from "./delete-wallet";
 
 const EditWalletSchema = z.object({
   id: z.number().int(),
@@ -178,6 +179,7 @@ export default function EditWallet({ wallet }: {
                 </div></>
             </div>
 
+            <div className="w-full flex flex-col flex-start items-start gap-2">
             <div className="w-full">
               <button
                 type="submit"
@@ -185,6 +187,10 @@ export default function EditWallet({ wallet }: {
               >
                 Save
               </button>
+            </div>
+            <div className="w-full">
+              <DeleteWallet wallet={wallet} />
+            </div>
             </div>
           </form>
         </Form>
