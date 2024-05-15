@@ -15,83 +15,57 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
-import Image from "next/image";
-import { Switch } from "@/components/ui/switch";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { banks } from "@/data/banks";
 import FormError from "@/components/global/form-error";
-import { postWallet } from "@/fetchs/wallets/postWallet";
-import { useWalletsStore } from "@/stores/Wallets";
 import { User } from "@/types/User";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
+import { transactionCategories } from "@/data/transaction-categories";
+import renderTablerIcon from "@/utils/render-tabler-icon";
+import { postExpenseCategoryGoal } from "@/fetchs/goals/postExpenseCategoryGoal";
 
-const CreateWalletSchema = z.object({
+const CreateExpenseCategoryGoalSchema = z.object({
   user_id: z.number().int(),
-  bank_id: z.number().int(),
-  nickname: z.string().min(6, "Nickname must have at least 6 characters"),
-  initial_balance: z.coerce.number().min(0.00, "Required"),
-  is_main: z.boolean(),
-  type: z.string().refine((value) => (value === "saving" || value === "current" || value === "wallet"), {
-    message: "You must select a valid wallet type."
-  })
+  category_id: z.number().int(),
+  target_value: z.coerce.number().min(0.00, "Required")
 })
 
-type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
+type CreateExpenseCategoryGoalType = z.infer<typeof CreateExpenseCategoryGoalSchema>;
 
 export default function CreateExpenseCategoryGoal({user}: {
   user: User
 }) {
-  const [iconColor, setIconColor] = useState("#15803d");
-
-  const addWallet = useWalletsStore((state) => state.addWallet);
-
-  const form = useForm<CreateWalletSchemaType>({
-    resolver: zodResolver(CreateWalletSchema),
+  const form = useForm<CreateExpenseCategoryGoalType>({
+    resolver: zodResolver(CreateExpenseCategoryGoalSchema),
     defaultValues: {
-      user_id: 1,
-      bank_id: 0,
-      initial_balance: 0.00,
-      nickname: "",
-      is_main: false,
-      type: "current"
+      user_id: user.id,
+      category_id: 1,
+      target_value: 0.00,
     }
   });
 
-  const { handleSubmit, control, register, reset, setValue, getValues, formState: { errors } } = form;
+  const { handleSubmit, control, reset, formState: { errors } } = form;
 
-  const typeFieldValue = useWatch({
-    control,
-    name: "type",
-  });
-
-  const handleCreateWallet = async ({
-    user_id, bank_id, initial_balance, nickname, is_main, type
-  }: CreateWalletSchemaType) => {
+  const handleCreateExpenseCategoryGoal = async ({
+    user_id, category_id, target_value
+  }: CreateExpenseCategoryGoalType) => {
     try {
-      const newWallet = await postWallet({
+      const newExpenseCategoryGoal = await postExpenseCategoryGoal({
         user_id,
-        bank_id,
-        initial_balance: Number(initial_balance),
-        nickname,
-        is_main,
-        type,
+        category_id,
+        target_value
       });
-
-      addWallet(newWallet);
 
       reset();
 
-      toast.success("Wallet created successfully.");
+      toast.success("Expense category goal created successfully.");
     } catch (error) {
-      toast.error("An error occurred while creating the wallet.");
+      toast.error("An error occurred while creating the expense category goal.");
       console.error(error);
     }
   }
@@ -109,19 +83,18 @@ export default function CreateExpenseCategoryGoal({user}: {
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <Form {...form}>
-          <form onSubmit={handleSubmit(handleCreateWallet)} className="w-full flex flex-col items-start justify-start gap-6">
+          <form onSubmit={handleSubmit(handleCreateExpenseCategoryGoal)} className="w-full flex flex-col items-start justify-start gap-6">
             <DialogHeader className="w-full" />
-
             <div className="w-full flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="category">Category</Label>
-                {errors.bank_id?.message && (
-                  <FormError message={errors.bank_id.message} />
+                {errors.category_id?.message && (
+                  <FormError message={errors.category_id.message} />
                 )}
                 <div className="flex flex-col gap-2">
                   <Controller
                     control={control}
-                    name="bank_id"
+                    name="category_id"
                     render={({ field }) => (
                       <Select {...field} onValueChange={(value) => field.onChange(Number(value))} value={
                         field.value === null ? "" : field.value.toString() === "0" ? "" : field.value.toString()
@@ -131,19 +104,18 @@ export default function CreateExpenseCategoryGoal({user}: {
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            {banks.slice(1,).map((bank, index: number) => (
-                              <SelectItem value={String(bank.id)} className="py-2" key={index}>
-                                <div className="flex w-full items-center justify-center gap-4">
-                                  <div>
-                                    <Image
-                                      src={bank.logo_src}
-                                      alt={`Logo ${bank.name}`}
-                                      width={20}
-                                      height={20}
-                                      className="rounded-md"
-                                    />
+                            {transactionCategories.map((category, index) => (
+                              <SelectItem key={index} value={category.id.toString()}>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-8 h-8 flex items-center justify-center">
+                                    {renderTablerIcon({
+                                      icon: category.icon,
+                                      size: 16
+                                    })}
                                   </div>
-                                  <span className="text-md">{bank.name}</span>
+                                  <div>
+                                    <p>{category.name}</p>
+                                  </div>
                                 </div>
                               </SelectItem>
                             ))}
@@ -154,11 +126,11 @@ export default function CreateExpenseCategoryGoal({user}: {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="initial_balance">Goal balance</Label>
-                {errors.initial_balance?.message && (
-                  <FormError message={errors.initial_balance.message} />
+                <Label htmlFor="target_value">Goal target value</Label>
+                {errors.target_value?.message && (
+                  <FormError message={errors.target_value.message} />
                 )}
-                <MoneyInput form={form} name="initial_balance" label="Initial balance" placeholder="R$ 0,00" />
+                <MoneyInput form={form} name="target_value" label="Target value" placeholder="R$ 0,00" />
               </div>
             </div>
 

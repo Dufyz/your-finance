@@ -1,98 +1,68 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTrigger
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { IconPencil, IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
-import Image from "next/image";
-import { Switch } from "@/components/ui/switch";
-import { Controller, useForm, useWatch } from "react-hook-form";
+import { IconPencil } from "@tabler/icons-react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { banks } from "@/data/banks";
 import FormError from "@/components/global/form-error";
-import { postWallet } from "@/fetchs/wallets/postWallet";
-import { useWalletsStore } from "@/stores/Wallets";
-import { User } from "@/types/User";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
+import { GoalCategory } from "@/types/GoalCategory";
+import { transactionCategories } from "@/data/transaction-categories";
+import { putExpenseCategoryGoal } from "@/fetchs/goals/putExpenseCategoryGoal";
 
-const CreateWalletSchema = z.object({
+const EditExpenseCategoryGoalSchema = z.object({
   user_id: z.number().int(),
-  bank_id: z.number().int(),
-  nickname: z.string().min(6, "Nickname must have at least 6 characters"),
-  initial_balance: z.coerce.number().min(0.00, "Required"),
-  is_main: z.boolean(),
-  type: z.string().refine((value) => (value === "saving" || value === "current" || value === "wallet"), {
-    message: "You must select a valid wallet type."
-  })
+  category_id: z.number().int(),
+  target_value: z.coerce.number().min(0.00, "Required")
 })
 
-type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
+type EditExpenseCategoryGoalType = z.infer<typeof EditExpenseCategoryGoalSchema>;
 
-export default function EditExpenseCategoryGoal() {
-  const [iconColor, setIconColor] = useState("#15803d");
-
-  const addWallet = useWalletsStore((state) => state.addWallet);
-
-  const form = useForm<CreateWalletSchemaType>({
-    resolver: zodResolver(CreateWalletSchema),
+export default function EditExpenseCategoryGoal({
+  goalCategory
+}: {
+  goalCategory: GoalCategory;
+}) {
+  const form = useForm<EditExpenseCategoryGoalType>({
+    resolver: zodResolver(EditExpenseCategoryGoalSchema),
     defaultValues: {
-      user_id: 1,
-      bank_id: 0,
-      initial_balance: 0.00,
-      nickname: "",
-      is_main: false,
-      type: "current"
+      user_id: goalCategory.user_id,
+      category_id: goalCategory.category_id,
+      target_value: goalCategory.target_value,
     }
   });
 
-  const { handleSubmit, control, register, reset, setValue, getValues, formState: { errors } } = form;
-
-  const typeFieldValue = useWatch({
-    control,
-    name: "type",
-  });
+  const { handleSubmit, formState: { errors } } = form;
 
   const handleCreateWallet = async ({
-    user_id, bank_id, initial_balance, nickname, is_main, type
-  }: CreateWalletSchemaType) => {
+    user_id, category_id, target_value
+  }: EditExpenseCategoryGoalType) => {
     try {
-      const newWallet = await postWallet({
-        user_id,
-        bank_id,
-        initial_balance: Number(initial_balance),
-        nickname,
-        is_main,
-        type,
+      await putExpenseCategoryGoal({
+        id: goalCategory.id,
+        category_id,
+        target_value
       });
 
-      addWallet(newWallet);
-
-      reset();
-
-      toast.success("Wallet created successfully.");
+      toast.success("Expense category goal updated successfully.");
     } catch (error) {
-      toast.error("An error occurred while creating the wallet.");
+      toast.error("An error occurred while updating the expense category goal.");
       console.error(error);
     }
   }
+
+  const categoryName = transactionCategories.find(
+    category => category.id === goalCategory.category_id
+  )?.name || " ";
 
   return (
     <Dialog>
@@ -113,18 +83,18 @@ export default function EditExpenseCategoryGoal() {
 
             <div className="w-full flex flex-col gap-6">
               <div className="flex flex-col gap-2">
-                <p>Category: {"Restaurante"}</p>
+                <p>Category: {categoryName}</p>
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="initial_balance">Goal target</Label>
-                {errors.initial_balance?.message && (
-                  <FormError message={errors.initial_balance.message} />
+                <Label htmlFor="initial_balance">Goal target value</Label>
+                {errors.target_value?.message && (
+                  <FormError message={errors.target_value.message} />
                 )}
-                <MoneyInput form={form} name="initial_balance" label="Initial balance" placeholder="R$ 0,00" />
+                <MoneyInput form={form} name="target_value" label="Goal target value" placeholder="R$ 0,00" />
               </div>
             </div>
 
-            <div className="w-full">
+            <div className="w-full flex flex-col items-start justify-start gap-4">
               <button
                 type="submit"
                 className="w-full rounded-md bg-green-700 p-2 text-white"

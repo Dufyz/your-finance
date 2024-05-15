@@ -1,12 +1,10 @@
 "use client";
 
+import { transactionCategories } from "@/data/transaction-categories";
 import "./../styles.css"
 import React from 'react';
 
 import {
-    ComposedChart,
-    Line,
-    Area,
     XAxis,
     YAxis,
     CartesianGrid,
@@ -16,56 +14,48 @@ import {
     Bar,
 } from 'recharts';
 
-const data = [
-    {
-        "name": "Page A",
-        "uv": 4000,
-        "pv": 2400
-    },
-    {
-        "name": "Page B",
-        "uv": 3000,
-        "pv": 1398
-    },
-    {
-        "name": "Page C",
-        "uv": 2000,
-        "pv": 9800
-    },
-    {
-        "name": "Page D",
-        "uv": 2780,
-        "pv": 3908
-    },
-    {
-        "name": "Page E",
-        "uv": 1890,
-        "pv": 4800
-    },
-    {
-        "name": "Page F",
-        "uv": 2390,
-        "pv": 3800
-    },
-    {
-        "name": "Page G",
-        "uv": 3490,
-        "pv": 4300
-    }
-]
+interface categoriesGoals {
+    id: number;
+    category_id: number;
+    user_id: number;
+    target_value: number;
+    created_at: string;
+    updated_at: string;
+}
 
-export default function ExpensesChart() {
+interface categoriesExpenses {
+    category_id: number;
+    value: number;
+}
+
+export default function ExpensesChart({
+    categoriesGoals,
+    categoriesExpenses
+}: {
+    categoriesGoals: categoriesGoals[];
+    categoriesExpenses: categoriesExpenses[];
+}) {
+    const barChartData = categoriesGoals.map((goal) => {
+        const categoryExpense = categoriesExpenses.find((category)=> category.category_id === goal.category_id);
+        const category = transactionCategories.find((category) => category.id === goal.category_id);
+
+        return {
+            name: category?.name,
+            target: goal.target_value,
+            real: categoryExpense?.value || 0
+        }
+    });
 
     return (
         <div className="col-span-4 w-full rounded-md bg-white border shadow-md flex items-center justify-center p-4">
-            <BarChart width={1400} height={380} data={data}>
+            <BarChart width={1400} height={380} data={barChartData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="pv" fill="#8884d8" />
-                <Bar dataKey="uv" fill="#82ca9d" />
+                <Bar dataKey="target" fill="#8884d8" />
+                <Bar dataKey="real" fill="#82ca9d" />
             </BarChart>
         </div>
     );

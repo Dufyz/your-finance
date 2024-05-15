@@ -2,19 +2,22 @@ import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import { Suspense } from "react";
 import ExpenseCategoryGoalCard from "./components/expense-category-goal-card";
 import CreateExpenseCategoryGoal from "./components/create-expense-category-goal";
-import SavingsGoalCard from "./components/savings-goal-card";
-import SavingsChart from "./components/savings-chart";
 import ExpensesChart from "./components/expenses-chart";
-import DateRangePicker from "./components/date-range-picker";
 import getUser from "@/fetchs/user/getUser";
-import { getCategoriesGoals } from "@/fetchs/goals/getCustomTransactions";
+import { getCategoriesGoals } from "@/fetchs/goals/getCategoriesGoals";
+import { GoalCategory } from "@/types/GoalCategory";
+import { getCategoriesExpenses } from "@/fetchs/categories/getCategoriesExpenses";
 
 export default async function GoalsPage() {
   const user = await getUser();
 
   const categoriesGoals = await getCategoriesGoals({
     user_id: user.id
-  });
+  }) || [];
+
+  const categoriesExpenses = await getCategoriesExpenses({
+    user_id: user.id
+  }) || [];
 
   return (
     <LeftNavbarLayout>
@@ -45,10 +48,10 @@ export default async function GoalsPage() {
               </div>
               <div className="w-full flex flex-col gap-4 items-center justify-start">
                 <div className="w-full grid gap-4 grid-cols-4">
-                  <ExpensesChart />
-                  {categoriesGoals.map((index: number) => {
-                  <ExpenseCategoryGoalCard key={index}/>
-                  })}
+                  <ExpensesChart categoriesGoals={categoriesGoals} categoriesExpenses={categoriesExpenses} />
+                  {categoriesGoals?.map((goalCategory: GoalCategory, index: number) => (
+                    <ExpenseCategoryGoalCard key={index} goalCategory={goalCategory} />
+                  ))}
                 </div>
               </div>
             </div>

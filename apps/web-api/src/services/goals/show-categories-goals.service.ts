@@ -5,11 +5,11 @@ interface IShowCategoriesGoalsService {
 }
 
 export default async function ShowCategoriesGoals({ user_id }: IShowCategoriesGoalsService) {
-    const { data, error } = await supabase.from("transactions").select("*").eq("user_id", user_id).single();
+
+    const { data, error } = await supabase.from("goalcategory").select("*").eq("user_id", user_id);
 
     if (error) {
-        console.log("error", error);
-        throw new Error(error.message);
+        throw new Error("Error getting categories goals");
     }
 
     return data;
