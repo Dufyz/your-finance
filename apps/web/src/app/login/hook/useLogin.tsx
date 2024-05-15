@@ -1,10 +1,8 @@
-import apiWeb from "@/config/api-web";
-import getCookie from "@/utils/get-cookie";
+import supabase from "@/config/supabase";
 import setCookie from "@/utils/set-cookie";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-
 interface IHandleSignUp {
   name: string;
   email: string;
@@ -25,25 +23,35 @@ const useLogin = () => {
 
   const handleSingUp = async ({ name, email, password }: IHandleSignUp) => {
     try {
-      const body = {
-        action: "sign-up",
-        name,
+      const {data, error} = await supabase.auth.signUp({
         email,
-        password
-      };
-
-      const { data: session } = await apiWeb.post("/auth", body);
-
-      toast.success("User created successfully");
+        password,
+        options: {
+          data: {
+            name
+          }
+        }
+      });
+     
+      if (error) {
+        console.log("error", error);
+        throw error;
+      }
 
       setActiveTab("sign-in");
 
       setCookie({
         name: "sessionToken",
-        value: session.access_token,
-        expires_at: new Date(session.expires_at * 1000).toUTCString()
+        value: data.session?.access_token,
+        expires_at: data.session?.expires_at
+      });
+      setCookie({
+        name: "refreshToken",
+        value: data.session?.refresh_token,
+        expires_at: data.session?.expires_at
       });
 
+      toast.success("User created successfully");
     } catch (error) {
       const errorStatus = error?.response?.status;
 
@@ -60,26 +68,31 @@ const useLogin = () => {
     password,
   }: IHandleSignin) => {
     try {
-      const body = {
-        action: "sign-in",
+      const {data, error} = await supabase.auth.signInWithPassword({
         email,
-        password,
-      };
+        password
+      });
 
-      const { data: session } = await apiWeb.post("/auth", body);
+      if (error) {
+        console.log("error", error);
+        throw error;
+      }
 
       setCookie({
         name: "sessionToken",
-        value: session.access_token,
-        expires_at: new Date(session.expires_at * 1000).toUTCString()
+        value: data.session?.access_token,
+        expires_at: data.session?.expires_at
+      });
+      setCookie({
+        name: "refreshToken",
+        value: data.session?.refresh_token,
+        expires_at: data.session?.expires_at
       });
 
-      router.push("/login");
+      router.push("/dashboard");
 
       toast.success("Login successfully");
     } catch (error) {
-      console.error(error);
-
       toast.error("Invalid credentials. Please try again.");
     }
   };
@@ -88,25 +101,22 @@ const useLogin = () => {
     toast.info("Not implemented yet");
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     try {
-      const sessionToken = getCookie({
-        name: "sessionToken"
-      });
+      await supabase.auth.signOut();
 
-      // apiWeb.post('/auth', {
-      //   action: "sign-out",
-      //   sessionToken,
-      //   })
-
-      setCookie({
-        name: "sessionToken",
-        value: "",
-        expires_at: new Date().toUTCString()
-      });
+      // setCookie({
+      //   name: "sessionToken",
+      //   value: "",
+      //   expires_at: 0
+      // });
+      // setCookie({
+      //   name: "refreshToken",
+      //   value: "",
+      //   expires_at: 0
+      // });
 
       router.push("/login");
-
       toast.info("Logout successfully");
     } catch (error) {
       console.error(error);

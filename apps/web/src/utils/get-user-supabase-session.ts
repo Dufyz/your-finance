@@ -7,7 +7,7 @@ export async function getUserSupabaseSession(request: NextRequest, sessionToken:
       headers: request.headers,
     },
   })
-
+  
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
