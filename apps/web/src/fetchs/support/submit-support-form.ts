@@ -1,3 +1,4 @@
+import api from "@/config/api";
 import { toast } from "sonner";
 
 export default async function submitSupportForm({ user_id, category_id, message }: {
@@ -12,7 +13,7 @@ export default async function submitSupportForm({ user_id, category_id, message 
     };
 
     try {
-        await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/support`, {
+        await api(`/support`, {
             method: "POST",
             body: JSON.stringify(body)
         });

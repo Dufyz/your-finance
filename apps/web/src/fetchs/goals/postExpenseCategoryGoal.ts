@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const postExpenseCategoryGoal = async ({
@@ -17,7 +18,7 @@ export const postExpenseCategoryGoal = async ({
         target_value
     });
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/goals/categories`, {
+    const response = await api(`/goals/categories`, {
         body,
         method: "POST",
     });

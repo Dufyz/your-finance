@@ -1,3 +1,5 @@
+import api from "@/config/api";
+
 export default async function validatePassword({ id, email, password }: {
     id: number;
     email: string;
@@ -5,7 +7,7 @@ export default async function validatePassword({ id, email, password }: {
 }) {
     const body = JSON.stringify({ id, email, password });
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/auth/validate-password`, {
+    const response = await api(`/auth/validate-password`, {
         method: 'POST',
         body,
     });

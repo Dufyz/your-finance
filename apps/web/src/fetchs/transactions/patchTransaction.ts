@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const patchTransaction = async ({ id, wallet_id, card_id, category_id, value, description, type, transaction_date }: {
@@ -16,7 +17,7 @@ export const patchTransaction = async ({ id, wallet_id, card_id, category_id, va
         id, wallet_id, card_id, category_id, value, description, type, transaction_date
     })
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions`, {
+    const response = await api(`/transactions`, {
         method: "PATCH",
         body,
     });

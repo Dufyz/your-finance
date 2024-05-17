@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export default async function patchWallet({
@@ -26,7 +27,7 @@ export default async function patchWallet({
         is_main
     })
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/wallets`, {
+    const response = await api(`/wallets`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"

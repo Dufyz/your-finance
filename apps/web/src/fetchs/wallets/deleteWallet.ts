@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const deleteWallet = async ({ id }: {
@@ -9,7 +10,7 @@ export const deleteWallet = async ({ id }: {
         id
     })
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/wallets`, {
+    const response = await api(`/wallets`, {
         method: "DELETE",
         body,
     });

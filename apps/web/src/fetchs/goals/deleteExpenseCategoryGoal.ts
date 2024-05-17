@@ -1,13 +1,14 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
+import api from "../../config/api";
 
 export const deleteExpenseCategoryGoal = async ({
     id,
 }: {
     id: number;
 }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/goals/categories/${id}`, {
+    const response = await api(`/goals/categories/${id}`, {
         method: "DELETE",
     });
     

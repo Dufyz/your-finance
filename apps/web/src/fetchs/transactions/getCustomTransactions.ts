@@ -1,5 +1,7 @@
 "use server";
 
+import api from "@/config/api";
+
 export const getCustomTransactions = async ({
     user_id,
     date_from,
@@ -9,7 +11,7 @@ export const getCustomTransactions = async ({
     date_from: Date | undefined;
     date_to: Date | undefined;
 }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions?user_id=${user_id}&tab=custom&date_from=${date_from}&date_to=${date_to}`, {
+    const response = await api(`/transactions?user_id=${user_id}&tab=custom&date_from=${date_from}&date_to=${date_to}`, {
         method: "GET",
         next: {
             tags: ["get-custom-transactions"]

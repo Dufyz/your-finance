@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const postWallet = async ({ user_id, bank_id, nickname, type, initial_balance, is_main }: {
@@ -19,7 +20,7 @@ export const postWallet = async ({ user_id, bank_id, nickname, type, initial_bal
         is_main
     })
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/wallets`, {
+    const response = await api(`/wallets`, {
         method: "POST",
         body,
     });

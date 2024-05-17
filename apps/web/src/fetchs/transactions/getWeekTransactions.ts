@@ -1,11 +1,13 @@
 "use server";
 
+import api from "@/config/api";
+
 export const getWeekTransactions = async ({
     user_id
 }: {
     user_id: number;
 }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions?user_id=${user_id}&tab=week`, {
+    const response = await api(`/transactions?user_id=${user_id}&tab=week`, {
         method: "GET",
         next: {
             tags: ["get-week-transactions"]

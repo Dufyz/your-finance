@@ -1,5 +1,6 @@
 "use server"
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 interface IPatchUser {
@@ -16,7 +17,7 @@ export default async function patchUser({ id, name, email, password, currency, i
 
   const body = JSON.stringify({ id, name, email, password, currency, is_dark_mode });
 
-  await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/user`, {
+  await api(`/user`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json"

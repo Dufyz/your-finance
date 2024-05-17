@@ -1,5 +1,6 @@
 "use server";
 
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const putExpenseCategoryGoal = async ({
@@ -16,7 +17,7 @@ export const putExpenseCategoryGoal = async ({
         target_value
     });
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/goals/categories/${id}`, {
+    const response = await api(`/goals/categories/${id}`, {
         body,
         method: "PUT",
     });
