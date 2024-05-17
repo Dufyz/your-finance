@@ -1,7 +1,6 @@
-import supabase from "@/config/supabase";
-import setCookie from "@/utils/set-cookie";
+import supabaseClient from "@/utils/supabase/supabaseClient";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 interface IHandleSignUp {
   name: string;
@@ -23,7 +22,7 @@ const useLogin = () => {
 
   const handleSingUp = async ({ name, email, password }: IHandleSignUp) => {
     try {
-      const {data, error} = await supabase.auth.signUp({
+      const { error } = await supabaseClient.auth.signUp({
         email,
         password,
         options: {
@@ -32,34 +31,20 @@ const useLogin = () => {
           }
         }
       });
-     
-      if (error) {
-        console.log("error", error);
-        throw error;
-      }
 
-      setActiveTab("sign-in");
+      if (error) throw error;
 
-      setCookie({
-        name: "sessionToken",
-        value: data.session?.access_token,
-        expires_at: data.session?.expires_at
-      });
-      setCookie({
-        name: "refreshToken",
-        value: data.session?.refresh_token,
-        expires_at: data.session?.expires_at
-      });
+      router.push("/login");
 
       toast.success("User created successfully");
     } catch (error) {
+      console.error("error", error);
+
       const errorStatus = error?.response?.status;
 
-      if (errorStatus === 409) {
-        toast.error("User already registered");
-      }
+      if (errorStatus === 409) return toast.error("User already registered")
 
-      console.error(error);
+      toast.error("Error to create user. Please try again.");
     }
   };
 
@@ -68,31 +53,16 @@ const useLogin = () => {
     password,
   }: IHandleSignin) => {
     try {
-      const {data, error} = await supabase.auth.signInWithPassword({
+      const { error } = await supabaseClient.auth.signInWithPassword({
         email,
         password
       });
 
-      if (error) {
-        console.log("error", error);
-        throw error;
-      }
-
-      setCookie({
-        name: "sessionToken",
-        value: data.session?.access_token,
-        expires_at: data.session?.expires_at
-      });
-      setCookie({
-        name: "refreshToken",
-        value: data.session?.refresh_token,
-        expires_at: data.session?.expires_at
-      });
-
-      router.push("/dashboard");
+      if (error) throw error;
 
       toast.success("Login successfully");
     } catch (error) {
+      console.error("error", error);
       toast.error("Invalid credentials. Please try again.");
     }
   };
@@ -103,25 +73,37 @@ const useLogin = () => {
 
   const handleLogout = async () => {
     try {
-      await supabase.auth.signOut();
+      const { error } = await supabaseClient.auth.signOut();
 
-      // setCookie({
-      //   name: "sessionToken",
-      //   value: "",
-      //   expires_at: 0
-      // });
-      // setCookie({
-      //   name: "refreshToken",
-      //   value: "",
-      //   expires_at: 0
-      // });
+      if (error) throw error;
 
-      router.push("/login");
       toast.info("Logout successfully");
     } catch (error) {
       console.error(error);
+      toast.error("Error to logout. Please try again.");
     }
   };
+
+
+  useEffect(() => {
+    supabaseClient.auth.onAuthStateChange((event, session) => {
+      if (event === "SIGNED_IN") {
+        router.push("/dashboard");
+      }
+
+      if (event === "SIGNED_OUT") {
+        router.push("/login");
+      }
+
+      // if (event === "PASSWORD_RECOVERY") {
+      //   toast.success("Password recovery email sent");
+      // }
+    });
+
+    return () => {
+      supabaseClient.auth.onAuthStateChange((event, session) => { });
+    };
+  })
 
   return {
     activeTab,

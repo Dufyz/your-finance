@@ -1,13 +1,13 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function getUserSupabaseSession(request: NextRequest, sessionToken: string | undefined) {
+export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({
     request: {
       headers: request.headers,
     },
   })
-  
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -54,6 +54,14 @@ export async function getUserSupabaseSession(request: NextRequest, sessionToken:
     }
   )
 
+  const {error} = await supabase.auth.getUser();
 
-  return await supabase.auth.getUser(sessionToken)
+  if (error && request.nextUrl.pathname !== "/login") {
+    const url = request.nextUrl.clone()
+    url.pathname = '/login'
+
+    response = NextResponse.redirect(url)
+  }
+
+  return response
 }
