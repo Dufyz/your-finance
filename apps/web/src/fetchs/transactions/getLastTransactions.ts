@@ -1,11 +1,13 @@
 "use server";
 
+import api from "@/config/api";
+
 export const getLastTransactions = async ({
     user_id
 }: {
     user_id: number;
 }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/transactions?user_id=${user_id}&tab=last`, {
+    const response = await api(`/transactions?user_id=${user_id}&tab=last`, {
         method: "GET",
         next: {
             tags: ["get-last-transactions"]

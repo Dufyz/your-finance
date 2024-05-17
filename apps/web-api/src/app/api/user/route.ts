@@ -1,9 +1,11 @@
 import { PatchUser } from "@/services/user/patch-user.service";
 import { ShowUser } from "@/services/user/show-user.service";
+import getUserFromRequest from "@/utils/getUserFromRequest";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-    //TODO - get user id from request
+    const reqUser = getUserFromRequest(request);
+
     const id = 1;
 
     try {

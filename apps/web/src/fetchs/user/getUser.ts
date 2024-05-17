@@ -1,9 +1,11 @@
+import api from "@/config/api";
+
 export default async function getUser() {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/user`, {
+  const response = await api('/user', {
     next: {
       tags: ["user"],
-    }
-  })
+    },
+  });
 
-  return response.json()
+  return response.json();
 }

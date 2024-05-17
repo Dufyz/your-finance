@@ -1,4 +1,4 @@
-import supabaseClient from "@/utils/supabase/supabaseClient";
+import supabaseClient from "@/config/supabase/supabaseClient";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";

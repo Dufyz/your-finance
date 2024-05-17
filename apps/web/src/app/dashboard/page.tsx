@@ -44,7 +44,7 @@ export default async function DashboardPage() {
             <TotalInvoices total={totalInvoices} currencyCC={currencyCC} />
           </div>
           <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-            <RecentTransactions transactions={lastTransactions} user={user} wallets={wallets} />
+            {/* <RecentTransactions transactions={lastTransactions} user={user} wallets={wallets} /> */}
             <Goals />
           </div>
         </main>

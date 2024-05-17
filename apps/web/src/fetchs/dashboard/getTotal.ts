@@ -1,11 +1,13 @@
 "use server";
 
+import api from "@/config/api";
+
 export const getTotal = async ({
     user_id,
 }: {
     user_id: number;
 }) => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_WEB_API}/api/dashboard/totals?user_id=${user_id}`, {
+    const response = await api(`/dashboard/totals?user_id=${user_id}`, {
         method: "GET",
         next: {
             tags: ["get-totals"]

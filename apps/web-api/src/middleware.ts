@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import supabase from "./config/supabase";
 
 export const corsHeaders = {
   "Content-Type": "application/json",
@@ -10,10 +11,26 @@ export const corsHeaders = {
   "Access-Control-Allow-Credentials": "true",
 };
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
+  const sessionToken = request.headers.get("Authorization")?.split(" ")[1];
+
+  if (!sessionToken) {
+    return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
+  }
+
+  const {data, error} = await supabase.auth.getUser(sessionToken);
+
+  if (error) {
+    return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
+  }
+
   if (request.method === "OPTIONS") {
     return NextResponse.next();
   }
 
-  return NextResponse.next();
+  const response = NextResponse.next();
+
+  response.headers.set('X-User-Data', JSON.stringify(data.user));
+  
+  return response;
 }
