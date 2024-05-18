@@ -11,7 +11,10 @@ import Custom from "./custom";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 
-export default function Tabs({ wallets, user }: {
+export default function Tabs({
+  wallets,
+  user
+}: {
   wallets: Wallet[];
   user: User;
 }) {

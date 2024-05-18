@@ -2,10 +2,9 @@ import FormatMoney from "@/utils/format-money";
 import { InfoCard } from "./components/InfoCard";
 import { getNumberWithSignal } from "@/utils/get-number-with-signal";
 
-
 export default function TotalExpenses({
   total,
-  currencyCC,
+  currencyCC
 }: {
   total: {
     value: number;
@@ -22,7 +21,9 @@ export default function TotalExpenses({
         <div>
           <FormatMoney value={total.value} currency={currencyCC} />
         </div>
-        <p className="text-xs text-muted-foreground">{getNumberWithSignal(total.percentage)} from last month</p>
+        <p className="text-muted-foreground text-xs">
+          {getNumberWithSignal(total.percentage)} from last month
+        </p>
       </InfoCard.Content>
     </InfoCard.Root>
   );

@@ -1,13 +1,11 @@
-const getCookie = ({ name }: {
-  name: string
-}) => {
+const getCookie = ({ name }: { name: string }) => {
   if (document) {
     let cname = name + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
-    let ca = decodedCookie.split(';');
+    let ca = decodedCookie.split(";");
     for (let i = 0; i < ca.length; i++) {
       let c = ca[i];
-      while (c.charAt(0) == ' ') {
+      while (c.charAt(0) == " ") {
         c = c.substring(1);
       }
       if (c.indexOf(cname) == 0) {
@@ -16,7 +14,6 @@ const getCookie = ({ name }: {
     }
   }
   return "";
-}
+};
 
 export default getCookie;
-

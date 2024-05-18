@@ -7,7 +7,9 @@ import { Inter } from "next/font/google";
 
 import { Toaster } from "sonner";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"]
+});
 
 export const metadata: Metadata = {
   title: "Your Finance",
@@ -19,10 +21,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   return (
     <html lang="en">
-      <Toaster position="top-center" closeButton/>
+      <Toaster position="top-center" closeButton />
       <body className={inter.className}>
         <ThemeProvider
           attribute="class"

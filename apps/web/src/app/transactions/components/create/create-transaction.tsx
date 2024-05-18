@@ -15,11 +15,13 @@ import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 import CreateWalletTransaction from "./create-wallet-transaction";
 
-const CreateTransaction = ({ wallets, user }: {
-  user: User,
-  wallets: Wallet[]
+const CreateTransaction = ({
+  wallets,
+  user
+}: {
+  user: User;
+  wallets: Wallet[];
 }) => {
-
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -49,7 +51,6 @@ const CreateTransaction = ({ wallets, user }: {
           {/* <TabsContent value="card">
             <TabCreateCardTransaction />
           </TabsContent> */}
-
         </Tabs>
       </DialogContent>
     </Dialog>

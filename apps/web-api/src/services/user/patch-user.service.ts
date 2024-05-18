@@ -8,14 +8,31 @@ interface IPatchUserService {
   currency?: string;
 }
 
-export const PatchUser = async ({ user_id, name, email, password, currency }: IPatchUserService) => {
-  const { error } = await supabase.from("users").update({ name, email, currency }).eq("id", user_id).single();
-  const { data: user, error: errorUser } = await supabase.from("users").select("*").eq("id", user_id).single();
+export const PatchUserService = async ({
+  user_id,
+  name,
+  email,
+  password,
+  currency
+}: IPatchUserService) => {
+  const { error } = await supabase
+    .from("users")
+    .update({ name, email, currency })
+    .eq("id", user_id)
+    .single();
+  const { data: user, error: errorUser } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", user_id)
+    .single();
 
   const auth_id = user?.auth_id;
 
   if (email) {
-    const { error: errorAdmin } = await supabase.auth.admin.updateUserById(auth_id, { email })
+    const { error: errorAdmin } = await supabase.auth.admin.updateUserById(
+      auth_id,
+      { email }
+    );
 
     if (errorAdmin) {
       console.log("errorAdmin", errorAdmin);
@@ -25,9 +42,12 @@ export const PatchUser = async ({ user_id, name, email, password, currency }: IP
   }
 
   if (password) {
-    const { error: errorAdmin } = await supabase.auth.admin.updateUserById(auth_id, {
-      password
-    });
+    const { error: errorAdmin } = await supabase.auth.admin.updateUserById(
+      auth_id,
+      {
+        password
+      }
+    );
 
     if (errorAdmin) {
       console.log("errorAdmin", errorAdmin);

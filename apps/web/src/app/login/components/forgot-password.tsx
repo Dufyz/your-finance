@@ -55,7 +55,7 @@ const ForgotPassword = ({ setActiveTab }: IForgotPasswordProps) => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="hover:bg-primary-hover w-full rounded-[8px] bg-primary px-3 py-4 font-bold text-white"
+              className="hover:bg-primary-hover bg-primary w-full rounded-[8px] px-3 py-4 font-bold text-white"
             >
               Recover
             </button>

@@ -10,5 +10,5 @@ export const features = {
   customCategories: "Custom Categories",
   customGoals: "Custom Goals",
   customReports: "Custom Reports",
-  customAttachments: "Custom Attachments",
-}
+  customAttachments: "Custom Attachments"
+};

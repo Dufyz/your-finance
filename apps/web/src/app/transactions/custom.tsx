@@ -33,12 +33,15 @@ import { subDays } from "date-fns";
 import { getCustomTransactions } from "@/fetchers/transactions/getCustomTransactions";
 import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
 
-export default function Custom({ wallets, user }: {
+export default function Custom({
+  wallets,
+  user
+}: {
   wallets: Wallet[];
   user: User;
 }) {
   // TODO revalidate the transactions when some transaction is created or updated
-  
+
   const [transactions, setTransactions] = useState<Transaction[]>([]);
 
   const [date, setDate] = useState<DateRange | undefined>({
@@ -46,7 +49,9 @@ export default function Custom({ wallets, user }: {
     to: new Date()
   });
 
-  const currencyCC = currencys.find(currency => currency.cc === user.currency)?.cc || currencys.find(currency => currency.cc === "USD")?.cc;
+  const currencyCC =
+    currencys.find((currency) => currency.cc === user.currency)?.cc ||
+    currencys.find((currency) => currency.cc === "USD")?.cc;
 
   const handleDateChange = async () => {
     if (!date?.to || !date?.from) return;
@@ -63,7 +68,6 @@ export default function Custom({ wallets, user }: {
   useEffect(() => {
     handleDateChange();
   }, [JSON.stringify(date)]);
-
 
   return (
     <TabsContent value="custom">
@@ -94,35 +98,52 @@ export default function Custom({ wallets, user }: {
             </TableHeader>
             <TableBody>
               {transactions.map((transaction: Transaction, index: number) => {
-                const wallet = wallets.find(wallet => wallet.id === transaction.wallet_id) || { nickname: "Unknown" };
+                const wallet = wallets.find(
+                  (wallet) => wallet.id === transaction.wallet_id
+                ) || { nickname: "Unknown" };
 
-                const category = transactionCategories.find(category => category.id === transaction.category_id) || { name: "Unknown" };
+                const category = transactionCategories.find(
+                  (category) => category.id === transaction.category_id
+                ) || { name: "Unknown" };
 
                 return (
                   <TableRow key={index}>
                     <TableCell>
-                      <div className="font-medium">{transaction.description}</div>
-                      <div className="hidden text-sm text-muted-foreground md:inline">
+                      <div className="font-medium">
+                        {transaction.description}
+                      </div>
+                      <div className="text-muted-foreground hidden text-sm md:inline">
                         {wallet.nickname}
                       </div>
                     </TableCell>
-                    <TableCell className="hidden sm:table-cell">{category.name}</TableCell>
+                    <TableCell className="hidden sm:table-cell">
+                      {category.name}
+                    </TableCell>
                     <TableCell className="hidden sm:table-cell">
                       <Badge className="text-xs" variant="secondary">
                         {capitalizeFirstLetter(transaction.type)}
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {new Date(transaction.transaction_date).toLocaleDateString()}
+                      {new Date(
+                        transaction.transaction_date
+                      ).toLocaleDateString()}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      <FormatMoney value={transaction.value} currency={currencyCC} />
+                      <FormatMoney
+                        value={transaction.value}
+                        currency={currencyCC}
+                      />
                     </TableCell>
                     <TableCell className="flex h-[72px] items-center justify-end">
-                      <ToolsTransaction transaction={transaction} wallets={wallets} user={user} />
+                      <ToolsTransaction
+                        transaction={transaction}
+                        wallets={wallets}
+                        user={user}
+                      />
                     </TableCell>
                   </TableRow>
-                )
+                );
               })}
             </TableBody>
           </Table>

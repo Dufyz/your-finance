@@ -24,7 +24,6 @@ export default function DateRangePicker({
   date,
   setDate
 }: IDateRangePicker) {
-
   return (
     <div className={cn("grid gap-2", className)}>
       <Popover>
@@ -60,9 +59,7 @@ export default function DateRangePicker({
             selected={date}
             onSelect={setDate}
             numberOfMonths={2}
-            disabled={(date) =>
-              date > new Date()
-            }
+            disabled={(date) => date > new Date()}
           />
         </PopoverContent>
       </Popover>

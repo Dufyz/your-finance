@@ -7,9 +7,12 @@ import { User } from "@/types/User";
 import FormatMoney from "@/utils/format-money";
 import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
 
-export default function WalletCard({ wallet, user }: {
+export default function WalletCard({
+  wallet,
+  user
+}: {
   wallet: Wallet;
-  user: User
+  user: User;
 }) {
   let bank;
 
@@ -18,7 +21,7 @@ export default function WalletCard({ wallet, user }: {
   }
 
   if (!bank || !wallet.bank_id) {
-    bank = banks[0]
+    bank = banks[0];
   }
 
   return (
@@ -53,7 +56,12 @@ export default function WalletCard({ wallet, user }: {
           <div className="flex flex-col space-y-1.5">
             <p>
               <b>Balance: </b>
-              <span className="px-1"><FormatMoney value={wallet.current_balance} currency={user.currency} /></span>
+              <span className="px-1">
+                <FormatMoney
+                  value={wallet.current_balance}
+                  currency={user.currency}
+                />
+              </span>
             </p>
           </div>
         </div>

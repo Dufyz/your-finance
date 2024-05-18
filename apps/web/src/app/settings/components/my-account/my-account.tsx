@@ -11,13 +11,14 @@ import ChangeCurrency from "./change-currency";
 import getUser from "@/fetchers/user/getUser";
 import { currencys } from "@/data/currencys";
 
-
 export default async function MyAccount() {
   //TODO Implementar features comentadas
 
-  const user = await getUser()
+  const user = await getUser();
 
-  const userCurrency = currencys.find((currency) => currency.cc === user.currency);
+  const userCurrency = currencys.find(
+    (currency) => currency.cc === user.currency
+  );
   const userCurrencyString = `${userCurrency?.cc} (${userCurrency?.symbol})`;
 
   return (
@@ -32,18 +33,16 @@ export default async function MyAccount() {
               <span className="text-muted-foreground">{user.name}</span>
             </div>
             <div>
-              <ChangeName userData={user} />
+              <ChangeName user={user} />
             </div>
           </div>
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Email</h3>
-              <span className="text-muted-foreground">
-                {user.email}
-              </span>
+              <span className="text-muted-foreground">{user.email}</span>
             </div>
             <div>
-              <ChangeEmail />
+              <ChangeEmail user={user} />
             </div>
           </div>
         </div>
@@ -61,7 +60,7 @@ export default async function MyAccount() {
               </p>
             </div>
             <div>
-              <ChangePassword />
+              <ChangePassword user={user} />
             </div>
           </div>
           {/* <div className="flex w-full items-center justify-between">
@@ -85,10 +84,12 @@ export default async function MyAccount() {
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Currency</h3>
-              <span className="text-muted-foreground">{userCurrencyString}</span>
+              <span className="text-muted-foreground">
+                {userCurrencyString}
+              </span>
             </div>
             <div>
-              <ChangeCurrency />
+              <ChangeCurrency user={user} />
             </div>
           </div>
           {/* <div className="flex w-full items-center justify-between">
@@ -114,24 +115,23 @@ export default async function MyAccount() {
         </div>
       </section>
 
-      {/* <section className="w-full">
+      <section className="w-full">
         <h1 className="text-bold text-2xl text-black">Danger Zone</h1>
         <Separator className="my-4" />
         <div className="flex flex-col items-start justify-center gap-8">
           <div className="flex w-full items-center justify-between">
             <div>
               <h3 className="font-bold">Delete account</h3>
-              <span className="flex max-w-2xl text-wrap text-start text-muted-foreground">
-                Your account will be deleted. You will have 30 days to recover
-                it; after that, the account will be permanently deleted.
+              <span className="text-muted-foreground flex max-w-2xl text-wrap text-start">
+                Your account will be deleted.
               </span>
             </div>
             <div>
-              <DeleteAccount />
+              <DeleteAccount user={user} />
             </div>
           </div>
         </div>
-      </section> */}
+      </section>
     </main>
   );
-};
+}

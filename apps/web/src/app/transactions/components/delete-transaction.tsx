@@ -11,9 +11,8 @@ export default function DeleteTransaction({
 }: {
   handleDialogItemSelect: any;
   handleDialogItemOpenChange: any;
-  transaction: Transaction
+  transaction: Transaction;
 }) {
-
   const handleDeleteTransaction = async () => {
     try {
       await deleteTransaction({
@@ -25,7 +24,7 @@ export default function DeleteTransaction({
       console.error(error);
       toast.error("An error occurred while deleting the transaction.");
     }
-  }
+  };
   return (
     <DialogItem
       triggerChildren="Delete"
@@ -48,7 +47,10 @@ export default function DeleteTransaction({
           </button>
         </Dialog.Close>
         <Dialog.Close asChild>
-          <button onClick={handleDeleteTransaction} className="DialogButton flex w-full flex-1 items-center justify-center rounded-md bg-red-600 p-3 px-6  text-white hover:bg-red-700">
+          <button
+            onClick={handleDeleteTransaction}
+            className="DialogButton flex w-full flex-1 items-center justify-center rounded-md bg-red-600 p-3 px-6  text-white hover:bg-red-700"
+          >
             Delete
           </button>
         </Dialog.Close>

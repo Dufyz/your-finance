@@ -32,27 +32,34 @@ import { postExpenseCategoryGoal } from "@/fetchers/goals/postExpenseCategoryGoa
 const CreateExpenseCategoryGoalSchema = z.object({
   user_id: z.number().int(),
   category_id: z.number().int(),
-  target_value: z.coerce.number().min(0.00, "Required")
-})
+  target_value: z.coerce.number().min(0.0, "Required")
+});
 
-type CreateExpenseCategoryGoalType = z.infer<typeof CreateExpenseCategoryGoalSchema>;
+type CreateExpenseCategoryGoalType = z.infer<
+  typeof CreateExpenseCategoryGoalSchema
+>;
 
-export default function CreateExpenseCategoryGoal({user}: {
-  user: User
-}) {
+export default function CreateExpenseCategoryGoal({ user }: { user: User }) {
   const form = useForm<CreateExpenseCategoryGoalType>({
     resolver: zodResolver(CreateExpenseCategoryGoalSchema),
     defaultValues: {
       user_id: user.id,
       category_id: 1,
-      target_value: 0.00,
+      target_value: 0.0
     }
   });
 
-  const { handleSubmit, control, reset, formState: { errors } } = form;
+  const {
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors }
+  } = form;
 
   const handleCreateExpenseCategoryGoal = async ({
-    user_id, category_id, target_value
+    user_id,
+    category_id,
+    target_value
   }: CreateExpenseCategoryGoalType) => {
     try {
       const newExpenseCategoryGoal = await postExpenseCategoryGoal({
@@ -65,10 +72,12 @@ export default function CreateExpenseCategoryGoal({user}: {
 
       toast.success("Expense category goal created successfully.");
     } catch (error) {
-      toast.error("An error occurred while creating the expense category goal.");
+      toast.error(
+        "An error occurred while creating the expense category goal."
+      );
       console.error(error);
     }
-  }
+  };
 
   return (
     <Dialog>
@@ -83,9 +92,12 @@ export default function CreateExpenseCategoryGoal({user}: {
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <Form {...form}>
-          <form onSubmit={handleSubmit(handleCreateExpenseCategoryGoal)} className="w-full flex flex-col items-start justify-start gap-6">
+          <form
+            onSubmit={handleSubmit(handleCreateExpenseCategoryGoal)}
+            className="flex w-full flex-col items-start justify-start gap-6"
+          >
             <DialogHeader className="w-full" />
-            <div className="w-full flex flex-col gap-6">
+            <div className="flex w-full flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="category">Category</Label>
                 {errors.category_id?.message && (
@@ -96,18 +108,29 @@ export default function CreateExpenseCategoryGoal({user}: {
                     control={control}
                     name="category_id"
                     render={({ field }) => (
-                      <Select {...field} onValueChange={(value) => field.onChange(Number(value))} value={
-                        field.value === null ? "" : field.value.toString() === "0" ? "" : field.value.toString()
-                      }>
+                      <Select
+                        {...field}
+                        onValueChange={(value) => field.onChange(Number(value))}
+                        value={
+                          field.value === null
+                            ? ""
+                            : field.value.toString() === "0"
+                              ? ""
+                              : field.value.toString()
+                        }
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a wallet" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
                             {transactionCategories.map((category, index) => (
-                              <SelectItem key={index} value={category.id.toString()}>
+                              <SelectItem
+                                key={index}
+                                value={category.id.toString()}
+                              >
                                 <div className="flex items-center gap-2">
-                                  <div className="w-8 h-8 flex items-center justify-center">
+                                  <div className="flex h-8 w-8 items-center justify-center">
                                     {renderTablerIcon({
                                       icon: category.icon,
                                       size: 16
@@ -122,7 +145,8 @@ export default function CreateExpenseCategoryGoal({user}: {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                    )} />
+                    )}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -130,7 +154,12 @@ export default function CreateExpenseCategoryGoal({user}: {
                 {errors.target_value?.message && (
                   <FormError message={errors.target_value.message} />
                 )}
-                <MoneyInput form={form} name="target_value" label="Target value" placeholder="R$ 0,00" />
+                <MoneyInput
+                  form={form}
+                  name="target_value"
+                  label="Target value"
+                  placeholder="R$ 0,00"
+                />
               </div>
             </div>
 

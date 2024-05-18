@@ -17,38 +17,30 @@ import {
   SelectTrigger,
   SelectValue
 } from "@/components/ui/select";
-import { useUserStore } from "@/stores/User";
 import patchUser from "@/fetchers/user/patchUser";
 import { toast } from "sonner";
 import { useState } from "react";
 import { currencys } from "@/data/currencys";
+import { User } from "@/types/User";
 
-const ChangeCurrency = () => {
-  const user = useUserStore((state) => state.user);
-  const setUser = useUserStore((state) => state.setUser);
-
+export default function ChangeCurrency({ user }: { user: User }) {
   const [newCurrency, setNewCurrency] = useState<string>(user.currency);
 
-  const currentCurrency = currencys.find((currency) => currency.cc === user.currency);
+  const currentCurrency = currencys.find(
+    (currency) => currency.cc === user.currency
+  );
 
   const handleChangeCurrency = async () => {
     try {
       await patchUser({
         user_id: user.id,
         currency: newCurrency
-      })
-
-      setUser({
-        user: {
-          ...user,
-          currency: newCurrency
-        }
       });
     } catch (error) {
       console.error(error);
       toast.error("An error occurred while changing the currency.");
     }
-  }
+  };
 
   return (
     <Dialog>
@@ -63,8 +55,10 @@ const ChangeCurrency = () => {
         <div className="flex w-full flex-col items-start justify-start gap-4">
           <div className="flex w-full items-center justify-start">
             <p className="text-sm">
-              Your current curreny is: {" "}
-              <span className="text-sm font-bold">{currentCurrency?.cc} ({currentCurrency?.symbol})</span>
+              Your current curreny is:{" "}
+              <span className="text-sm font-bold">
+                {currentCurrency?.cc} ({currentCurrency?.symbol})
+              </span>
             </p>
           </div>
           <div className="flex w-full items-center space-x-2">
@@ -77,9 +71,7 @@ const ChangeCurrency = () => {
                   {currencys.map((currency, index) => (
                     <SelectItem key={index} value={currency.cc}>
                       <div className="flex items-center justify-center gap-1">
-                        <span>
-                          {currency.cc}
-                        </span>
+                        <span>{currency.cc}</span>
                         <span className="text-sm font-bold">
                           {currency.symbol}
                         </span>
@@ -105,6 +97,4 @@ const ChangeCurrency = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default ChangeCurrency;
+}

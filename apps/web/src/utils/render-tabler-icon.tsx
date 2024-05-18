@@ -1,15 +1,15 @@
-import * as tablerIcons from '@tabler/icons-react';
+import * as tablerIcons from "@tabler/icons-react";
 
 export default function renderTablerIcon({
-    icon,
-    size,
-    color,
+  icon,
+  size,
+  color
 }: {
-    icon: string;
-    size: number;
-    color?: string;
+  icon: string;
+  size: number;
+  color?: string;
 }) {
-    const Icon = tablerIcons[icon];
+  const Icon = tablerIcons[icon];
 
-    return <Icon size={size} color={color} />;
+  return <Icon size={size} color={color} />;
 }

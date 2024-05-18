@@ -1,103 +1,59 @@
 module.exports = {
   env: {
-    browser: true,
-    es2021: true
+    es2021: true,
+    node: true,
+    jest: true
   },
   extends: [
-    "airbnb",
-    "plugin:react/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-    "plugin:import/typescript",
-    "plugin:react-hooks/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
+    "airbnb-base",
     "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
     "prettier"
   ],
-  overrides: [],
+  plugins: ["@typescript-eslint", "prettier"],
+  parser: "@typescript-eslint/parser",
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 12,
     sourceType: "module"
   },
-  plugins: [
-    "react",
-    "sort-keys-fix",
-    "import",
-    "@typescript-eslint",
-    "typescript-sort-keys"
-  ],
+  rules: {
+    "no-eval": "off",
+    camelcase: "off",
+    "class-methods-use-this": "off",
+    "consistent-return": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "_" }],
+    "import/prefer-default-export": "off",
+    "no-console": "warn",
+    "no-param-reassign": "off",
+    "no-use-before-define": "warn",
+    "no-shadow": "off",
+    "@typescript-eslint/no-explicit-any": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto"
+      }
+    ],
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        ts: "never"
+      }
+    ],
+    quotes: [
+      1,
+      "double",
+      {
+        avoidEscape: true
+      }
+    ]
+  },
   settings: {
     "import/resolver": {
-      typescript: {},
-      node: {
-        extensions: [".js", ".jsx", ".ts", ".tsx"],
-        paths: ["src"]
-      }
+      typescript: {}
     }
-  },
-  globals: {
-    React: true,
-    google: true,
-    mount: true,
-    mountWithRouter: true,
-    shallow: true,
-    shallowWithRouter: true,
-    context: true,
-    expect: true,
-    jsdom: true,
-    JSX: true
-  },
-  rules: {
-    "react/jsx-filename-extension": [
-      1,
-      { extensions: [".js", ".jsx", ".tsx"] }
-    ],
-    "import/extensions": ["off"],
-    "linebreak-style": 0,
-    "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "function-paren-newline": "off",
-    ident: "off",
-    "no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "react/no-unused-prop-types": "off",
-    "react/require-default-props": "off",
-    "react/jsx-curly-newline": "off",
-    "no-useless-escape": "off",
-    "no-console": "off",
-    "import/namespace": "off",
-    "@typescript-eslint/no-empty-function": "off",
-    "import/default": "off",
-    "import/no-named-as-default": "off",
-    "import/no-named-as-default-member": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/prop-types": "off",
-    "import/prefer-default-export": "off",
-    "no-unsafe-optional-chaining": "off",
-    "no-plusplus": "off",
-    "no-param-reassign": "off",
-    "no-underscore-dangle": "off",
-    "consistent-return": "off",
-    "no-shadow": "off",
-    "react/function-component-definition": "off",
-    "import/no-cycle": "off",
-    "react/jsx-uses-react": "off",
-    "react/react-in-jsx-scope": "off",
-    "react/self-closing-comp": "warn",
-    "react/jsx-no-comment-textnodes": "off",
-    "react/no-unstable-nested-components": "off",
-    "react/display-name": "off",
-    "react/no-array-index-key": "off",
-    "jsx-a11y/img-redundant-alt": "off",
-    "prefer-regex-literals": "off",
-    "jsx-a11y/label-has-associated-control": "off",
-    "implicit-arrow-linebreak": "off",
-    "comma-dangle": "off",
-    quotes: ["warn", "double"],
-    "react/jsx-one-expression-per-line": "off",
-    "react/no-unescaped-entities": "off",
-    "max-len": "off",
-    "no-confusing-arrow": "off",
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["warn"],
-    "import/no-unresolved": "off"
   }
 };

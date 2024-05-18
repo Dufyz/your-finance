@@ -15,7 +15,7 @@ interface ISignInProps {
 
 const SignInSchema = z.object({
   email: z.string().email().toLowerCase(),
-  password: z.string().min(6, "Password must have at least 6 characters"),
+  password: z.string().min(6, "Password must have at least 6 characters")
 });
 
 type SignInSchemaType = z.infer<typeof SignInSchema>;
@@ -49,7 +49,7 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
     } catch (error) {
       return toast.error("Invalid credentials. Please try again.");
     }
-  }
+  };
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8">
       <form
@@ -106,7 +106,7 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
             <Button
               type="submit"
               disabled={!isValid}
-              className="w-full h-12 text-white text-base font-semibold rounded-[8px] flex items-center justify-center"
+              className="flex h-12 w-full items-center justify-center rounded-[8px] text-base font-semibold text-white"
             >
               Login
             </Button>

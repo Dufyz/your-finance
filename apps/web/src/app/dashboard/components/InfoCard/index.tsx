@@ -4,8 +4,8 @@ import Root from "./Root";
 import Title from "./Title";
 
 export const InfoCard = {
-    Root: Root,
-    Header: Header,
-    Title: Title,
-    Content: Content
-}
+  Root: Root,
+  Header: Header,
+  Title: Title,
+  Content: Content
+};

@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import patchUser from "@/fetchers/user/patchUser";
-import { useUserStore } from "@/stores/User";
+import { User } from "@/types/User";
 import isPasswordValid from "@/utils/is-password-valid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
@@ -20,60 +20,63 @@ import { z } from "zod";
 const ChangeEmailSchema = z.object({
   user_id: z.number(),
   email: z.string().email("Invalid email address").toLowerCase(),
-  password: z.string().min(6, "Password must have at least 6 characters"),
-})
+  password: z.string().min(6, "Password must have at least 6 characters")
+});
 
 type ChangeEmailSchemaType = z.infer<typeof ChangeEmailSchema>;
 
-export default function ChangeEmail() {
-  const setUser = useUserStore((state) => state.setUser);
-  const user = useUserStore((state) => state.user);
-
+export default function ChangeEmail({ user }: { user: User }) {
   const [isValidatingPassword, setIsValidatingPassword] = useState(true);
 
-  const { register, handleSubmit, formState: { errors } } = useForm<ChangeEmailSchemaType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<ChangeEmailSchemaType>({
     resolver: zodResolver(ChangeEmailSchema),
     values: {
       user_id: user.id,
       email: user.email,
-      password: "",
+      password: ""
     }
-  })
+  });
 
-  const handleChangeEmail = async ({ user_id, email }: {
+  const handleChangeEmail = async ({
+    user_id,
+    email
+  }: {
     user_id: number;
     email: string;
   }) => {
     try {
-
       await patchUser({ user_id, email });
-
-      setUser({
-        user: {
-          ...user,
-          email
-        }
-      })
 
       toast.success("Email changed successfully.");
     } catch (error) {
       console.log(error?.message);
       toast.error("Error changing email. Please try again.");
     }
-  }
+  };
 
-  const handleValidatePassword = async ({ user_id, email, password }: {
+  const handleValidatePassword = async ({
+    user_id,
+    email,
+    password
+  }: {
     user_id: number;
     email: string;
     password: string;
   }) => {
     if (isValidatingPassword) {
-      const isValid = await isPasswordValid({ user_id, email: user.email, password });
+      const isValid = await isPasswordValid({
+        user_id,
+        email: user.email,
+        password
+      });
 
-      if (isValid)
-        setIsValidatingPassword(false);
+      if (isValid) setIsValidatingPassword(false);
 
-      return
+      return;
     }
 
     if (!isValidatingPassword) {
@@ -86,13 +89,14 @@ export default function ChangeEmail() {
         return;
       }
     }
-  }
-
+  };
 
   return (
-    <Dialog onOpenChange={(value) => {
-      if (!value) setIsValidatingPassword(true);
-    }}>
+    <Dialog
+      onOpenChange={(value) => {
+        if (!value) setIsValidatingPassword(true);
+      }}
+    >
       <DialogTrigger asChild>
         <button className="rounded-md  bg-gray-800  p-2  text-sm text-white hover:bg-gray-900">
           Change email
@@ -105,19 +109,22 @@ export default function ChangeEmail() {
           <div className="flex w-full items-center justify-start">
             <p className="text-sm">
               Your current email is:{" "}
-              <span className="text-sm font-bold">
-                {user.email}
-              </span>
+              <span className="text-sm font-bold">{user.email}</span>
             </p>
           </div>
-          <form onSubmit={handleSubmit(handleValidatePassword)} className="w-full flex gap-4 flex-col items-start justify-center">
-            <div className="w-full flex flex-col items-start justify-start gap-4">
+          <form
+            onSubmit={handleSubmit(handleValidatePassword)}
+            className="flex w-full flex-col items-start justify-center gap-4"
+          >
+            <div className="flex w-full flex-col items-start justify-start gap-4">
               {isValidatingPassword && (
-                <div className="w-full grid flex-1 gap-2">
+                <div className="grid w-full flex-1 gap-2">
                   <label htmlFor="" className="text-sm">
                     Enter your password
                   </label>
-                  {errors.password?.message && <FormError message={errors.password?.message} />}
+                  {errors.password?.message && (
+                    <FormError message={errors.password?.message} />
+                  )}
                   <Input
                     {...register("password")}
                     type="password"
@@ -128,11 +135,13 @@ export default function ChangeEmail() {
               )}
               {!isValidatingPassword && (
                 <>
-                  <div className="w-full grid flex-1 gap-2">
+                  <div className="grid w-full flex-1 gap-2">
                     <label htmlFor="" className="text-sm">
                       Enter your new email
                     </label>
-                    {errors.email?.message && <FormError message={errors.email?.message} />}
+                    {errors.email?.message && (
+                      <FormError message={errors.email?.message} />
+                    )}
                     <Input
                       {...register("email")}
                       type="email"
@@ -143,20 +152,15 @@ export default function ChangeEmail() {
               )}
             </div>
 
-
             <button
               type="submit"
               className="w-full rounded-md bg-green-700 p-2 text-white"
             >
-              {
-                isValidatingPassword ? "Continuar" : "Save"
-              }
+              {isValidatingPassword ? "Continuar" : "Save"}
             </button>
-
           </form>
         </div>
-
       </DialogContent>
     </Dialog>
   );
-};
+}

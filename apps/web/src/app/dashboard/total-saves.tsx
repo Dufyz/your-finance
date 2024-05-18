@@ -4,7 +4,7 @@ import { getNumberWithSignal } from "@/utils/get-number-with-signal";
 
 export default function TotalSaves({
   total,
-  currencyCC,
+  currencyCC
 }: {
   total: {
     value: number;
@@ -18,10 +18,12 @@ export default function TotalSaves({
         <InfoCard.Title>Total Saves</InfoCard.Title>
       </InfoCard.Header>
       <InfoCard.Content>
-      <div>
-        <FormatMoney value={total.value} currency={currencyCC} />
-      </div>
-      <p className="text-xs text-muted-foreground">{getNumberWithSignal(total.percentage)} from last month</p>
+        <div>
+          <FormatMoney value={total.value} currency={currencyCC} />
+        </div>
+        <p className="text-muted-foreground text-xs">
+          {getNumberWithSignal(total.percentage)} from last month
+        </p>
       </InfoCard.Content>
     </InfoCard.Root>
   );

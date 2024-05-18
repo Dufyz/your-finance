@@ -36,12 +36,18 @@ const CreateWalletSchema = z.object({
   user_id: z.number().int(),
   bank_id: z.number().int(),
   nickname: z.string().min(6, "Nickname must have at least 6 characters"),
-  initial_balance: z.coerce.number().min(0.00, "Required"),
+  initial_balance: z.coerce.number().min(0.0, "Required"),
   is_main: z.boolean(),
-  type: z.string().refine((value) => (value === "saving" || value === "current" || value === "wallet"), {
-    message: "You must select a valid wallet type."
-  })
-})
+  type: z
+    .string()
+    .refine(
+      (value) =>
+        value === "saving" || value === "current" || value === "wallet",
+      {
+        message: "You must select a valid wallet type."
+      }
+    )
+});
 
 type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 
@@ -55,22 +61,35 @@ export default function EditSavingsGoal() {
     defaultValues: {
       user_id: 1,
       bank_id: 0,
-      initial_balance: 0.00,
+      initial_balance: 0.0,
       nickname: "",
       is_main: false,
       type: "current"
     }
   });
 
-  const { handleSubmit, control, register, reset, setValue, getValues, formState: { errors } } = form;
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    setValue,
+    getValues,
+    formState: { errors }
+  } = form;
 
   const typeFieldValue = useWatch({
     control,
-    name: "type",
+    name: "type"
   });
 
   const handleCreateWallet = async ({
-    user_id, bank_id, initial_balance, nickname, is_main, type
+    user_id,
+    bank_id,
+    initial_balance,
+    nickname,
+    is_main,
+    type
   }: CreateWalletSchemaType) => {
     try {
       const newWallet = await postWallet({
@@ -79,7 +98,7 @@ export default function EditSavingsGoal() {
         initial_balance: Number(initial_balance),
         nickname,
         is_main,
-        type,
+        type
       });
 
       addWallet(newWallet);
@@ -91,12 +110,12 @@ export default function EditSavingsGoal() {
       toast.error("An error occurred while creating the wallet.");
       console.error(error);
     }
-  }
+  };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="flex gap-3 items-center justify-center border-green-700 p-2 hover:bg-gray-100 border rounded-md">
+        <button className="flex items-center justify-center gap-3 rounded-md border border-green-700 p-2 hover:bg-gray-100">
           <div>
             <p className="text-green-700">Adjust goal</p>
           </div>
@@ -107,10 +126,13 @@ export default function EditSavingsGoal() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <Form {...form}>
-          <form onSubmit={handleSubmit(handleCreateWallet)} className="w-full flex flex-col items-start justify-start gap-6">
+          <form
+            onSubmit={handleSubmit(handleCreateWallet)}
+            className="flex w-full flex-col items-start justify-start gap-6"
+          >
             <DialogHeader className="w-full" />
 
-            <div className="w-full flex flex-col gap-6">
+            <div className="flex w-full flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <Label htmlFor="category">Month</Label>
                 {errors.bank_id?.message && (
@@ -121,16 +143,28 @@ export default function EditSavingsGoal() {
                     control={control}
                     name="bank_id"
                     render={({ field }) => (
-                      <Select {...field} onValueChange={(value) => field.onChange(Number(value))} value={
-                        field.value === null ? "" : field.value.toString() === "0" ? "" : field.value.toString()
-                      }>
+                      <Select
+                        {...field}
+                        onValueChange={(value) => field.onChange(Number(value))}
+                        value={
+                          field.value === null
+                            ? ""
+                            : field.value.toString() === "0"
+                              ? ""
+                              : field.value.toString()
+                        }
+                      >
                         <SelectTrigger className="w-full">
                           <SelectValue placeholder="Select a wallet" />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            {banks.slice(1,).map((bank, index: number) => (
-                              <SelectItem value={String(bank.id)} className="py-2" key={index}>
+                            {banks.slice(1).map((bank, index: number) => (
+                              <SelectItem
+                                value={String(bank.id)}
+                                className="py-2"
+                                key={index}
+                              >
                                 <div className="flex w-full items-center justify-center gap-4">
                                   <div>
                                     <Image
@@ -148,7 +182,8 @@ export default function EditSavingsGoal() {
                           </SelectGroup>
                         </SelectContent>
                       </Select>
-                    )} />
+                    )}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
@@ -156,7 +191,12 @@ export default function EditSavingsGoal() {
                 {errors.initial_balance?.message && (
                   <FormError message={errors.initial_balance.message} />
                 )}
-                <MoneyInput form={form} name="initial_balance" label="Initial balance" placeholder="R$ 0,00" />
+                <MoneyInput
+                  form={form}
+                  name="initial_balance"
+                  label="Initial balance"
+                  placeholder="R$ 0,00"
+                />
               </div>
             </div>
 

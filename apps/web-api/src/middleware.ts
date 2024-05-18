@@ -8,7 +8,7 @@ export const corsHeaders = {
   "Access-Control-Allow-Headers":
     "Origin, X-Requested-With, Content-Type, Accept, Authorization",
   withCredentials: "true",
-  "Access-Control-Allow-Credentials": "true",
+  "Access-Control-Allow-Credentials": "true"
 };
 
 export async function middleware(request: NextRequest) {
@@ -19,24 +19,22 @@ export async function middleware(request: NextRequest) {
   const sessionToken = request.headers.get("Authorization")?.split(" ")[1];
 
   if (!sessionToken) {
-    return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
+    return NextResponse.json({ message: "Invalid token" }, { status: 401 });
   }
 
-  const {data, error} = await supabase.auth.getUser(sessionToken);
+  const { data, error } = await supabase.auth.getUser(sessionToken);
 
   if (error) {
-    return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
+    return NextResponse.json({ message: "Invalid token" }, { status: 401 });
   }
 
   const response = NextResponse.next();
 
-  response.headers.set('X-User-Data', JSON.stringify(data.user));
+  response.headers.set("X-User-Data", JSON.stringify(data.user));
 
   return response;
 }
 
 export const config = {
-  matcher: [
-    '/((?!api/auth/sign-up).*)',
-  ],
-}
+  matcher: ["/((?!api/auth/sign-up).*)"]
+};

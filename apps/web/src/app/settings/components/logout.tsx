@@ -27,13 +27,13 @@ export function Logout() {
     } catch {
       return toast.error("An error occurred while logging out");
     }
-  }
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <div className="flex items-center justify-center gap-2">
           <IconLogout size={20} color="#868e96" />
-          <button className="text-sm text-muted-foreground">Logout</button>
+          <button className="text-muted-foreground text-sm">Logout</button>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>

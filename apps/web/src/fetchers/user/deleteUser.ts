@@ -1,0 +1,18 @@
+"use server";
+
+import apiServer from "@/config/apiServer";
+
+export default async function deleteUser({ id }: { id: number }) {
+  const body = JSON.stringify({ id });
+
+  const response = await apiServer("/user", {
+    method: "DELETE",
+    body
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
+}

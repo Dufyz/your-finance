@@ -4,8 +4,12 @@ interface IShowUserService {
   id: number;
 }
 
-export const ShowUser = async ({ id }: IShowUserService) => {
-  const { data, error } = await supabase.from("users").select("*").eq("id", id).single();
+export const ShowUserService = async ({ id }: IShowUserService) => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", id)
+    .single();
 
   if (error) {
     console.log("error", error);

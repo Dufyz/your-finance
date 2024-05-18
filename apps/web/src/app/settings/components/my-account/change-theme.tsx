@@ -12,18 +12,22 @@ export default function ChangeTheme() {
 
   const isDarkMode = false;
 
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   const handleChangeTheme = (value: boolean) => {
-    const newTheme = value ? 'dark' : 'light'
+    const newTheme = value ? "dark" : "light";
     // setCookie({
     //   name: 'theme',
     //   value: newTheme,
     //   expires_at: new Date(new Date().getTime() + 1000 * 60 * 60 * 24 * 365).getTime()
     // })
-    setTheme(newTheme)
-  }
+    setTheme(newTheme);
+  };
 
-  return <Switch checked={isDarkMode} onCheckedChange={(value) => handleChangeTheme(value)} />;
-};
-
+  return (
+    <Switch
+      checked={isDarkMode}
+      onCheckedChange={(value) => handleChangeTheme(value)}
+    />
+  );
+}

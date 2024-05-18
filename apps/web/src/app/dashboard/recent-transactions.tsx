@@ -37,10 +37,11 @@ export default function RecentTransactions({
 }: {
   wallets: Wallet[];
   transactions: Transaction[];
-  user: User
+  user: User;
 }) {
-
-  const currencyCC = currencys.find(currency => currency.cc === user.currency)?.cc || currencys.find(currency => currency.cc === "USD")?.cc;
+  const currencyCC =
+    currencys.find((currency) => currency.cc === user.currency)?.cc ||
+    currencys.find((currency) => currency.cc === "USD")?.cc;
 
   return (
     <Card className="xl:col-span-2">
@@ -72,35 +73,50 @@ export default function RecentTransactions({
           </TableHeader>
           <TableBody>
             {transactions.map((transaction: Transaction, index: number) => {
-              const wallet = wallets.find(wallet => wallet.id === transaction.wallet_id) || { nickname: "Unknown" };
+              const wallet = wallets.find(
+                (wallet) => wallet.id === transaction.wallet_id
+              ) || { nickname: "Unknown" };
 
-              const category = transactionCategories.find(category => category.id === transaction.category_id) || { name: "Unknown" };
+              const category = transactionCategories.find(
+                (category) => category.id === transaction.category_id
+              ) || { name: "Unknown" };
 
               return (
                 <TableRow key={index}>
                   <TableCell>
                     <div className="font-medium">{transaction.description}</div>
-                    <div className="hidden text-sm text-muted-foreground md:inline">
+                    <div className="text-muted-foreground hidden text-sm md:inline">
                       {wallet.nickname}
                     </div>
                   </TableCell>
-                  <TableCell className="hidden sm:table-cell">{category.name}</TableCell>
+                  <TableCell className="hidden sm:table-cell">
+                    {category.name}
+                  </TableCell>
                   <TableCell className="hidden sm:table-cell">
                     <Badge className="text-xs" variant="secondary">
                       {capitalizeFirstLetter(transaction.type)}
                     </Badge>
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    {new Date(transaction.transaction_date).toLocaleDateString()}
+                    {new Date(
+                      transaction.transaction_date
+                    ).toLocaleDateString()}
                   </TableCell>
                   <TableCell className="hidden md:table-cell">
-                    <FormatMoney value={transaction.value} currency={currencyCC} />
+                    <FormatMoney
+                      value={transaction.value}
+                      currency={currencyCC}
+                    />
                   </TableCell>
                   <TableCell className="flex h-[72px] items-center justify-end">
-                    <ToolsTransaction transaction={transaction} wallets={wallets} user={user} />
+                    <ToolsTransaction
+                      transaction={transaction}
+                      wallets={wallets}
+                      user={user}
+                    />
                   </TableCell>
                 </TableRow>
-              )
+              );
             })}
           </TableBody>
         </Table>

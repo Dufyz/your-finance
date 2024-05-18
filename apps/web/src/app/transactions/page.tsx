@@ -7,7 +7,7 @@ export default async function TransactionsPage() {
   const user = await getUser();
 
   const wallets = await getWallets({
-    user_id: user.id,
+    user_id: user.id
   });
 
   return (

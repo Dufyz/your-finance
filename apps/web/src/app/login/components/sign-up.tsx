@@ -10,7 +10,7 @@ import { useState } from "react";
 
 type ISignUpProps = {
   setActiveTab: any;
-}
+};
 
 const SignUpSchema = z.object({
   name: z.string().min(3, "Name must have at least 3 characters"),
@@ -23,7 +23,10 @@ type SignUpSchemaType = z.infer<typeof SignUpSchema>;
 const SingUp = ({ setActiveTab }: ISignUpProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { register, formState: { errors, isValid } } = useForm<SignUpSchemaType>({
+  const {
+    register,
+    formState: { errors, isValid }
+  } = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema)
   });
 
@@ -43,17 +46,16 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
     }
 
     try {
-      await signUp({ name, email, password })
+      await signUp({ name, email, password });
       return toast.success("User created successfully");
     } catch (error) {
       const errorStatus = error?.response?.status;
 
-      if (errorStatus === 409) return toast.error("User already registered")
+      if (errorStatus === 409) return toast.error("User already registered");
 
       return toast.error("Error to create user. Please try again.");
     }
-
-  }
+  };
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8">
@@ -119,7 +121,7 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
             <Button
               type="submit"
               disabled={!isValid}
-              className="w-full h-12 text-white text-base font-semibold rounded-[8px] flex items-center justify-center"
+              className="flex h-12 w-full items-center justify-center rounded-[8px] text-base font-semibold text-white"
             >
               Sign Up
             </Button>

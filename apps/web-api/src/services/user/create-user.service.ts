@@ -11,13 +11,16 @@ export const CreateUserService = async ({
   email,
   auth_id
 }: ICreateUserService) => {
-  const { error } = await supabase.from("users").insert({
-    auth_id,
-    name,
-    email,
-    created_at: new Date(),
-    updated_at: new Date(),
-  }).single();
+  const { error } = await supabase
+    .from("users")
+    .insert({
+      auth_id,
+      name,
+      email,
+      created_at: new Date(),
+      updated_at: new Date()
+    })
+    .single();
 
   if (error) {
     console.log("error", error);
@@ -25,7 +28,11 @@ export const CreateUserService = async ({
     throw new Error(error.message);
   }
 
-  const { data } = await supabase.from("users").select("*").eq("auth_id", auth_id).single();
+  const { data } = await supabase
+    .from("users")
+    .select("*")
+    .eq("auth_id", auth_id)
+    .single();
 
   if (!data) {
     throw new Error("User not found");
@@ -33,7 +40,7 @@ export const CreateUserService = async ({
 
   await supabase.auth.admin.updateUserById(auth_id, {
     user_metadata: {
-      id: data.id,
+      id: data.id
     }
   });
 

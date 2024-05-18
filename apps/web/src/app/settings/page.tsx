@@ -6,7 +6,9 @@ import MyAccount from "./components/my-account/my-account";
 import { Suspense } from "react";
 import MyAccountSkeleton from "./components/my-account/skeleton";
 
-export default async function ProfilePage({ searchParams }: {
+export default async function ProfilePage({
+  searchParams
+}: {
   searchParams: {
     tab: "my-account" | "plan" | "payment-method";
   };
@@ -23,10 +25,10 @@ export default async function ProfilePage({ searchParams }: {
           </div>
           <div className="mx-auto flex w-full max-w-6xl flex-col flex-wrap items-start justify-start gap-6 md:grid md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
             <div className="flex w-full flex-col items-start justify-center gap-8">
-              <nav className="grid gap-4 text-sm text-muted-foreground">
+              <nav className="text-muted-foreground grid gap-4 text-sm">
                 <Link
                   href="?tab=my-account"
-                  className={`${tabUrlParam === "my-account" && "font-semibold text-primary"}`}
+                  className={`${tabUrlParam === "my-account" && "text-primary font-semibold"}`}
                 >
                   My Account
                 </Link>
@@ -67,4 +69,4 @@ export default async function ProfilePage({ searchParams }: {
       </div>
     </LeftNavbarLayout>
   );
-};
+}

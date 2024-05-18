@@ -3,11 +3,11 @@ import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import SupportForm from "./components/support";
 
 export default async function SupportPage() {
-  const user = await getUser()
+  const user = await getUser();
 
   return (
     <LeftNavbarLayout>
-      <div className="w-full flex flex-col items-start justify-start gap-12">
+      <div className="flex w-full flex-col items-start justify-start gap-12">
         <div className="mx-auto max-w-2xl text-center">
           <h1 className="text-3xl font-bold tracking-tight text-green-700 sm:text-4xl">
             Support contact

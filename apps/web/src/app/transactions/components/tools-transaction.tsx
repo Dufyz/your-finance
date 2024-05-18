@@ -12,7 +12,11 @@ import EditTransaction from "./edit/edit-transaction";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 
-export default function ToolsTransaction({ transaction, wallets, user }: {
+export default function ToolsTransaction({
+  transaction,
+  wallets,
+  user
+}: {
   transaction: Transaction;
   wallets: Wallet[];
   user: User;

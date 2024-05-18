@@ -10,7 +10,7 @@ export default function EditTransaction({
   handleDialogItemOpenChange,
   transaction,
   wallets,
-  user,
+  user
 }: {
   handleDialogItemSelect: any;
   handleDialogItemOpenChange: any;
@@ -27,16 +27,17 @@ export default function EditTransaction({
     >
       <Dialog.Description className="DialogDescription" />
 
-     {transaction.wallet_id && (
-       <div className="flex flex-col gap-4">
-       <EditWalletTransaction transaction={transaction} wallets={wallets} user={user}/>
-     </div>
-     )}
+      {transaction.wallet_id && (
+        <div className="flex flex-col gap-4">
+          <EditWalletTransaction
+            transaction={transaction}
+            wallets={wallets}
+            user={user}
+          />
+        </div>
+      )}
 
-     {transaction.card_id && (
-      <h1>card</h1>
-     )}
-    
+      {transaction.card_id && <h1>card</h1>}
     </DialogItem>
   );
 }

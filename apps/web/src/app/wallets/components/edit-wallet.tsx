@@ -35,19 +35,22 @@ const EditWalletSchema = z.object({
   id: z.number().int(),
   bank_id: z.number().int(),
   nickname: z.string().min(6, "Nickname must have at least 6 characters"),
-  initial_balance: z.coerce.number().min(0.00, "Required"),
+  initial_balance: z.coerce.number().min(0.0, "Required"),
   is_main: z.boolean(),
-  type: z.string().refine((value) => (value === "saving" || value === "current" || value === "wallet"), {
-    message: "You must select a valid wallet type."
-  })
-})
+  type: z
+    .string()
+    .refine(
+      (value) =>
+        value === "saving" || value === "current" || value === "wallet",
+      {
+        message: "You must select a valid wallet type."
+      }
+    )
+});
 
 type EditWalletSchemaType = z.infer<typeof EditWalletSchema>;
 
-export default function EditWallet({ wallet }: {
-  wallet: WalletType;
-}) {
-
+export default function EditWallet({ wallet }: { wallet: WalletType }) {
   const form = useForm<EditWalletSchemaType>({
     resolver: zodResolver(EditWalletSchema),
     defaultValues: {
@@ -60,22 +63,43 @@ export default function EditWallet({ wallet }: {
     }
   });
 
-  const { handleSubmit, control, register, formState: { errors }, setValue, getValues } = form;
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+    setValue,
+    getValues
+  } = form;
 
   const typeFieldValue = useWatch({
     control,
     name: "type"
-  })
+  });
 
-  const handleEditWallet = async ({ id, bank_id, nickname, initial_balance, is_main, type }: EditWalletSchemaType) => {
+  const handleEditWallet = async ({
+    id,
+    bank_id,
+    nickname,
+    initial_balance,
+    is_main,
+    type
+  }: EditWalletSchemaType) => {
     try {
-      await patchWallet({ id, bank_id, nickname, initial_balance, is_main, type });
+      await patchWallet({
+        id,
+        bank_id,
+        nickname,
+        initial_balance,
+        is_main,
+        type
+      });
       toast.success("Wallet edited successfully.");
     } catch (error) {
       toast.error("An error occurred while trying to edit the wallet.");
       console.error(error);
     }
-  }
+  };
 
   return (
     <Dialog>
@@ -89,25 +113,42 @@ export default function EditWallet({ wallet }: {
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <Form {...form}>
-          <form onSubmit={handleSubmit(handleEditWallet)} className="w-full flex flex-col items-start justify-start gap-6">
+          <form
+            onSubmit={handleSubmit(handleEditWallet)}
+            className="flex w-full flex-col items-start justify-start gap-6"
+          >
             <DialogHeader className="w-full">
               <div className="pt-4">
                 <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
-                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "current")}>
+                  <Button
+                    type="button"
+                    className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`}
+                    onClick={() => setValue("type", "current")}
+                  >
                     Current
                   </Button>
-                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "saving")}>
+                  <Button
+                    type="button"
+                    className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`}
+                    onClick={() => setValue("type", "saving")}
+                  >
                     Savings
                   </Button>
-                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`} onClick={() => {
-                    setValue("type", "wallet");
-                    setValue("bank_id", 0)
-                  }}>Wallet</Button>
+                  <Button
+                    type="button"
+                    className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`}
+                    onClick={() => {
+                      setValue("type", "wallet");
+                      setValue("bank_id", 0);
+                    }}
+                  >
+                    Wallet
+                  </Button>
                 </div>
               </div>
             </DialogHeader>
 
-            <div className="w-full flex flex-col gap-4">
+            <div className="flex w-full flex-col gap-4">
               {typeFieldValue !== "wallet" && (
                 <>
                   {errors.bank_id?.message && (
@@ -118,16 +159,30 @@ export default function EditWallet({ wallet }: {
                       control={control}
                       name="bank_id"
                       render={({ field }) => (
-                        <Select {...field} onValueChange={(value) => field.onChange(Number(value))} value={
-                          field.value === null ? "" : field.value.toString() === "0" ? "" : field.value.toString()
-                        }>
+                        <Select
+                          {...field}
+                          onValueChange={(value) =>
+                            field.onChange(Number(value))
+                          }
+                          value={
+                            field.value === null
+                              ? ""
+                              : field.value.toString() === "0"
+                                ? ""
+                                : field.value.toString()
+                          }
+                        >
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a wallet" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {banks.slice(1,).map((bank, index: number) => (
-                                <SelectItem value={String(bank.id)} className="py-2" key={index}>
+                              {banks.slice(1).map((bank, index: number) => (
+                                <SelectItem
+                                  value={String(bank.id)}
+                                  className="py-2"
+                                  key={index}
+                                >
                                   <div className="flex w-full items-center justify-center gap-4">
                                     <div>
                                       <Image
@@ -145,7 +200,8 @@ export default function EditWallet({ wallet }: {
                             </SelectGroup>
                           </SelectContent>
                         </Select>
-                      )} />
+                      )}
+                    />
                   </div>
                 </>
               )}
@@ -154,14 +210,22 @@ export default function EditWallet({ wallet }: {
                 {errors.nickname?.message && (
                   <FormError message={errors.nickname.message} />
                 )}
-                <Input {...register("nickname")} placeholder="Ex: Itaú Savings Account" />
+                <Input
+                  {...register("nickname")}
+                  placeholder="Ex: Itaú Savings Account"
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="initial_balance">Initial balance</Label>
                 {errors.initial_balance?.message && (
                   <FormError message={errors.initial_balance.message} />
                 )}
-                <MoneyInput form={form} name="initial_balance" label="Initial balance" placeholder="R$ 0,00" />
+                <MoneyInput
+                  form={form}
+                  name="initial_balance"
+                  label="Initial balance"
+                  placeholder="R$ 0,00"
+                />
               </div>
               <>
                 {errors.is_main?.message && (
@@ -173,24 +237,28 @@ export default function EditWallet({ wallet }: {
                     control={control}
                     name="is_main"
                     render={({ field }) => (
-                      <Switch checked={field.value} onCheckedChange={field.onChange} />
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     )}
                   />
-                </div></>
+                </div>
+              </>
             </div>
 
-            <div className="w-full flex flex-col flex-start items-start gap-2">
-            <div className="w-full">
-              <button
-                type="submit"
-                className="w-full rounded-md bg-green-700 p-2 text-white"
-              >
-                Save
-              </button>
-            </div>
-            <div className="w-full">
-              <DeleteWallet wallet={wallet} />
-            </div>
+            <div className="flex-start flex w-full flex-col items-start gap-2">
+              <div className="w-full">
+                <button
+                  type="submit"
+                  className="w-full rounded-md bg-green-700 p-2 text-white"
+                >
+                  Save
+                </button>
+              </div>
+              <div className="w-full">
+                <DeleteWallet wallet={wallet} />
+              </div>
             </div>
           </form>
         </Form>

@@ -9,11 +9,11 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog"
+  AlertDialogTrigger
+} from "@/components/ui/alert-dialog";
 import { deleteExpenseCategoryGoal } from "@/fetchers/goals/deleteExpenseCategoryGoal";
 import { GoalCategory } from "@/types/GoalCategory";
-import { IconTrash } from "@tabler/icons-react"
+import { IconTrash } from "@tabler/icons-react";
 import { toast } from "sonner";
 
 export function DeleteExpenseCategoryGoal({
@@ -21,7 +21,6 @@ export function DeleteExpenseCategoryGoal({
 }: {
   goalCategory: GoalCategory;
 }) {
-
   const handleDeleteExpenseCategoryGoal = async () => {
     try {
       await deleteExpenseCategoryGoal({
@@ -30,14 +29,16 @@ export function DeleteExpenseCategoryGoal({
 
       toast.success("Expense category goal deleted successfully.");
     } catch (error) {
-      toast.error("An error occurred while deleting the expense category goal.");
+      toast.error(
+        "An error occurred while deleting the expense category goal."
+      );
       console.error(error);
     }
-  }
+  };
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="flex gap-3 items-center justify-center border-red-700 p-3 hover:bg-gray-100 border rounded-md">
+        <button className="flex items-center justify-center gap-3 rounded-md border border-red-700 p-3 hover:bg-gray-100">
           <div>
             <IconTrash size={16} color="#b91c1c" />
           </div>
@@ -47,14 +48,17 @@ export function DeleteExpenseCategoryGoal({
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will delete your expense category goal.
+            This action cannot be undone. This will delete your expense category
+            goal.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => handleDeleteExpenseCategoryGoal()}>Continue</AlertDialogAction>
+          <AlertDialogAction onClick={() => handleDeleteExpenseCategoryGoal()}>
+            Continue
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

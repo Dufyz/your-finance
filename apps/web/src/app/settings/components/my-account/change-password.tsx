@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import patchUser from "@/fetchers/user/patchUser";
-import { useUserStore } from "@/stores/User";
+import { User } from "@/types/User";
 import isPasswordValid from "@/utils/is-password-valid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -20,15 +20,19 @@ const ChangePasswordSchema = z.object({
   user_id: z.number(),
   password: z.string().min(6, "Password must have at least 6 characters"),
   new_password: z.string().min(6, "Password must have at least 6 characters"),
-  confirm_password: z.string().min(6, "Password must have at least 6 characters"),
-})
+  confirm_password: z
+    .string()
+    .min(6, "Password must have at least 6 characters")
+});
 
-type ChangePasswordSchemaType = z.infer<typeof ChangePasswordSchema>
+type ChangePasswordSchemaType = z.infer<typeof ChangePasswordSchema>;
 
-export default function ChangePassword() {
-  const user = useUserStore((state) => state.user);
-
-  const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordSchemaType>({
+export default function ChangePassword({ user }: { user: User }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<ChangePasswordSchemaType>({
     resolver: zodResolver(ChangePasswordSchema),
     values: {
       user_id: user.id,
@@ -38,7 +42,12 @@ export default function ChangePassword() {
     }
   });
 
-  const handleChangePassword = async ({ user_id, password, new_password, confirm_password }: {
+  const handleChangePassword = async ({
+    user_id,
+    password,
+    new_password,
+    confirm_password
+  }: {
     user_id: number;
     password: string;
     new_password: string;
@@ -49,7 +58,11 @@ export default function ChangePassword() {
       return;
     }
 
-    const isPwdValid = isPasswordValid({ user_id, email: user.email, password });
+    const isPwdValid = isPasswordValid({
+      user_id,
+      email: user.email,
+      password
+    });
 
     if (!isPwdValid) {
       return;
@@ -58,7 +71,7 @@ export default function ChangePassword() {
     await patchUser({ user_id, password: new_password });
 
     toast.success("Password changed successfully.");
-  }
+  };
 
   return (
     <Dialog>
@@ -72,17 +85,20 @@ export default function ChangePassword() {
         <DialogHeader />
         <div className="flex w-full flex-col items-start justify-start gap-4">
           <div className="flex w-full items-center justify-start">
-            <p className="text-sm">
-              Use a password at least 6 letters long.
-            </p>
+            <p className="text-sm">Use a password at least 6 letters long.</p>
           </div>
-          <form onSubmit={handleSubmit(handleChangePassword)} className="flex w-full flex-col  items-start justify-center gap-4 space-x-2">
+          <form
+            onSubmit={handleSubmit(handleChangePassword)}
+            className="flex w-full flex-col  items-start justify-center gap-4 space-x-2"
+          >
             <div className="flex w-full flex-col  items-start justify-center gap-4 space-x-2">
               <div className="grid w-full flex-1 gap-2">
                 <label htmlFor="" className="text-sm">
                   Enter your current password
                 </label>
-                {errors.password?.message && <FormError message={errors.password?.message} />}
+                {errors.password?.message && (
+                  <FormError message={errors.password?.message} />
+                )}
                 <Input
                   {...register("password")}
                   type="password"
@@ -93,7 +109,9 @@ export default function ChangePassword() {
                 <label htmlFor="" className="text-sm">
                   Enter your new password
                 </label>
-                {errors.new_password?.message && <FormError message={errors.new_password?.message} />}
+                {errors.new_password?.message && (
+                  <FormError message={errors.new_password?.message} />
+                )}
                 <Input
                   {...register("new_password")}
                   type="password"
@@ -104,7 +122,9 @@ export default function ChangePassword() {
                 <label htmlFor="" className="text-sm">
                   Confirm your new password
                 </label>
-                {errors.confirm_password?.message && <FormError message={errors.confirm_password?.message} />}
+                {errors.confirm_password?.message && (
+                  <FormError message={errors.confirm_password?.message} />
+                )}
                 <Input
                   {...register("confirm_password")}
                   type="password"
@@ -123,5 +143,4 @@ export default function ChangePassword() {
       </DialogContent>
     </Dialog>
   );
-};
-
+}

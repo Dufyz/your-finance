@@ -37,18 +37,22 @@ const CreateWalletSchema = z.object({
   user_id: z.number().int(),
   bank_id: z.number().int(),
   nickname: z.string().min(6, "Nickname must have at least 6 characters"),
-  initial_balance: z.coerce.number().min(0.00, "Required"),
+  initial_balance: z.coerce.number().min(0.0, "Required"),
   is_main: z.boolean(),
-  type: z.string().refine((value) => (value === "saving" || value === "current" || value === "wallet"), {
-    message: "You must select a valid wallet type."
-  })
-})
+  type: z
+    .string()
+    .refine(
+      (value) =>
+        value === "saving" || value === "current" || value === "wallet",
+      {
+        message: "You must select a valid wallet type."
+      }
+    )
+});
 
 type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 
-export default function CreateWallet({ user }: {
-  user: User
-}) {
+export default function CreateWallet({ user }: { user: User }) {
   const [iconColor, setIconColor] = useState("#15803d");
 
   const addWallet = useWalletsStore((state) => state.addWallet);
@@ -58,22 +62,35 @@ export default function CreateWallet({ user }: {
     defaultValues: {
       user_id: user.id,
       bank_id: 0,
-      initial_balance: 0.00,
+      initial_balance: 0.0,
       nickname: "",
       is_main: false,
       type: "current"
     }
   });
 
-  const { handleSubmit, control, register, reset, setValue, getValues, formState: { errors } } = form;
+  const {
+    handleSubmit,
+    control,
+    register,
+    reset,
+    setValue,
+    getValues,
+    formState: { errors }
+  } = form;
 
   const typeFieldValue = useWatch({
     control,
-    name: "type",
+    name: "type"
   });
 
   const handleCreateWallet = async ({
-    user_id, bank_id, initial_balance, nickname, is_main, type
+    user_id,
+    bank_id,
+    initial_balance,
+    nickname,
+    is_main,
+    type
   }: CreateWalletSchemaType) => {
     try {
       const newWallet = await postWallet({
@@ -82,7 +99,7 @@ export default function CreateWallet({ user }: {
         initial_balance: Number(initial_balance),
         nickname,
         is_main,
-        type,
+        type
       });
 
       addWallet(newWallet);
@@ -94,7 +111,7 @@ export default function CreateWallet({ user }: {
       toast.error("An error occurred while creating the wallet.");
       console.error(error);
     }
-  }
+  };
 
   return (
     <Dialog>
@@ -109,25 +126,42 @@ export default function CreateWallet({ user }: {
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <Form {...form}>
-          <form onSubmit={handleSubmit(handleCreateWallet)} className="w-full flex flex-col items-start justify-start gap-6">
+          <form
+            onSubmit={handleSubmit(handleCreateWallet)}
+            className="flex w-full flex-col items-start justify-start gap-6"
+          >
             <DialogHeader className="w-full">
               <div className="pt-4">
                 <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
-                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "current")}>
+                  <Button
+                    type="button"
+                    className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`}
+                    onClick={() => setValue("type", "current")}
+                  >
                     Current
                   </Button>
-                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`} onClick={() => setValue("type", "saving")}>
+                  <Button
+                    type="button"
+                    className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`}
+                    onClick={() => setValue("type", "saving")}
+                  >
                     Savings
                   </Button>
-                  <Button type="button" className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`} onClick={() => {
-                    setValue("type", "wallet");
-                    setValue("bank_id", 0)
-                  }}>Wallet</Button>
+                  <Button
+                    type="button"
+                    className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`}
+                    onClick={() => {
+                      setValue("type", "wallet");
+                      setValue("bank_id", 0);
+                    }}
+                  >
+                    Wallet
+                  </Button>
                 </div>
               </div>
             </DialogHeader>
 
-            <div className="w-full flex flex-col gap-4">
+            <div className="flex w-full flex-col gap-4">
               {typeFieldValue !== "wallet" && (
                 <>
                   {errors.bank_id?.message && (
@@ -138,16 +172,30 @@ export default function CreateWallet({ user }: {
                       control={control}
                       name="bank_id"
                       render={({ field }) => (
-                        <Select {...field} onValueChange={(value) => field.onChange(Number(value))} value={
-                          field.value === null ? "" : field.value.toString() === "0" ? "" : field.value.toString()
-                        }>
+                        <Select
+                          {...field}
+                          onValueChange={(value) =>
+                            field.onChange(Number(value))
+                          }
+                          value={
+                            field.value === null
+                              ? ""
+                              : field.value.toString() === "0"
+                                ? ""
+                                : field.value.toString()
+                          }
+                        >
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a wallet" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              {banks.slice(1,).map((bank, index: number) => (
-                                <SelectItem value={String(bank.id)} className="py-2" key={index}>
+                              {banks.slice(1).map((bank, index: number) => (
+                                <SelectItem
+                                  value={String(bank.id)}
+                                  className="py-2"
+                                  key={index}
+                                >
                                   <div className="flex w-full items-center justify-center gap-4">
                                     <div>
                                       <Image
@@ -165,7 +213,8 @@ export default function CreateWallet({ user }: {
                             </SelectGroup>
                           </SelectContent>
                         </Select>
-                      )} />
+                      )}
+                    />
                   </div>
                 </>
               )}
@@ -174,14 +223,22 @@ export default function CreateWallet({ user }: {
                 {errors.nickname?.message && (
                   <FormError message={errors.nickname.message} />
                 )}
-                <Input {...register("nickname")} placeholder="Ex: Itaú Savings Account" />
+                <Input
+                  {...register("nickname")}
+                  placeholder="Ex: Itaú Savings Account"
+                />
               </div>
               <div className="flex flex-col gap-2">
                 <Label htmlFor="initial_balance">Initial balance</Label>
                 {errors.initial_balance?.message && (
                   <FormError message={errors.initial_balance.message} />
                 )}
-                <MoneyInput form={form} name="initial_balance" label="Initial balance" placeholder="R$ 0,00" />
+                <MoneyInput
+                  form={form}
+                  name="initial_balance"
+                  label="Initial balance"
+                  placeholder="R$ 0,00"
+                />
               </div>
               <>
                 {errors.is_main?.message && (
@@ -193,10 +250,14 @@ export default function CreateWallet({ user }: {
                     control={control}
                     name="is_main"
                     render={({ field }) => (
-                      <Switch checked={field.value} onCheckedChange={field.onChange} />
+                      <Switch
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                      />
                     )}
                   />
-                </div></>
+                </div>
+              </>
             </div>
 
             <div className="w-full">

@@ -26,7 +26,7 @@ export default async function Plan() {
       {Object.keys(featuresList).map((feature) => {
         const isChecked =
           plansFeatures[planType as keyof typeof plansFeatures].features[
-          feature as keyof (typeof plansFeatures)[typeof planType]["features"]
+            feature as keyof (typeof plansFeatures)[typeof planType]["features"]
           ];
 
         return (
@@ -64,7 +64,7 @@ export default async function Plan() {
         <CardContent className="flex flex-1 flex-col items-start justify-center gap-6">
           <div className="">
             <span className="text-4xl font-semibold text-green-700">$9.99</span>
-            <span className="text-xl text-muted-foreground">/month</span>
+            <span className="text-muted-foreground text-xl">/month</span>
           </div>
           {renderFeatureList(plansFeatures.pro.features, "pro")}
         </CardContent>
