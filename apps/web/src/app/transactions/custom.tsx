@@ -30,7 +30,7 @@ import ToolsTransaction from "./components/tools-transaction";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { subDays } from "date-fns";
-import { getCustomTransactions } from "@/fetchs/transactions/getCustomTransactions";
+import { getCustomTransactions } from "@/fetchers/transactions/getCustomTransactions";
 import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
 
 export default function Custom({ wallets, user }: {

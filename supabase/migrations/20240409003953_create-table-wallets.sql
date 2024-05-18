@@ -2,7 +2,7 @@ CREATE TYPE wallets_type AS ENUM ('saving', 'current', 'wallet');
 
 CREATE TABLE Wallets (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users (id) NOT NULL,
+    user_id INT REFERENCES users (id) ON DELETE CASCADE,
     bank_id INT NOT NULL,
     nickname TEXT NOT NULL,
     "type" wallets_type NOT NULL DEFAULT 'wallet',

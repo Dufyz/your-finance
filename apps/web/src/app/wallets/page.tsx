@@ -2,8 +2,8 @@ import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import CreateWallet from "./components/create-wallet";
 import { Suspense } from "react";
 import { Wallet } from "@/types/Wallet";
-import getWallets from "@/fetchs/wallets/getWallets";
-import getUser from "@/fetchs/user/getUser";
+import getWallets from "@/fetchers/wallets/getWallets";
+import getUser from "@/fetchers/user/getUser";
 import WalletCard from "./components/wallet-card";
 
 export default async function WalletsPage() {
@@ -11,7 +11,9 @@ export default async function WalletsPage() {
 
   const user = await getUser();
 
-  const wallets = await getWallets();
+  const wallets = await getWallets({
+    user_id: user.id,
+  });
 
   const orderedWallets = wallets.sort((a: Wallet, b: Wallet) => {
     if (a.is_main && !b.is_main) {

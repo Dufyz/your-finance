@@ -1,6 +1,5 @@
 "use client";
 
-import useLogin from "@/app/login/hook/useLogin";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -12,11 +11,23 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
+import supabaseClient from "@/config/supabase/supabaseClient";
 import { IconLogout } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export function Logout() {
-  const { handleLogout } = useLogin();
+  const router = useRouter();
 
+  const handleSignOutAction = async () => {
+    try {
+      await supabaseClient.auth.signOut();
+      router.push("/login");
+      return toast.success("You have been logged out successfully");
+    } catch {
+      return toast.error("An error occurred while logging out");
+    }
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -35,7 +46,7 @@ export function Logout() {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => handleLogout()}>
+          <AlertDialogAction onClick={async () => await handleSignOutAction()}>
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

@@ -1,4 +1,4 @@
-CREATE TABLE SupportForms (
+CREATE TABLE support_forms (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES Users (id) NOT NULL,
     category_id INT NOT NULL,

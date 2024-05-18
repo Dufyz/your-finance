@@ -6,7 +6,7 @@ interface IShowCategoriesGoalsService {
 
 export default async function ShowCategoriesGoals({ user_id }: IShowCategoriesGoalsService) {
 
-    const { data, error } = await supabase.from("goalcategory").select("*").eq("user_id", user_id);
+    const { data, error } = await supabase.from("goal_category").select("*").eq("user_id", user_id);
 
     if (error) {
         throw new Error("Error getting categories goals");

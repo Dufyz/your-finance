@@ -2,9 +2,9 @@ CREATE TYPE transaction_type AS ENUM ('income', 'expense');
 
 CREATE TABLE Transactions (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users (id) NOT NULL,
-    wallet_id INT REFERENCES wallets (id),
-    card_id INT REFERENCES cards (id),
+    user_id INT REFERENCES Users (id) ON DELETE CASCADE,
+    wallet_id INT REFERENCES wallets (id) ON DELETE CASCADE,
+    card_id INT REFERENCES cards (id) ON DELETE CASCADE,
     category_id INT,
     "value" NUMERIC NOT NULL,
     "description" TEXT NOT NULL,

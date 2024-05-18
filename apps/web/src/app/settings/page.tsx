@@ -2,8 +2,6 @@ import Link from "next/link";
 
 import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import { Logout } from "./components/logout";
-import Plan from "./components/plan";
-import PaymentMethod from "./components/payment-method/payment-method";
 import MyAccount from "./components/my-account/my-account";
 import { Suspense } from "react";
 import MyAccountSkeleton from "./components/my-account/skeleton";
@@ -14,7 +12,6 @@ export default async function ProfilePage({ searchParams }: {
   };
 }) {
   //TODO Implementar features comentadas
-
   const tabUrlParam = searchParams?.tab || "my-account";
 
   return (

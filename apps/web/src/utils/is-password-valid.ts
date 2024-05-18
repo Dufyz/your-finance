@@ -1,13 +1,15 @@
-import validatePassword from "@/fetchs/user/validatePassword";
+"use server";
+
+import validatePassword from "@/fetchers/user/validatePassword";
 import { toast } from "sonner";
 
-export default async function isPasswordValid({ id, email, password }: {
-    id: number;
+export default async function isPasswordValid({ user_id, email, password }: {
+    user_id: number;
     email: string;
     password: string;
 }) {
     try {
-        await validatePassword({ id, email: email, password });
+        await validatePassword({ user_id, email: email, password });
         return true;
     } catch (error) {
         console.log(error?.message);

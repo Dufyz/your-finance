@@ -7,7 +7,7 @@ interface IUpdateExpenseCategoryGoalService {
 }
 
 export default async function UpdateExpenseCategoryGoal({ id, category_id, target_value }: IUpdateExpenseCategoryGoalService) {
-    const { data, error } = await supabase.from("goalcategory").update({
+    const { data, error } = await supabase.from("goal_category").update({
         category_id: category_id,
         target_value: target_value
     }).eq("id", id).single();

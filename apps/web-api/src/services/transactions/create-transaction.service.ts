@@ -8,7 +8,7 @@ interface ICreateTransactionService {
     value: number;
     description: string;
     type: string;
-    transaction_date: Date;
+    transaction_date: string;
     created_at?: Date;
 }
 

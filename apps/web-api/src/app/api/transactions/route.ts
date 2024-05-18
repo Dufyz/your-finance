@@ -1,32 +1,47 @@
+import { z } from "zod";
 import CreateTransaction from "@/services/transactions/create-transaction.service";
-import DeleteTransaction from "@/services/transactions/delete-transaction.service";
-import PatchTransaction from "@/services/transactions/patch-transaction.service";
 import ShowCustomTransactions from "@/services/transactions/show-custom-transactions.service";
 import ShowLastTransactions from "@/services/transactions/show-last-transactions.service";
 import ShowMonthTransactions from "@/services/transactions/show-month-transactions.service";
 import ShowWeekTransactions from "@/services/transactions/show-week-transactions.service";
 import ShowYearTransactions from "@/services/transactions/show-year-transactions.service";
 import { NextRequest, NextResponse } from "next/server";
+import getUserFromRequest from "@/utils/getUserFromRequest";
+import DeleteTransaction from "@/services/transactions/delete-transaction.service";
+import PatchTransaction from "@/services/transactions/patch-transaction.service";
 
+const getUserTransactionsSchema = z.object({
+    user_id: z.number(),
+    tab: z.string().refine((value) => ["week", "month", "year", "custom", "last"].includes(value)),
+    date_from: z.string().optional(),
+    date_to: z.string().optional()
+});
 export async function GET(request: NextRequest) {
-    const user_id = Number(request.nextUrl.searchParams.get("user_id"));
-    const tab = request.nextUrl.searchParams.get("tab");
+    const body = {
+        tab: request.nextUrl.searchParams.get("tab"),
+        date_from: request.nextUrl.searchParams.get("date_from") || undefined,
+        date_to: request.nextUrl.searchParams.get("date_to") || undefined
+    };
 
-    const date_from = request.nextUrl.searchParams.get("date_from");
-    const date_to = request.nextUrl.searchParams.get("date_to");
+    const reqUser = getUserFromRequest(request);
 
-    if(tab !== "week" && tab !== "month" && tab !== "year" && tab !== "custom" && tab !== "last") {
-        return NextResponse.json({
-            message: "Invalid tab"
-        }, {
+    const validation = getUserTransactionsSchema.safeParse({
+        user_id: reqUser.user_id,
+        ...body
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
             status: 400
         });
     }
 
+    const { user_id, tab, date_from, date_to } = validation.data;
+
     try {
         let transactions: any = [];
 
-        switch(tab) {
+        switch (tab) {
             case "week":
                 transactions = await ShowWeekTransactions({
                     user_id
@@ -59,7 +74,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.json(transactions, {
             status: 200
         });
-        
+
     } catch (error) {
         return NextResponse.json({
             message: "Error getting transactions"
@@ -69,8 +84,33 @@ export async function GET(request: NextRequest) {
     }
 }
 
+const postUserTransactionsSchema = z.object({
+    user_id: z.number(),
+    wallet_id: z.number().optional(),
+    card_id: z.number().optional(),
+    category_id: z.number(),
+    value: z.number(),
+    description: z.string(),
+    type: z.string().refine((value) => ["income", "expense"].includes(value)),
+    transaction_date: z.string()
+});
 export async function POST(request: NextRequest) {
-    const { user_id, wallet_id, card_id, category_id, value, description, type, transaction_date } = await request.json();
+    const body = await request.json();
+
+    const reqUser = getUserFromRequest(request);
+
+    const validation = postUserTransactionsSchema.safeParse({
+        user_id: reqUser.user_id,
+        ...body
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
+        });
+    }
+
+    const { user_id, wallet_id, card_id, category_id, value, description, type, transaction_date } = validation.data;
 
     try {
         const transaction = await CreateTransaction({
@@ -96,8 +136,30 @@ export async function POST(request: NextRequest) {
     }
 }
 
+const patchUserTransactionsSchema = z.object({
+    id: z.number(),
+    wallet_id: z.string().transform((value) => parseInt(value)),
+    card_id: z.string().transform((value) => parseInt(value)),
+    category_id: z.string().transform((value) => parseInt(value)),
+    value: z.number(),
+    description: z.string(),
+    type: z.string().refine((value) => ["income", "expense"].includes(value)),
+    transaction_date: z.date()
+});
 export async function PATCH(request: NextRequest) {
-    const { id, wallet_id, card_id, category_id, value, description, type, transaction_date } = await request.json();
+    const body = await request.json();
+
+    const validation = patchUserTransactionsSchema.safeParse({
+        ...body
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
+        });
+    }
+
+    const { id, wallet_id, card_id, category_id, value, description, type, transaction_date } = validation.data;
 
     try {
         const transaction = await PatchTransaction({
@@ -123,14 +185,27 @@ export async function PATCH(request: NextRequest) {
     }
 }
 
+const deleteUserTransactionsSchema = z.object({
+    id: z.number()
+});
 export async function DELETE(request: NextRequest) {
-    const { id } = await request.json();
+    const body = await request.json();
+
+    const validation = deleteUserTransactionsSchema.safeParse(body);
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
+        });
+    }
+
+    const { id } = validation.data;
 
     try {
         await DeleteTransaction({
             id
         })
-        
+
         return NextResponse.json({
             message: "Transaction deleted"
         }, {

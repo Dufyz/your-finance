@@ -56,12 +56,19 @@ export async function updateSession(request: NextRequest) {
 
   const {error} = await supabase.auth.getUser();
 
-  if (error && request.nextUrl.pathname !== "/login") {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
+  // if (error && request.nextUrl.pathname !== "/login") {
+  //   const url = request.nextUrl.clone()
+  //   url.pathname = '/login'
 
-    response = NextResponse.redirect(url)
-  }
+  //   response = NextResponse.redirect(url)
+  // }
 
+  // if (!error && request.nextUrl.pathname === "/login") {
+  //   const url = request.nextUrl.clone()
+  //   url.pathname = '/dashboard'
+
+  //   response = NextResponse.redirect(url)
+  // }
+  
   return response
 }

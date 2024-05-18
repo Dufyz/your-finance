@@ -1,10 +1,27 @@
+import { z } from "zod";
 import ShowCategoriesExpenses from "@/services/categories/show-categories-expenses.service";
 import { NextRequest, NextResponse } from "next/server";
+import getUserFromRequest from "@/utils/getUserFromRequest";
 
-export async function GET(request: NextRequest) {
+const getCategoriesExpensesSchema = z.object({
+    user_id: z.number()
+});
+export async function GET(request: NextRequest, context: any) {
+    const reqUser = getUserFromRequest(request);
+
+    const validation = getCategoriesExpensesSchema.safeParse({
+        user_id: reqUser.user_id
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
+        });
+    }
+
+    const { user_id } = validation.data;
+
     try {
-        const user_id = Number(request.nextUrl.searchParams.get("user_id"));
-
         const getCategoriesExpenses = await ShowCategoriesExpenses({
             user_id
         });
@@ -13,7 +30,7 @@ export async function GET(request: NextRequest) {
             status: 200
         });
     } catch (error) {
-        return NextResponse.json({ error: error.message }, {
+        return NextResponse.json({ error: error?.message }, {
             status: 500
         });
     }

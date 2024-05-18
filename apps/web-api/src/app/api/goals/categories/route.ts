@@ -1,9 +1,26 @@
+import { z } from "zod";
 import CreateExpenseCategoryGoal from "@/services/goals/create-expense-category-goal.service";
 import ShowCategoriesGoals from "@/services/goals/show-categories-goals.service";
 import { NextRequest, NextResponse } from "next/server";
+import getUserFromRequest from "@/utils/getUserFromRequest";
 
-export async function GET(request: NextRequest) {
-    const user_id = Number(request.nextUrl.searchParams.get("user_id"));
+const getCategoriesGoalsSchema = z.object({
+    user_id: z.number()
+});
+export async function GET(request: NextRequest, context: any) {
+    const reqUser = getUserFromRequest(request);
+
+    const validation = getCategoriesGoalsSchema.safeParse({
+        user_id: reqUser.user_id
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
+        });
+    }
+
+    const { user_id } = validation.data;
 
     const categoriesGoals = await ShowCategoriesGoals({
         user_id
@@ -14,8 +31,28 @@ export async function GET(request: NextRequest) {
     })
 }
 
+const postCategoriesGoalsSchema = z.object({
+    user_id: z.number(),
+    category_id: z.number(),
+    target_value: z.number()
+});
 export async function POST(request: NextRequest) {
-    const { user_id, category_id, target_value } = await request.json();
+    const body = await request.json();
+
+    const reqUser = getUserFromRequest(request);
+
+    const validation = postCategoriesGoalsSchema.safeParse({
+        user_id: reqUser.user_id,
+        ...body
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
+        });
+    }
+
+    const { user_id, category_id, target_value } = validation.data;
 
     const newExpenseCategoryGoal = await CreateExpenseCategoryGoal({
         user_id,

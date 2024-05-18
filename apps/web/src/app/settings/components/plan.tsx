@@ -7,12 +7,13 @@ import {
   CardHeader,
   CardTitle
 } from "@/components/ui/card";
+import { plansFeatures } from "@/data/plansFeatures";
 import {
   IconCheck,
   IconRosetteDiscountCheck,
   IconX
 } from "@tabler/icons-react";
-import { features, plansFeatures } from "../data/plans";
+import { features } from "process";
 
 export default async function Plan() {
   const renderFeatureList = (

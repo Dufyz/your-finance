@@ -6,7 +6,7 @@ interface IDeleteExpenseCategoryGoalService {
 
 export default async function DeleteExpenseCategoryGoal({ id }: IDeleteExpenseCategoryGoalService) {
 
-    const { data, error } = await supabase.from("goalcategory").delete().eq("id", id);
+    const { data, error } = await supabase.from("goal_category").delete().eq("id", id);
 
     if (error) {
         console.log(error)

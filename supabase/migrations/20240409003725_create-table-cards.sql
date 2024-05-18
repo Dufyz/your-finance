@@ -1,7 +1,7 @@
 CREATE TABLE Cards (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users (id) NOT NULL,
-    bank_id INT REFERENCES Banks (id),
+    user_id INT REFERENCES Users (id) ON DELETE CASCADE,
+    bank_id INT NOT NULL,
     nickaname TEXT NOT NULL,
     is_main BOOLEAN NOT NULL DEFAULT FALSE,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),

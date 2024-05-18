@@ -8,7 +8,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import patchUser from "@/fetchs/user/patchUser";
+import patchUser from "@/fetchers/user/patchUser";
 import { useUserStore } from "@/stores/User";
 import isPasswordValid from "@/utils/is-password-valid";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,7 +17,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const ChangePasswordSchema = z.object({
-  id: z.number(),
+  user_id: z.number(),
   password: z.string().min(6, "Password must have at least 6 characters"),
   new_password: z.string().min(6, "Password must have at least 6 characters"),
   confirm_password: z.string().min(6, "Password must have at least 6 characters"),
@@ -31,15 +31,15 @@ export default function ChangePassword() {
   const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordSchemaType>({
     resolver: zodResolver(ChangePasswordSchema),
     values: {
-      id: user.id,
+      user_id: user.id,
       password: "",
       new_password: "",
       confirm_password: ""
     }
   });
 
-  const handleChangePassword = async ({ id, password, new_password, confirm_password }: {
-    id: number;
+  const handleChangePassword = async ({ user_id, password, new_password, confirm_password }: {
+    user_id: number;
     password: string;
     new_password: string;
     confirm_password: string;
@@ -49,13 +49,13 @@ export default function ChangePassword() {
       return;
     }
 
-    const isPwdValid = isPasswordValid({ id, email: user.email, password });
+    const isPwdValid = isPasswordValid({ user_id, email: user.email, password });
 
     if (!isPwdValid) {
       return;
     }
 
-    await patchUser({ id, password: new_password });
+    await patchUser({ user_id, password: new_password });
 
     toast.success("Password changed successfully.");
   }

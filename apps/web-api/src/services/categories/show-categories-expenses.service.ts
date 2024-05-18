@@ -11,7 +11,7 @@ interface CategoryExpense {
 
 export default async function ShowCategoriesExpenses({ user_id }: IShowCategoriesExpensesService): Promise<CategoryExpense[]> {
     const { data: categories, error: categoriesError } = await supabase
-        .from("goalcategory")
+        .from("goal_category")
         .select("category_id")
         .eq("user_id", user_id);
 

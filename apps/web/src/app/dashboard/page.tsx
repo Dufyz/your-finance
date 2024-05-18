@@ -2,20 +2,20 @@ import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import TotalSaves from "./total-saves";
 import TotalExpenses from "./total-expenses";
 import TotalInvoices from "./total-invoices";
-import RecentTransactions from "./recent-transactions";
 import Goals from "./goals";
 import TotalIncomes from "./total-incomes";
-import getUser from "@/fetchs/user/getUser";
-import { getTotal } from "@/fetchs/dashboard/getTotal";
+import getUser from "@/fetchers/user/getUser";
 import { currencys } from "@/data/currencys";
 import TotalBalance from "./total-balance";
-import { getLastTransactions } from "@/fetchs/transactions/getLastTransactions";
-import getWallets from "@/fetchs/wallets/getWallets";
+import { getLastTransactions } from "@/fetchers/transactions/getLastTransactions";
+import getWallets from "@/fetchers/wallets/getWallets";
+import { getTotals } from "@/fetchers/dashboard/getTotals";
+import RecentTransactions from "./recent-transactions";
 
 export default async function DashboardPage() {
   const user = await getUser();
 
-  const totals = await getTotal({
+  const totals = await getTotals({
     user_id: user.id,
   });
 
@@ -23,7 +23,9 @@ export default async function DashboardPage() {
     user_id: user.id,
   });
 
-  const wallets = await getWallets();
+  const wallets = await getWallets({
+    user_id: user.id,
+  });
 
   const { totalBalance, totalSaves, totalIncomes, totalExpenses, totalInvoices } = totals;
 
@@ -44,7 +46,7 @@ export default async function DashboardPage() {
             <TotalInvoices total={totalInvoices} currencyCC={currencyCC} />
           </div>
           <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
-            {/* <RecentTransactions transactions={lastTransactions} user={user} wallets={wallets} /> */}
+            <RecentTransactions transactions={lastTransactions} user={user} wallets={wallets} />
             <Goals />
           </div>
         </main>

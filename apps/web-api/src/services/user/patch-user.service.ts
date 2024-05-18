@@ -1,16 +1,16 @@
 import supabase from "@/config/supabase";
 
 interface IPatchUserService {
-  id: number;
+  user_id: number;
   name?: string;
   email?: string;
   password?: string;
   currency?: string;
 }
 
-export const PatchUser = async ({ id, name, email, password, currency }: IPatchUserService) => {
-  const { error } = await supabase.from("users").update({ name, email, currency }).eq("id", id).single();
-  const { data: user, error: errorUser } = await supabase.from("users").select("*").eq("id", id).single();
+export const PatchUser = async ({ user_id, name, email, password, currency }: IPatchUserService) => {
+  const { error } = await supabase.from("users").update({ name, email, currency }).eq("id", user_id).single();
+  const { data: user, error: errorUser } = await supabase.from("users").select("*").eq("id", user_id).single();
 
   const auth_id = user?.auth_id;
 

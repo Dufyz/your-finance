@@ -9,7 +9,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { deleteWallet } from "@/fetchs/wallets/deleteWallet";
+import { deleteWallet } from "@/fetchers/wallets/deleteWallet";
 import { Wallet } from "@/types/Wallet"
 import { toast } from "sonner";
 

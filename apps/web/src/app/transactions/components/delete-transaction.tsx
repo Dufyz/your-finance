@@ -1,5 +1,5 @@
 import DialogItem from "@/components/global/dialog-item";
-import { deleteTransaction } from "@/fetchs/transactions/deleteTransaction";
+import { deleteTransaction } from "@/fetchers/transactions/deleteTransaction";
 import { Transaction } from "@/types/Transaction";
 import * as Dialog from "@radix-ui/react-dialog";
 import { toast } from "sonner";

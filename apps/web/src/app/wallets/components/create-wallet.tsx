@@ -26,7 +26,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { banks } from "@/data/banks";
 import FormError from "@/components/global/form-error";
-import { postWallet } from "@/fetchs/wallets/postWallet";
+import { postWallet } from "@/fetchers/wallets/postWallet";
 import { useWalletsStore } from "@/stores/Wallets";
 import { User } from "@/types/User";
 import MoneyInput from "@/components/ui/MoneyInput";

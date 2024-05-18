@@ -1,4 +1,4 @@
-import getUser from "@/fetchs/user/getUser";
+import getUser from "@/fetchers/user/getUser";
 import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import SupportForm from "./components/support";
 

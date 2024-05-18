@@ -1,11 +1,14 @@
 import LeftNavbarLayout from "@/layout/left-navbar-layout";
 import Tabs from "./tabs";
-import getWallets from "@/fetchs/wallets/getWallets";
-import getUser from "@/fetchs/user/getUser";
+import getWallets from "@/fetchers/wallets/getWallets";
+import getUser from "@/fetchers/user/getUser";
 
 export default async function TransactionsPage() {
-  const wallets = await getWallets();
   const user = await getUser();
+
+  const wallets = await getWallets({
+    user_id: user.id,
+  });
 
   return (
     <LeftNavbarLayout>

@@ -1,19 +1,29 @@
+import { z } from "zod";
+
 import ShowTotalBalance from "@/services/dashboard/total/show-total-balance.service";
 import ShowTotalExpenses from "@/services/dashboard/total/show-total-expenses.service";
 import ShowTotalIncomes from "@/services/dashboard/total/show-total-incomes.service";
 import ShowTotalSaves from "@/services/dashboard/total/show-total-saves.service";
 import { NextRequest, NextResponse } from "next/server";
+import getUserFromRequest from "@/utils/getUserFromRequest";
 
-export async function GET(request: NextRequest) {
-    const user_id = Number(request.nextUrl.searchParams.get("user_id"));
+const getUserTotalsSchema = z.object({
+    user_id: z.number(),
+});
+export async function GET(request: NextRequest, context: any) {
+    const reqUser = getUserFromRequest(request);
 
-    if (!user_id) {
-        return NextResponse.json({
-            message: "User ID is required",
-        }, {
-            status: 400,
+    const validation = getUserTotalsSchema.safeParse({
+        user_id: reqUser.user_id
+    });
+
+    if (!validation.success) {
+        return NextResponse.json({ error: validation.error }, {
+            status: 400
         });
     }
+
+    const { user_id } = validation.data;
 
     const totalBalance = await ShowTotalBalance({ user_id });
     const totalSaves = await ShowTotalSaves({ user_id });

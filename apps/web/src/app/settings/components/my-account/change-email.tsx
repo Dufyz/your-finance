@@ -8,7 +8,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import patchUser from "@/fetchs/user/patchUser";
+import patchUser from "@/fetchers/user/patchUser";
 import { useUserStore } from "@/stores/User";
 import isPasswordValid from "@/utils/is-password-valid";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const ChangeEmailSchema = z.object({
-  id: z.number(),
+  user_id: z.number(),
   email: z.string().email("Invalid email address").toLowerCase(),
   password: z.string().min(6, "Password must have at least 6 characters"),
 })
@@ -34,19 +34,19 @@ export default function ChangeEmail() {
   const { register, handleSubmit, formState: { errors } } = useForm<ChangeEmailSchemaType>({
     resolver: zodResolver(ChangeEmailSchema),
     values: {
-      id: user.id,
+      user_id: user.id,
       email: user.email,
       password: "",
     }
   })
 
-  const handleChangeEmail = async ({ id, email }: {
-    id: number;
+  const handleChangeEmail = async ({ user_id, email }: {
+    user_id: number;
     email: string;
   }) => {
     try {
 
-      await patchUser({ id, email });
+      await patchUser({ user_id, email });
 
       setUser({
         user: {
@@ -62,15 +62,13 @@ export default function ChangeEmail() {
     }
   }
 
-  const handleValidatePassword = async ({ id, email, password }: {
-    id: number;
+  const handleValidatePassword = async ({ user_id, email, password }: {
+    user_id: number;
     email: string;
     password: string;
   }) => {
-    console.log(id, email, password);
-
     if (isValidatingPassword) {
-      const isValid = await isPasswordValid({ id, email: user.email, password });
+      const isValid = await isPasswordValid({ user_id, email: user.email, password });
 
       if (isValid)
         setIsValidatingPassword(false);
@@ -80,7 +78,7 @@ export default function ChangeEmail() {
 
     if (!isValidatingPassword) {
       try {
-        handleChangeEmail({ id, email });
+        handleChangeEmail({ user_id, email });
       } catch (error) {
         console.log(error?.message);
         toast.error("Error changing email. Please try again.");

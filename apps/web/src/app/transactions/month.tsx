@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/table";
 import { TabsContent } from "@/components/ui/tabs";
 import { transactionCategories } from "@/data/transaction-categories";
-import { getMonthTransactions } from "@/fetchs/transactions/getMonthTransactions";
+import { getMonthTransactions } from "@/fetchers/transactions/getMonthTransactions";
 import { Transaction } from "@/types/Transaction";
 import { User } from "@/types/User";
 import { Wallet } from "@/types/Wallet";

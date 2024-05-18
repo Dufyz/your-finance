@@ -11,7 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
-import { deleteExpenseCategoryGoal } from "@/fetchs/goals/deleteExpenseCategoryGoal";
+import { deleteExpenseCategoryGoal } from "@/fetchers/goals/deleteExpenseCategoryGoal";
 import { GoalCategory } from "@/types/GoalCategory";
 import { IconTrash } from "@tabler/icons-react"
 import { toast } from "sonner";

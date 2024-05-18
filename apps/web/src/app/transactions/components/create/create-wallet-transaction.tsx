@@ -37,9 +37,9 @@ import { Form } from "@/components/ui/form";
 import { User } from "@/types/User";
 import FormError from "@/components/global/form-error";
 import { toast } from "sonner";
-import { postTransaction } from "@/fetchs/transactions/postTransaction";
+import { postTransaction } from "@/fetchers/transactions/postTransaction";
 import { Transaction } from "@/types/Transaction";
-import { patchTransaction } from "@/fetchs/transactions/patchTransaction";
+import { patchTransaction } from "@/fetchers/transactions/patchTransaction";
 
 const CreateWalletSchema = z.object({
     user_id: z.number().int(),

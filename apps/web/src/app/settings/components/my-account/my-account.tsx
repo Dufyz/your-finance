@@ -8,7 +8,7 @@ import ChangeTheme from "./change-theme";
 import ChangeLanguage from "./change-language";
 import ChangeCountry from "./change-country";
 import ChangeCurrency from "./change-currency";
-import getUser from "@/fetchs/user/getUser";
+import getUser from "@/fetchers/user/getUser";
 import { currencys } from "@/data/currencys";
 
 
@@ -19,7 +19,6 @@ export default async function MyAccount() {
 
   const userCurrency = currencys.find((currency) => currency.cc === user.currency);
   const userCurrencyString = `${userCurrency?.cc} (${userCurrency?.symbol})`;
-
 
   return (
     <main className="flex w-full flex-col items-center justify-start gap-16">

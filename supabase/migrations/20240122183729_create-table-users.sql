@@ -1,6 +1,6 @@
 CREATE TABLE Users (
     id SERIAL PRIMARY KEY,
-    auth_id UUID REFERENCES auth.users (id),
+    auth_id UUID REFERENCES auth.users (id) ON DELETE CASCADE,
     "name" TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
     phone TEXT,

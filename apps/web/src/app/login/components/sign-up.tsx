@@ -1,12 +1,14 @@
-import { IconEye } from "@tabler/icons-react";
-import useLogin from "../hook/useLogin";
 import { z } from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { IconEye } from "@tabler/icons-react";
 import FormError from "@/components/global/form-error";
+import { signUp } from "../actions/sign-up";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { useState } from "react";
 
-interface ISignUpProps {
+type ISignUpProps = {
   setActiveTab: any;
 }
 
@@ -21,26 +23,43 @@ type SignUpSchemaType = z.infer<typeof SignUpSchema>;
 const SingUp = ({ setActiveTab }: ISignUpProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { handleSingUp } = useLogin();
-
-  const {
-    handleSubmit,
-    register,
-    formState: { errors, isSubmitting }
-  } = useForm<SignUpSchemaType>({
-    resolver: zodResolver(SignUpSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: ""
-    }
+  const { register, formState: { errors, isValid } } = useForm<SignUpSchemaType>({
+    resolver: zodResolver(SignUpSchema)
   });
+
+  const handleSingUpAction = async (formData: FormData) => {
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const validation = SignUpSchema.safeParse({
+      name,
+      email,
+      password
+    });
+
+    if (!validation.success) {
+      return validation.error.errors;
+    }
+
+    try {
+      await signUp({ name, email, password })
+      return toast.success("User created successfully");
+    } catch (error) {
+      const errorStatus = error?.response?.status;
+
+      if (errorStatus === 409) return toast.error("User already registered")
+
+      return toast.error("Error to create user. Please try again.");
+    }
+
+  }
 
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8">
       <form
         className="flex w-full flex-col items-center justify-center gap-6"
-        onSubmit={handleSubmit(handleSingUp)}
+        action={handleSingUpAction}
       >
         <div className="flex w-full flex-col items-center justify-center gap-6">
           <div className="flex w-full flex-col items-start justify-center gap-2">
@@ -97,13 +116,13 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
         </div>
         <div className="flex w-full flex-col items-center justify-center gap-8">
           <div className="flex w-full flex-col items-start justify-center gap-6">
-            <button
+            <Button
               type="submit"
-              disabled={isSubmitting}
-              className="hover:bg-primary-hover w-full rounded-[8px] bg-primary px-3 py-4 font-bold text-white"
+              disabled={!isValid}
+              className="w-full h-12 text-white text-base font-semibold rounded-[8px] flex items-center justify-center"
             >
               Sign Up
-            </button>
+            </Button>
           </div>
         </div>
       </form>

@@ -12,7 +12,7 @@ export default async function CreateExpenseCategoryGoal({ user_id, category_id, 
     const current_value = currentValueRaw?.reduce((acc, curr) => acc + curr.value, 0);
 
 
-    const { data, error } = await supabase.from("goalcategory").insert({
+    const { data, error } = await supabase.from("goal_category").insert({
         user_id,
         category_id,
         target_value,

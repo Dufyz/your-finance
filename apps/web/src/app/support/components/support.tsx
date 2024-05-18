@@ -12,10 +12,11 @@ import {
 
 import { Switch } from "@/components/ui/switch";
 import { supportCategories } from "@/data/support-categories";
-import submitSupportForm from "@/fetchs/support/submit-support-form";
+import submitSupportForm from "@/fetchers/support/submit-support-form";
 import { User } from "@/types/User";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 const SupportFormSchema = z.object({
@@ -46,13 +47,15 @@ export default function SupportForm({ user }: {
         }
     });
 
-    const handleSubmitSupportForm = async ({ user_id, category_id, message }: {
-        user_id: number;
-        category_id: number;
-        message: string;
-    }) => {
-        await submitSupportForm({ user_id, category_id, message })
-        reset();
+    const handleSubmitSupportForm = async ({ user_id, category_id, message, isAgreed }: SupportFormSchemaType) => {
+        try {
+            await submitSupportForm({ user_id, category_id, message, isAgreed });
+            toast.success("Your message has been sent. We'll get back to you as soon as possible.");
+            reset();
+        } catch (error) {
+            console.error(error);
+            toast.error("An error occurred while submitting the form. Please try again later.");
+        }
     }
 
     return (

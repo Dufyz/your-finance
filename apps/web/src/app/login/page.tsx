@@ -1,14 +1,14 @@
 "use client";
 
 import ForgotPassword from "./components/forgot-password";
-import useLogin from "./hook/useLogin";
 import SignIn from "./components/sign-in";
 import SingUp from "./components/sign-up";
+import { useState } from "react";
 
 export const LoginPage = () => {
-  //TODO implementar forgot password
-
-  const { activeTab, setActiveTab } = useLogin();
+  const [activeTab, setActiveTab] = useState<
+    "sign-in" | "sign-up" | "forgot-password"
+  >("sign-in");
 
   return (
     <div className="bg-bg-primary flex h-screen w-full flex-col items-center justify-center gap-8">
@@ -22,9 +22,7 @@ export const LoginPage = () => {
           <div className="flex w-full flex-col items-start justify-center gap-6">
             {activeTab === "sign-in" && <SignIn setActiveTab={setActiveTab} />}
             {activeTab === "sign-up" && <SingUp setActiveTab={setActiveTab} />}
-            {activeTab === "forgot-password" && (
-              <ForgotPassword setActiveTab={setActiveTab} />
-            )}
+            {/* {activeTab === "forgot-password" && (<ForgotPassword setActiveTab={setActiveTab} />)} */}
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ import {
   SelectValue
 } from "@/components/ui/select";
 import { useUserStore } from "@/stores/User";
-import patchUser from "@/fetchs/user/patchUser";
+import patchUser from "@/fetchers/user/patchUser";
 import { toast } from "sonner";
 import { useState } from "react";
 import { currencys } from "@/data/currencys";
@@ -34,7 +34,7 @@ const ChangeCurrency = () => {
   const handleChangeCurrency = async () => {
     try {
       await patchUser({
-        id: user.id,
+        user_id: user.id,
         currency: newCurrency
       })
 

@@ -1,6 +1,6 @@
-CREATE TABLE GoalSavings (
+CREATE TABLE goal_savings (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES Users (id) NOT NULL,
+    user_id INT REFERENCES Users (id) ON DELETE CASCADE,
     goal_date DATE NOT NULL,
     target_value NUMERIC NOT NULL,
     current_value NUMERIC NOT NULL,

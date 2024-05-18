@@ -17,7 +17,7 @@ import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
 import { GoalCategory } from "@/types/GoalCategory";
 import { transactionCategories } from "@/data/transaction-categories";
-import { putExpenseCategoryGoal } from "@/fetchs/goals/putExpenseCategoryGoal";
+import { putExpenseCategoryGoal } from "@/fetchers/goals/putExpenseCategoryGoal";
 
 const EditExpenseCategoryGoalSchema = z.object({
   user_id: z.number().int(),

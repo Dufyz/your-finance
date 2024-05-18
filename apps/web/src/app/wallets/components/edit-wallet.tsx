@@ -28,7 +28,7 @@ import FormError from "@/components/global/form-error";
 import { banks } from "@/data/banks";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { toast } from "sonner";
-import patchWallet from "@/fetchs/wallets/patchWallet";
+import patchWallet from "@/fetchers/wallets/patchWallet";
 import { DeleteWallet } from "./delete-wallet";
 
 const EditWalletSchema = z.object({

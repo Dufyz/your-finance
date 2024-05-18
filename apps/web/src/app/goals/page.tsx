@@ -3,10 +3,10 @@ import { Suspense } from "react";
 import ExpenseCategoryGoalCard from "./components/expense-category-goal-card";
 import CreateExpenseCategoryGoal from "./components/create-expense-category-goal";
 import ExpensesChart from "./components/expenses-chart";
-import getUser from "@/fetchs/user/getUser";
-import { getCategoriesGoals } from "@/fetchs/goals/getCategoriesGoals";
+import getUser from "@/fetchers/user/getUser";
+import { getCategoriesGoals } from "@/fetchers/goals/getCategoriesGoals";
 import { GoalCategory } from "@/types/GoalCategory";
-import { getCategoriesExpenses } from "@/fetchs/categories/getCategoriesExpenses";
+import { getCategoriesExpenses } from "@/fetchers/categories/getCategoriesExpenses";
 
 export default async function GoalsPage() {
   const user = await getUser();

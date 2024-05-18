@@ -1,10 +1,13 @@
 import { IconEye } from "@tabler/icons-react";
-import useLogin from "../hook/useLogin";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import FormError from "@/components/global/form-error";
 import { useState } from "react";
+import { signIn } from "../actions/sign-in";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface ISignInProps {
   setActiveTab: any;
@@ -20,24 +23,37 @@ type SignInSchemaType = z.infer<typeof SignInSchema>;
 const SignIn = ({ setActiveTab }: ISignInProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
-  const { handleSignIn } = useLogin();
-
   const {
     register,
-    handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isValid }
   } = useForm<SignInSchemaType>({
-    resolver: zodResolver(SignInSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    }
+    resolver: zodResolver(SignInSchema)
   });
 
+  const handleSingInAction = async (formData: FormData) => {
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    const validation = SignInSchema.safeParse({
+      email,
+      password
+    });
+
+    if (!validation.success) {
+      return validation.error.errors;
+    }
+
+    try {
+      await signIn({ email, password });
+      return toast.success("Login successfully");
+    } catch (error) {
+      return toast.error("Invalid credentials. Please try again.");
+    }
+  }
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8">
       <form
-        onSubmit={handleSubmit(handleSignIn)}
+        action={handleSingInAction}
         className="flex w-full flex-col items-center justify-center gap-6"
       >
         <div className="flex w-full flex-col items-start justify-center gap-2">
@@ -87,13 +103,13 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
         </div>
         <div className="flex w-full flex-col items-center justify-center gap-8">
           <div className="flex w-full flex-col items-start justify-center gap-6">
-            <button
+            <Button
               type="submit"
-              disabled={isSubmitting}
-              className="hover:bg-primary-hover w-full rounded-[8px] bg-primary px-3 py-4 font-bold text-white"
+              disabled={!isValid}
+              className="w-full h-12 text-white text-base font-semibold rounded-[8px] flex items-center justify-center"
             >
               Login
-            </button>
+            </Button>
           </div>
         </div>
       </form>

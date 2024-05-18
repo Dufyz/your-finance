@@ -12,6 +12,10 @@ export const corsHeaders = {
 };
 
 export async function middleware(request: NextRequest) {
+  if (request.method === "OPTIONS") {
+    return NextResponse.next();
+  }
+
   const sessionToken = request.headers.get("Authorization")?.split(" ")[1];
 
   if (!sessionToken) {
@@ -24,13 +28,15 @@ export async function middleware(request: NextRequest) {
     return NextResponse.json({ message: 'Invalid token' }, { status: 401 });
   }
 
-  if (request.method === "OPTIONS") {
-    return NextResponse.next();
-  }
-
   const response = NextResponse.next();
 
   response.headers.set('X-User-Data', JSON.stringify(data.user));
-  
+
   return response;
+}
+
+export const config = {
+  matcher: [
+    '/((?!api/auth/sign-up).*)',
+  ],
 }

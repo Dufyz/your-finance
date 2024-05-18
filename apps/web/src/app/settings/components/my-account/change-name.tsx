@@ -8,7 +8,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import patchUser from "@/fetchs/user/patchUser";
+import patchUser from "@/fetchers/user/patchUser";
 import { useUserStore } from "@/stores/User";
 import { User } from "@/types/User";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -18,7 +18,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const ChangeNameSchema = z.object({
-  id: z.number(),
+  user_id: z.number(),
   name: z.string().min(3, "Name must have at least 3 characters")
 });
 
@@ -35,25 +35,25 @@ export default function ChangeName({ userData }: { userData: User }) {
   } = useForm<ChangeNameSchemaType>({
     resolver: zodResolver(ChangeNameSchema),
     values: {
-      id: user.id,
+      user_id: user.id,
       name: user.name,
     }
   })
 
-  const handleChangeName = async ({ id, name }: {
-    id: number;
+  const handleChangeName = async ({ user_id, name }: {
+    user_id: number;
     name: string;
   }) => {
     const newUser = {
       ...user,
-      id,
+      user_id,
       name,
     }
 
     try {
       setUser({ user: newUser });
 
-      await patchUser({ id, name });
+      await patchUser({ user_id, name });
 
       toast.success("Name updated successfully");
     } catch (error) {
