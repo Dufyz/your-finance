@@ -51,16 +51,24 @@ export default function ExpensesChart({
   });
 
   return (
-    <div className="col-span-4 flex w-full items-center justify-center rounded-md border bg-white p-4 shadow-md">
-      <BarChart width={1400} height={380} data={barChartData}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="target" fill="#8884d8" />
-        <Bar dataKey="real" fill="#82ca9d" />
-      </BarChart>
+    <div className="col-span-4 flex min-h-72 w-full items-center justify-center rounded-md border bg-white p-4 shadow-md">
+      {barChartData.length > 0 && (
+        <BarChart width={1400} height={380} data={barChartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="target" fill="#8884d8" />
+          <Bar dataKey="real" fill="#82ca9d" />
+        </BarChart>
+      )}
+      {barChartData.length === 0 && (
+        <div className="text-muted-foreground flex flex-col items-center justify-center gap-2">
+          <p>There is no data to display yet.</p>
+          <p>Start by creating a expense category goal.</p>
+        </div>
+      )}
     </div>
   );
 }

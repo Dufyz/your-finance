@@ -16,56 +16,64 @@ import {
   Bar
 } from "recharts";
 
-const data = [
+const barChartData = [
   {
     name: "Page A",
-    uv: 4000,
-    pv: 2400
+    target: 4000,
+    real: 2400
   },
   {
     name: "Page B",
-    uv: 3000,
-    pv: 1398
+    target: 3000,
+    real: 1398
   },
   {
     name: "Page C",
-    uv: 2000,
-    pv: 9800
+    target: 2000,
+    real: 9800
   },
   {
     name: "Page D",
-    uv: 2780,
-    pv: 3908
+    target: 2780,
+    real: 3908
   },
   {
     name: "Page E",
-    uv: 1890,
-    pv: 4800
+    target: 1890,
+    real: 4800
   },
   {
     name: "Page F",
-    uv: 2390,
-    pv: 3800
+    target: 2390,
+    real: 3800
   },
   {
     name: "Page G",
-    uv: 3490,
-    pv: 4300
+    target: 3490,
+    real: 4300
   }
 ];
 
 export default function SavingsChart() {
   return (
-    <div className="col-span-3 flex w-full items-center justify-center rounded-md border bg-white p-4 shadow-md">
-      <BarChart width={900} height={280} data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="pv" fill="#8884d8" />
-        <Bar dataKey="uv" fill="#82ca9d" />
-      </BarChart>
+    <div className="col-span-3 flex min-h-72 w-full items-center justify-center rounded-md border bg-white p-4 shadow-md">
+      {barChartData.length > 0 && (
+        <BarChart width={1200} height={380} data={barChartData}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="target" fill="#8884d8" />
+          <Bar dataKey="real" fill="#82ca9d" />
+        </BarChart>
+      )}
+      {barChartData.length === 0 && (
+        <div className="text-muted-foreground flex flex-col items-center justify-center gap-2">
+          <p>There is no data to display yet.</p>
+          <p>Start by creating a expense category goal.</p>
+        </div>
+      )}
     </div>
   );
 }

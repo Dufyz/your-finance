@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTrigger
@@ -30,8 +31,10 @@ import MoneyInput from "@/components/ui/MoneyInput";
 import { toast } from "sonner";
 import patchWallet from "@/fetchers/wallets/patchWallet";
 import { DeleteWallet } from "./delete-wallet";
+import { User } from "@/types/User";
 
 const EditWalletSchema = z.object({
+  user_id: z.number(),
   id: z.number().int(),
   bank_id: z.number().int(),
   nickname: z.string().min(6, "Nickname must have at least 6 characters"),
@@ -50,10 +53,17 @@ const EditWalletSchema = z.object({
 
 type EditWalletSchemaType = z.infer<typeof EditWalletSchema>;
 
-export default function EditWallet({ wallet }: { wallet: WalletType }) {
+export default function EditWallet({
+  wallet,
+  user
+}: {
+  wallet: WalletType;
+  user: User;
+}) {
   const form = useForm<EditWalletSchemaType>({
     resolver: zodResolver(EditWalletSchema),
     defaultValues: {
+      user_id: user.id,
       id: wallet.id,
       bank_id: wallet.bank_id,
       nickname: wallet.nickname,
@@ -67,9 +77,8 @@ export default function EditWallet({ wallet }: { wallet: WalletType }) {
     handleSubmit,
     control,
     register,
-    formState: { errors },
-    setValue,
-    getValues
+    formState: { errors, isValid },
+    setValue
   } = form;
 
   const typeFieldValue = useWatch({
@@ -78,6 +87,7 @@ export default function EditWallet({ wallet }: { wallet: WalletType }) {
   });
 
   const handleEditWallet = async ({
+    user_id,
     id,
     bank_id,
     nickname,
@@ -85,8 +95,10 @@ export default function EditWallet({ wallet }: { wallet: WalletType }) {
     is_main,
     type
   }: EditWalletSchemaType) => {
+    console.log("estou no handleEditWallet");
     try {
       await patchWallet({
+        user_id,
         id,
         bank_id,
         nickname,
@@ -122,21 +134,27 @@ export default function EditWallet({ wallet }: { wallet: WalletType }) {
                 <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
                   <Button
                     type="button"
-                    className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`}
+                    className={`flex flex-1 ${
+                      typeFieldValue === "current" ? "" : "bg-muted-foreground"
+                    }`}
                     onClick={() => setValue("type", "current")}
                   >
                     Current
                   </Button>
                   <Button
                     type="button"
-                    className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`}
+                    className={`flex flex-1 ${
+                      typeFieldValue === "saving" ? "" : "bg-muted-foreground"
+                    }`}
                     onClick={() => setValue("type", "saving")}
                   >
                     Savings
                   </Button>
                   <Button
                     type="button"
-                    className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`}
+                    className={`flex flex-1 ${
+                      typeFieldValue === "wallet" ? "" : "bg-muted-foreground"
+                    }`}
                     onClick={() => {
                       setValue("type", "wallet");
                       setValue("bank_id", 0);
@@ -249,12 +267,15 @@ export default function EditWallet({ wallet }: { wallet: WalletType }) {
 
             <div className="flex-start flex w-full flex-col items-start gap-2">
               <div className="w-full">
-                <button
-                  type="submit"
-                  className="w-full rounded-md bg-green-700 p-2 text-white"
-                >
-                  Save
-                </button>
+                <DialogClose className="w-full" disabled={!isValid}>
+                  <Button
+                    type="submit"
+                    disabled={!isValid}
+                    className="w-full rounded-md bg-green-700 p-2 text-white hover:bg-green-800"
+                  >
+                    Save
+                  </Button>
+                </DialogClose>
               </div>
               <div className="w-full">
                 <DeleteWallet wallet={wallet} />

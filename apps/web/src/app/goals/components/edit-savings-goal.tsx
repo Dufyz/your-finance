@@ -26,7 +26,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { banks } from "@/data/banks";
 import FormError from "@/components/global/form-error";
 import { postWallet } from "@/fetchers/wallets/postWallet";
-import { useWalletsStore } from "@/stores/Wallets";
 import { User } from "@/types/User";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { Form } from "@/components/ui/form";
@@ -53,8 +52,6 @@ type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 
 export default function EditSavingsGoal() {
   const [iconColor, setIconColor] = useState("#15803d");
-
-  const addWallet = useWalletsStore((state) => state.addWallet);
 
   const form = useForm<CreateWalletSchemaType>({
     resolver: zodResolver(CreateWalletSchema),
@@ -100,8 +97,6 @@ export default function EditSavingsGoal() {
         is_main,
         type
       });
-
-      addWallet(newWallet);
 
       reset();
 

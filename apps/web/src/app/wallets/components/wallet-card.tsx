@@ -67,7 +67,7 @@ export default function WalletCard({
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <EditWallet wallet={wallet} />
+        <EditWallet wallet={wallet} user={user} />
       </CardFooter>
     </Card>
   );

@@ -27,11 +27,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { banks } from "@/data/banks";
 import FormError from "@/components/global/form-error";
 import { postWallet } from "@/fetchers/wallets/postWallet";
-import { useWalletsStore } from "@/stores/Wallets";
 import { User } from "@/types/User";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const CreateWalletSchema = z.object({
   user_id: z.number().int(),
@@ -55,8 +55,6 @@ type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 export default function CreateWallet({ user }: { user: User }) {
   const [iconColor, setIconColor] = useState("#15803d");
 
-  const addWallet = useWalletsStore((state) => state.addWallet);
-
   const form = useForm<CreateWalletSchemaType>({
     resolver: zodResolver(CreateWalletSchema),
     defaultValues: {
@@ -75,8 +73,7 @@ export default function CreateWallet({ user }: { user: User }) {
     register,
     reset,
     setValue,
-    getValues,
-    formState: { errors }
+    formState: { errors, isValid }
   } = form;
 
   const typeFieldValue = useWatch({
@@ -102,10 +99,7 @@ export default function CreateWallet({ user }: { user: User }) {
         type
       });
 
-      addWallet(newWallet);
-
       reset();
-
       toast.success("Wallet created successfully.");
     } catch (error) {
       toast.error("An error occurred while creating the wallet.");
@@ -135,21 +129,27 @@ export default function CreateWallet({ user }: { user: User }) {
                 <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
                   <Button
                     type="button"
-                    className={`flex flex-1 ${typeFieldValue === "current" ? "" : "bg-muted-foreground"}`}
+                    className={`flex flex-1 ${
+                      typeFieldValue === "current" ? "" : "bg-muted-foreground"
+                    }`}
                     onClick={() => setValue("type", "current")}
                   >
                     Current
                   </Button>
                   <Button
                     type="button"
-                    className={`flex flex-1 ${typeFieldValue === "saving" ? "" : "bg-muted-foreground"}`}
+                    className={`flex flex-1 ${
+                      typeFieldValue === "saving" ? "" : "bg-muted-foreground"
+                    }`}
                     onClick={() => setValue("type", "saving")}
                   >
                     Savings
                   </Button>
                   <Button
                     type="button"
-                    className={`flex flex-1 ${typeFieldValue === "wallet" ? "" : "bg-muted-foreground"}`}
+                    className={`flex flex-1 ${
+                      typeFieldValue === "wallet" ? "" : "bg-muted-foreground"
+                    }`}
                     onClick={() => {
                       setValue("type", "wallet");
                       setValue("bank_id", 0);
@@ -261,12 +261,15 @@ export default function CreateWallet({ user }: { user: User }) {
             </div>
 
             <div className="w-full">
-              <button
-                type="submit"
-                className="w-full rounded-md bg-green-700 p-2 text-white"
-              >
-                Save
-              </button>
+              <DialogClose className="w-full" disabled={!isValid}>
+                <Button
+                  type="submit"
+                  disabled={!isValid}
+                  className="w-full rounded-md bg-green-700 p-2 text-white hover:bg-green-800"
+                >
+                  Save
+                </Button>
+              </DialogClose>
             </div>
           </form>
         </Form>

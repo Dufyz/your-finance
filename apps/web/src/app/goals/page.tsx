@@ -7,6 +7,8 @@ import getUser from "@/fetchers/user/getUser";
 import { getCategoriesGoals } from "@/fetchers/goals/getCategoriesGoals";
 import { GoalCategory } from "@/types/GoalCategory";
 import { getCategoriesExpenses } from "@/fetchers/categories/getCategoriesExpenses";
+import SavingsGoalCard from "./components/savings-goal-card";
+import SavingsChart from "./components/savings-chart";
 
 export default async function GoalsPage() {
   const user = await getUser();
@@ -32,12 +34,12 @@ export default async function GoalsPage() {
                   <DateRangePicker />
                 </div> */}
               </div>
-              {/* <div className="w-full flex flex-col gap-4 items-center justify-start">
-                <div className="w-full grid gap-4 md:grid-cols-3 md:gap-8 lg:grid-cols-5">
-                  <SavingsGoalCard />
-                  <SavingsChart />
+              <div className="flex w-full flex-col items-center justify-start gap-4">
+                <div className="grid w-full gap-4 md:grid-cols-3 md:gap-8 lg:grid-cols-5">
+                  {/* <SavingsGoalCard /> */}
+                  {/* <SavingsChart /> */}
                 </div>
-              </div> */}
+              </div>
             </div>
             <div className="flex w-full flex-col items-start justify-start gap-6">
               <div className="item-center flex w-full justify-between gap-6">

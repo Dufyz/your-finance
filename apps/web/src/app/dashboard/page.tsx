@@ -41,7 +41,7 @@ export default async function DashboardPage() {
 
   return (
     <LeftNavbarLayout>
-      <div className="flex w-full flex-col">
+      <div className="flex h-full w-full flex-1 flex-col">
         <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
           {/* <div>
             <DateRangePicker />
@@ -53,13 +53,13 @@ export default async function DashboardPage() {
             <TotalExpenses total={totalExpenses} currencyCC={currencyCC} />
             <TotalInvoices total={totalInvoices} currencyCC={currencyCC} />
           </div>
-          <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="flex h-full w-full gap-4">
             <RecentTransactions
               transactions={lastTransactions}
               user={user}
               wallets={wallets}
             />
-            <Goals />
+            {/* <Goals /> */}
           </div>
         </main>
       </div>

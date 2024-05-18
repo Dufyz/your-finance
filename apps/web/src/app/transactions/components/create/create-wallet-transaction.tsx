@@ -40,6 +40,7 @@ import { toast } from "sonner";
 import { postTransaction } from "@/fetchers/transactions/postTransaction";
 import { Transaction } from "@/types/Transaction";
 import { patchTransaction } from "@/fetchers/transactions/patchTransaction";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 const CreateWalletSchema = z.object({
   user_id: z.number().int(),
@@ -96,7 +97,7 @@ export default function CreateWalletTransaction({
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     control,
     handleSubmit,
     getValues,
@@ -152,7 +153,8 @@ export default function CreateWalletTransaction({
     try {
       if (!date || !transaction) return;
 
-      const updatedTransaction = await patchTransaction({
+      await patchTransaction({
+        user_id,
         id: transaction.id,
         wallet_id: Number(wallet_id),
         category_id: Number(category_id),
@@ -291,7 +293,11 @@ export default function CreateWalletTransaction({
               <div className="flex min-h-10 w-full flex-row gap-2 rounded-md py-2">
                 <Button
                   type="button"
-                  className={`flex flex-1 cursor-pointer hover:bg-green-800 ${typeFieldValue === "income" ? "bg-green-800" : "bg-muted-foreground"}`}
+                  className={`flex flex-1 cursor-pointer hover:bg-green-800 ${
+                    typeFieldValue === "income"
+                      ? "bg-green-800"
+                      : "bg-muted-foreground"
+                  }`}
                   onClick={() => setValue("type", "income")}
                 >
                   Income
@@ -299,7 +305,11 @@ export default function CreateWalletTransaction({
 
                 <Button
                   type="button"
-                  className={`flex flex-1 hover:bg-red-800 ${typeFieldValue === "expense" ? "bg-red-800" : "bg-muted-foreground"}`}
+                  className={`flex flex-1 hover:bg-red-800 ${
+                    typeFieldValue === "expense"
+                      ? "bg-red-800"
+                      : "bg-muted-foreground"
+                  }`}
                   onClick={() => setValue("type", "expense")}
                 >
                   Expense
@@ -335,12 +345,25 @@ export default function CreateWalletTransaction({
               </Popover>
             </div>
             <div className="pt-4">
-              <button
-                type="submit"
-                className="w-full rounded-md bg-green-700 p-2 text-white"
-              >
-                Save
-              </button>
+              {isEditing ? (
+                <Button
+                  type="submit"
+                  disabled={!isValid}
+                  className="w-full rounded-md bg-green-700 p-2 text-white hover:bg-green-800"
+                >
+                  Save
+                </Button>
+              ) : (
+                <DialogClose disabled={!isValid} className="w-full">
+                  <Button
+                    type="submit"
+                    disabled={!isValid}
+                    className="w-full rounded-md bg-green-700 p-2 text-white hover:bg-green-800"
+                  >
+                    Save
+                  </Button>
+                </DialogClose>
+              )}
             </div>
           </CardContent>
         </form>

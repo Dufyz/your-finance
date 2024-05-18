@@ -160,20 +160,20 @@ export async function POST(request: NextRequest) {
   }
 }
 
-const patchUserTransactionsSchema = z.object({
+const patchTransactionSchema = z.object({
   id: z.number(),
-  wallet_id: z.string().transform((value) => parseInt(value)),
-  card_id: z.string().transform((value) => parseInt(value)),
-  category_id: z.string().transform((value) => parseInt(value)),
+  wallet_id: z.number().optional(),
+  card_id: z.number().optional(),
+  category_id: z.number(),
   value: z.number(),
   description: z.string(),
   type: z.string().refine((value) => ["income", "expense"].includes(value)),
-  transaction_date: z.date()
+  transaction_date: z.string()
 });
 export async function PATCH(request: NextRequest) {
   const body = await request.json();
 
-  const validation = patchUserTransactionsSchema.safeParse({
+  const validation = patchTransactionSchema.safeParse({
     ...body
   });
 

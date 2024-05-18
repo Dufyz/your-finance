@@ -10,7 +10,12 @@ export const deleteExpenseCategoryGoal = async ({
   user_id: number;
   id: number;
 }) => {
-  const response = await apiServer(`/goals/categories`, {
+  const body = JSON.stringify({
+    user_id,
+    id
+  });
+
+  const response = await apiServer(`/goals/categories/${id}`, {
     method: "DELETE"
   });
 
