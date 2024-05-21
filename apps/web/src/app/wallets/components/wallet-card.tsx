@@ -6,6 +6,7 @@ import { banks } from "@/data/banks";
 import { User } from "@/types/User";
 import FormatMoney from "@/utils/format-money";
 import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
+import { IconDiscountCheck } from "@tabler/icons-react";
 
 export default function WalletCard({
   wallet,
@@ -30,7 +31,7 @@ export default function WalletCard({
         <div className="grid w-full items-center gap-4">
           <div className="flex w-full flex-row items-center justify-start space-y-1.5">
             <div className="flex w-full flex-row items-center justify-start gap-2">
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex w-full items-center justify-center gap-2">
                 <div>
                   <Image
                     src={bank.logo_src}
@@ -39,7 +40,14 @@ export default function WalletCard({
                     alt={bank?.name}
                   />
                 </div>
-                <span>{bank.name}</span>
+                <div className="flex w-full items-center justify-between">
+                  <span>{bank.name}</span>
+                  {wallet.is_main && (
+                    <div>
+                      <IconDiscountCheck size={20} color="#15803d" />
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>

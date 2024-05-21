@@ -2,8 +2,8 @@ import supabase from "@/config/supabase";
 
 interface IShowCustomTransactionsService {
   user_id: number;
-  date_from: Date;
-  date_to: Date;
+  date_from: string;
+  date_to: string;
 }
 
 export default async function ShowCustomTransactionsService({
@@ -15,8 +15,8 @@ export default async function ShowCustomTransactionsService({
     .from("transactions")
     .select("*")
     .eq("user_id", user_id)
-    .gte("transaction_date", date_from.toISOString())
-    .lte("transaction_date", date_to.toISOString())
+    .gte("transaction_date", date_from)
+    .lte("transaction_date", date_to)
     .order("transaction_date", { ascending: false })
     .order("created_at", { ascending: false });
 

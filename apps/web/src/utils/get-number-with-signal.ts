@@ -1,3 +1,7 @@
-export const getNumberWithSignal = (value: number): string => {
-  return value >= 0 ? `+${value}` : `${value}`;
+export const getNumberWithSignal = (
+  value: number,
+  decimalPlaces = 2
+): string => {
+  const formattedValue = value.toFixed(decimalPlaces);
+  return value >= 0 ? `+${formattedValue}` : formattedValue;
 };

@@ -3,11 +3,13 @@ import { currencys } from "@/data/currencys";
 export default function FormatMoney({
   value,
   currency = "USD",
-  className
+  className,
+  showSignal = false
 }: {
   value: number;
   currency?: string;
   className?: string;
+  showSignal?: boolean;
 }) {
   const currencyCC = currencys.find((c) => c.cc === currency)?.cc;
 
@@ -15,7 +17,8 @@ export default function FormatMoney({
     <span className={className}>
       {new Intl.NumberFormat("en-US", {
         style: "currency",
-        currency: currencyCC
+        currency: currencyCC,
+        signDisplay: showSignal ? "always" : "never"
       }).format(value)}
     </span>
   );

@@ -4,8 +4,8 @@ import CreateTransactionService from "./create-transaction.service";
 
 interface IPatchTransactionService {
   id: number;
-  wallet_id: number;
-  card_id: number;
+  wallet_id?: number;
+  card_id?: number;
   category_id: number;
   value: number;
   description: string;

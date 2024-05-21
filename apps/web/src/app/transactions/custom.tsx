@@ -32,6 +32,7 @@ import { DateRange } from "react-day-picker";
 import { subDays } from "date-fns";
 import { getCustomTransactions } from "@/fetchers/transactions/getCustomTransactions";
 import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
+import getDateOnFormatDDMMYY from "@/utils/getDateOnFormatDDMMYY";
 
 export default function Custom({
   wallets,
@@ -58,8 +59,8 @@ export default function Custom({
 
     const transactions = await getCustomTransactions({
       user_id: user.id,
-      date_from: date.from,
-      date_to: date.to
+      date_from: new Date(date?.from).toISOString(),
+      date_to: new Date(date.to).toISOString()
     });
 
     setTransactions(transactions);
@@ -125,9 +126,9 @@ export default function Custom({
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {new Date(
-                        transaction.transaction_date
-                      ).toLocaleDateString()}
+                      {getDateOnFormatDDMMYY(
+                        new Date(transaction.transaction_date)
+                      )}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       <FormatMoney

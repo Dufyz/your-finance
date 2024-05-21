@@ -14,6 +14,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 import CreateWalletTransaction from "./create-wallet-transaction";
+import { useState } from "react";
 
 const CreateTransaction = ({
   wallets,
@@ -22,8 +23,10 @@ const CreateTransaction = ({
   user: User;
   wallets: Wallet[];
 }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           size="sm"
@@ -45,7 +48,11 @@ const CreateTransaction = ({
           </TabsList>
 
           <TabsContent value="wallet">
-            <CreateWalletTransaction wallets={wallets} user={user} />
+            <CreateWalletTransaction
+              wallets={wallets}
+              user={user}
+              setOpen={setOpen}
+            />
           </TabsContent>
 
           {/* <TabsContent value="card">

@@ -4,16 +4,19 @@ import { Transaction } from "@/types/Transaction";
 import EditWalletTransaction from "./edit-wallet-transaction";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
+import { Dispatch } from "react";
 
 export default function EditTransaction({
   handleDialogItemSelect,
   handleDialogItemOpenChange,
+  setDropdownOpen,
   transaction,
   wallets,
   user
 }: {
-  handleDialogItemSelect: any;
-  handleDialogItemOpenChange: any;
+  handleDialogItemSelect: () => void;
+  handleDialogItemOpenChange: (open: boolean) => void;
+  setDropdownOpen: Dispatch<React.SetStateAction<boolean>>;
   transaction: Transaction;
   wallets: Wallet[];
   user: User;
@@ -33,6 +36,7 @@ export default function EditTransaction({
             transaction={transaction}
             wallets={wallets}
             user={user}
+            setOpen={setDropdownOpen}
           />
         </div>
       )}

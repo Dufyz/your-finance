@@ -25,7 +25,7 @@ import {
   PopoverContent,
   PopoverTrigger
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { Dispatch, useState } from "react";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -68,11 +68,13 @@ type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 export default function CreateWalletTransaction({
   transaction,
   wallets,
-  user
+  user,
+  setOpen
 }: {
   transaction?: Transaction;
   user: User;
   wallets: Wallet[];
+  setOpen: Dispatch<React.SetStateAction<boolean>>;
 }) {
   const isEditing = !!transaction;
 
@@ -122,7 +124,7 @@ export default function CreateWalletTransaction({
     try {
       if (!date) return;
 
-      const newTransaction = await postTransaction({
+      await postTransaction({
         user_id,
         wallet_id: Number(wallet_id),
         category_id: Number(category_id),
@@ -132,6 +134,7 @@ export default function CreateWalletTransaction({
         transaction_date: date
       });
 
+      setOpen(false);
       reset();
 
       toast.success("Transaction created successfully.");
@@ -163,6 +166,9 @@ export default function CreateWalletTransaction({
         type,
         transaction_date: date
       });
+
+      setOpen(false);
+      reset();
 
       toast.success("Transaction updated successfully.");
     } catch (error) {
@@ -340,6 +346,7 @@ export default function CreateWalletTransaction({
                     onSelect={setDate}
                     initialFocus
                     required
+                    disabled={(date) => date > new Date()}
                   />
                 </PopoverContent>
               </Popover>

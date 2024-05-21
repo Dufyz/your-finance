@@ -57,6 +57,7 @@ export default function ToolsTransaction({
         <EditTransaction
           handleDialogItemOpenChange={handleDialogItemOpenChange}
           handleDialogItemSelect={handleDialogItemSelect}
+          setDropdownOpen={setDropdownOpen}
           transaction={transaction}
           wallets={wallets}
           user={user}

@@ -22,11 +22,6 @@ export async function updateSession(request: NextRequest) {
             value,
             ...options
           });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers
-            }
-          });
           response.cookies.set({
             name,
             value,
@@ -38,11 +33,6 @@ export async function updateSession(request: NextRequest) {
             name,
             value: "",
             ...options
-          });
-          response = NextResponse.next({
-            request: {
-              headers: request.headers
-            }
           });
           response.cookies.set({
             name,
@@ -56,19 +46,17 @@ export async function updateSession(request: NextRequest) {
 
   const { error } = await supabase.auth.getUser();
 
-  // if (error && request.nextUrl.pathname !== "/login") {
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/login'
+  if (error && request.nextUrl.pathname !== "/login") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
 
-  //   response = NextResponse.redirect(url)
-  // }
-
-  // if (!error && request.nextUrl.pathname === "/login") {
-  //   const url = request.nextUrl.clone()
-  //   url.pathname = '/dashboard'
-
-  //   response = NextResponse.redirect(url)
-  // }
+  if (!error && request.nextUrl.pathname === "/login") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
 
   return response;
 }

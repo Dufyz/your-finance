@@ -67,8 +67,8 @@ export async function GET(request: NextRequest) {
       case "custom":
         transactions = await ShowCustomTransactionsService({
           user_id,
-          date_from: new Date(date_from || ""),
-          date_to: new Date(date_to || "")
+          date_from: date_from || new Date().toISOString(),
+          date_to: date_to || new Date().toISOString()
         });
         break;
       case "last":

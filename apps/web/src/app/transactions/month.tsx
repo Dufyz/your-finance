@@ -26,6 +26,7 @@ import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
 import FormatMoney from "@/utils/format-money";
 import ToolsTransaction from "./components/tools-transaction";
 import { currencys } from "@/data/currencys";
+import getDateOnFormatDDMMYY from "@/utils/getDateOnFormatDDMMYY";
 
 export default async function Month({
   wallets,
@@ -90,9 +91,9 @@ export default async function Month({
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {new Date(
-                        transaction.transaction_date
-                      ).toLocaleDateString()}
+                      {getDateOnFormatDDMMYY(
+                        new Date(transaction.transaction_date)
+                      )}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       <FormatMoney

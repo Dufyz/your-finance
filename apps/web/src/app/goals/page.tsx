@@ -54,10 +54,6 @@ export default async function GoalsPage() {
               </div>
               <div className="flex w-full flex-col items-center justify-start gap-4">
                 <div className="grid w-full grid-cols-4 gap-4">
-                  <ExpensesChart
-                    categoriesGoals={categoriesGoals}
-                    categoriesExpenses={categoriesExpenses}
-                  />
                   {categoriesGoals?.map(
                     (goalCategory: GoalCategory, index: number) => (
                       <ExpenseCategoryGoalCard
@@ -66,6 +62,10 @@ export default async function GoalsPage() {
                       />
                     )
                   )}
+                  <ExpensesChart
+                    categoriesGoals={categoriesGoals}
+                    categoriesExpenses={categoriesExpenses}
+                  />
                 </div>
               </div>
             </div>

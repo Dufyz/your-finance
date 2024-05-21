@@ -41,13 +41,21 @@ export default async function ShowTotalBalanceService({
       }
     });
 
-  const percentageFromLastMonth = calculatePercentageChange(
-    totalSavesLastMonth,
-    totalSaves
-  );
+  try {
+    const percentageFromLastMonth = calculatePercentageChange(
+      totalSavesLastMonth,
+      totalSaves
+    );
 
-  return {
-    value: totalSaves,
-    percentage: percentageFromLastMonth
-  };
+    return {
+      value: totalSaves,
+      percentage: percentageFromLastMonth
+    };
+  } catch (error) {
+    return {
+      value: totalSaves,
+      percentage: undefined,
+      absolute: totalSaves - totalSavesLastMonth
+    };
+  }
 }

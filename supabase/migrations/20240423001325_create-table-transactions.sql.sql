@@ -9,7 +9,7 @@ CREATE TABLE Transactions (
     "value" NUMERIC NOT NULL,
     "description" TEXT NOT NULL,
     "type" transaction_type NOT NULL,
-    transaction_date DATE NOT NULL,
+    transaction_date  TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
 );

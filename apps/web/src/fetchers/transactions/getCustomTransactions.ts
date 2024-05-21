@@ -8,8 +8,8 @@ export const getCustomTransactions = async ({
   date_to
 }: {
   user_id: number;
-  date_from: Date | undefined;
-  date_to: Date | undefined;
+  date_from: String;
+  date_to: String;
 }) => {
   const response = await apiServer(
     `/transactions?tab=custom&date_from=${date_from}&date_to=${date_to}`,

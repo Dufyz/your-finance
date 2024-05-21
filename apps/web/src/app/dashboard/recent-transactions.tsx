@@ -29,6 +29,7 @@ import ToolsTransaction from "../transactions/components/tools-transaction";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 import { currencys } from "@/data/currencys";
+import getDateOnFormatDDMMYY from "@/utils/getDateOnFormatDDMMYY";
 
 export default function RecentTransactions({
   wallets,
@@ -112,9 +113,9 @@ export default function RecentTransactions({
                       </Badge>
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
-                      {new Date(
-                        transaction.transaction_date
-                      ).toLocaleDateString()}
+                      {getDateOnFormatDDMMYY(
+                        new Date(transaction.transaction_date)
+                      )}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">
                       <FormatMoney
