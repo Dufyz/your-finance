@@ -7,13 +7,20 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
 const getUserTotalsSchema = z.object({
-  user_id: z.number()
+  user_id: z.number(),
+  date_from: z.string().optional(),
+  date_to: z.string().optional()
 });
-export async function GET(request: NextRequest, context: any) {
+export async function GET(request: NextRequest) {
   const reqUser = getUserFromRequest(request);
+  const query = {
+    date_from: request.nextUrl.searchParams.get("date_from"),
+    date_to: request.nextUrl.searchParams.get("date_to")
+  }
 
   const validation = getUserTotalsSchema.safeParse({
-    user_id: reqUser.user_id
+    user_id: reqUser.user_id,
+    ...query
   });
 
   if (!validation.success) {
@@ -25,12 +32,12 @@ export async function GET(request: NextRequest, context: any) {
     );
   }
 
-  const { user_id } = validation.data;
+  const { user_id, date_from, date_to } = validation.data;
 
-  const totalBalance = await ShowTotalBalanceService({ user_id });
-  const totalSaves = await ShowTotalSavesService({ user_id });
-  const totalIncomes = await ShowTotalIncomesService({ user_id });
-  const totalExpenses = await ShowTotalExpensesService({ user_id });
+  const totalBalance = await ShowTotalBalanceService({ user_id, date_from, date_to });
+  const totalSaves = await ShowTotalSavesService({ user_id, date_from, date_to });
+  const totalIncomes = await ShowTotalIncomesService({ user_id, date_from, date_to });
+  const totalExpenses = await ShowTotalExpensesService({ user_id, date_from, date_to });
   const totalInvoices = {
     value: 0,
     percentage: 0

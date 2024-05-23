@@ -3,49 +3,57 @@ import calculatePercentageChange from "@/utils/calcutate-percentage-change";
 
 interface IShowTotalExpensesService {
   user_id: number;
+  date_from?: string;
+  date_to?: string;
 }
 
 export default async function ShowTotalExpensesService({
-  user_id
+  user_id,
+  date_from,
+  date_to
 }: IShowTotalExpensesService) {
-  let totalExpenses = 0;
+  const isCalculatingPeriodically = date_from && date_to;
 
-  await supabase
+  if (isCalculatingPeriodically) {
+    const { data } = await supabase
+      .from("transactions")
+      .select("value")
+      .eq("user_id", user_id)
+      .eq("type", "expense")
+      .gte("transaction_date", date_from)
+      .lte("transaction_date", date_to);
+
+    return {
+      value: data?.reduce((acc, { value }) => acc + value, 0) ?? 0
+    }
+  }
+
+  const { data } = await supabase
     .from("transactions")
     .select("value")
     .eq("user_id", user_id)
-    .eq("type", "expense")
-    .then(({ data }) => {
-      if (data) {
-        totalExpenses = data.reduce((acc, { value }) => acc + value, 0);
-      }
-    });
+    .eq("type", "expense");
+
+  const totalExpenses = data?.reduce((acc, { value }) => acc + value, 0) ?? 0;
 
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-  let totalExpensesLastMonth = 0;
   await supabase
     .from("transactions")
     .select("value")
     .eq("user_id", user_id)
     .eq("type", "expense")
-    .lte("created_at", lastMonth.toISOString())
-    .then(({ data }) => {
-      if (data) {
-        totalExpensesLastMonth = data.reduce(
-          (acc, { value }) => acc + value,
-          0
-        );
-      }
-    });
+    .lte("created_at", lastMonth.toISOString());
+
+  const totalExpensesLastMonth = data?.reduce((acc, { value }) => acc + value, 0) ?? 0;
+
 
   try {
     const percentageFromLastMonth = calculatePercentageChange(
       totalExpensesLastMonth,
       totalExpenses
     );
-
     return {
       value: totalExpenses,
       percentage: percentageFromLastMonth
@@ -53,7 +61,6 @@ export default async function ShowTotalExpensesService({
   } catch (error) {
     return {
       value: totalExpenses,
-      percentage: undefined,
       absolute: totalExpenses - totalExpensesLastMonth
     };
   }

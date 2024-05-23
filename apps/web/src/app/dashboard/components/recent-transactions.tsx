@@ -25,7 +25,7 @@ import { Transaction } from "@/types/Transaction";
 import { transactionCategories } from "@/data/transaction-categories";
 import capitalizeFirstLetter from "@/utils/capitlize-first-letter";
 import FormatMoney from "@/utils/format-money";
-import ToolsTransaction from "../transactions/components/tools-transaction";
+import ToolsTransaction from "../../transactions/components/tools-transaction";
 import { Wallet } from "@/types/Wallet";
 import { User } from "@/types/User";
 import { currencys } from "@/data/currencys";

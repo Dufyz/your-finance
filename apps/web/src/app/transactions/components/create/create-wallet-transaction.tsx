@@ -131,7 +131,7 @@ export default function CreateWalletTransaction({
         value,
         description,
         type,
-        transaction_date: date
+        transaction_date
       });
 
       setOpen(false);

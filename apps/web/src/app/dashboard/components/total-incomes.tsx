@@ -1,5 +1,5 @@
 import FormatMoney from "@/utils/format-money";
-import { DashBoardCard, InfoCard } from "./components/InfoCard";
+import { DashBoardCard, InfoCard } from "./InfoCard";
 import { getNumberWithSignal } from "@/utils/get-number-with-signal";
 
 export default function TotalIncomes({ total, currencyCC }: DashBoardCard) {
