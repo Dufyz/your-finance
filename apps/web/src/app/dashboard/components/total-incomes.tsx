@@ -2,10 +2,14 @@ import FormatMoney from "@/utils/format-money";
 import { DashBoardCard, InfoCard } from "./InfoCard";
 import { getNumberWithSignal } from "@/utils/get-number-with-signal";
 
-export default function TotalIncomes({ total, currencyCC }: DashBoardCard) {
+export default function TotalIncomes({
+  total,
+  currencyCC,
+  info
+}: DashBoardCard) {
   return (
     <InfoCard.Root>
-      <InfoCard.Header>
+      <InfoCard.Header info={info}>
         <InfoCard.Title>Total Incomes</InfoCard.Title>
       </InfoCard.Header>
       <InfoCard.Content>

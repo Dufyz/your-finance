@@ -14,89 +14,115 @@ import { DashBoardCard } from "./components/InfoCard";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { getTotals } from "@/fetchers/dashboard/getTotals";
-
+import { getCustomTransactions } from "@/fetchers/transactions/getCustomTransactions";
 
 type DashboardIndexProps = {
-    initialData: {
-        totals: {
-            totalBalance: DashBoardCard;
-            totalSaves: DashBoardCard;
-            totalIncomes: DashBoardCard;
-            totalExpenses: DashBoardCard;
-            totalInvoices: DashBoardCard;
-        };
-        lastTransactions: Transaction[];
+  initialData: {
+    totals: {
+      totalBalance: DashBoardCard;
+      totalSaves: DashBoardCard;
+      totalIncomes: DashBoardCard;
+      totalExpenses: DashBoardCard;
+      totalInvoices: DashBoardCard;
     };
-    currencyCC?: string;
-    user: User;
-    wallets: Wallet[];
-}
+    lastTransactions: Transaction[];
+  };
+  currencyCC?: string;
+  user: User;
+  wallets: Wallet[];
+};
 export default function DashboardIndex({
-    initialData,
-    currencyCC,
-    user,
-    wallets
+  initialData,
+  currencyCC,
+  user,
+  wallets
 }: DashboardIndexProps) {
-    const [totals, setTotals] = useState(initialData.totals);
-    const [lastTransactions, setLastTransactions] = useState(initialData.lastTransactions);
+  const [totals, setTotals] = useState(initialData.totals);
+  const [lastTransactions, setLastTransactions] = useState(
+    initialData.lastTransactions
+  );
 
-    const [date, setDate] = useState<DateRange | undefined>({
-        from: undefined,
-        to: undefined
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: undefined,
+    to: undefined
+  });
+
+  const {
+    totalBalance,
+    totalSaves,
+    totalIncomes,
+    totalExpenses,
+    totalInvoices
+  } = totals;
+
+  const handleDateChange = async () => {
+    if (!date?.from && !date?.to) {
+      setTotals(initialData.totals);
+      setLastTransactions(initialData.lastTransactions);
+      return;
+    }
+
+    if (!date?.from || !date?.to) return;
+
+    const totals = await getTotals({
+      user_id: user.id,
+      date_from: date.from.toISOString(),
+      date_to: date.to.toISOString()
     });
 
-    const {
-        totalBalance,
-        totalSaves,
-        totalIncomes,
-        totalExpenses,
-        totalInvoices
-    } = totals;
+    const lastTransactions = await getCustomTransactions({
+      user_id: user.id,
+      date_from: date.from.toISOString(),
+      date_to: date.to.toISOString()
+    });
 
-    const handleDateChange = async () => {
-        if (!date?.from && !date?.to) {
-            setTotals(initialData.totals);
-            setLastTransactions(initialData.lastTransactions);
-            return;
-        }
+    setTotals(totals);
+    setLastTransactions(lastTransactions);
+  };
+  useEffect(() => {
+    handleDateChange();
+  }, [JSON.stringify(date)]);
 
-        if (!date?.from || !date?.to) return;
-
-        const totals = await getTotals({
-            user_id: user.id,
-            date_from: date.from.toISOString(),
-            date_to: date.to.toISOString()
-        });
-
-        const lastTransactions = []
-
-        setTotals(totals);
-        setLastTransactions(lastTransactions);
-    }
-    useEffect(() => {
-        handleDateChange();
-    }, [JSON.stringify(date)]);
-
-    return (
-        <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
-            <div>
-                <DateRangePicker date={date} setDate={setDate} />
-            </div>
-            <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
-                <TotalBalance total={totalBalance} currencyCC={currencyCC} />
-                <TotalSaves total={totalSaves} currencyCC={currencyCC} />
-                <TotalIncomes total={totalIncomes} currencyCC={currencyCC} />
-                <TotalExpenses total={totalExpenses} currencyCC={currencyCC} />
-                <TotalInvoices total={totalInvoices} currencyCC={currencyCC} />
-            </div>
-            <div className="flex h-full w-full gap-4">
-                <RecentTransactions
-                    transactions={lastTransactions}
-                    user={user}
-                    wallets={wallets}
-                />
-                {/* <Goals /> */}
-            </div>
-        </main>
-    )
+  return (
+    <main className="flex flex-1 flex-col gap-4 p-4 md:gap-8 md:p-8">
+      <div>
+        <DateRangePicker date={date} setDate={setDate} />
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 md:gap-8 lg:grid-cols-4">
+        <TotalBalance
+          total={totalBalance}
+          currencyCC={currencyCC}
+          info="Total balance of all wallets"
+        />
+        <TotalSaves
+          total={totalSaves}
+          currencyCC={currencyCC}
+          info="Total saves of saving wallets"
+        />
+        <TotalIncomes
+          total={totalIncomes}
+          currencyCC={currencyCC}
+          info="Total incomes of all wallets"
+        />
+        <TotalExpenses
+          total={totalExpenses}
+          currencyCC={currencyCC}
+          info="Total expenses of all wallets"
+        />
+        <TotalInvoices
+          total={totalInvoices}
+          currencyCC={currencyCC}
+          info="Total invoices of all cards"
+        />
+      </div>
+      <div className="grid gap-4 md:gap-8 lg:grid-cols-2 xl:grid-cols-3">
+        <RecentTransactions
+          transactions={lastTransactions}
+          user={user}
+          wallets={wallets}
+        />
+        {/* <Goals goals={goals} /> */}
+      </div>
+    </main>
+  );
 }

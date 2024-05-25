@@ -25,7 +25,7 @@ export default async function ShowTotalExpensesService({
 
     return {
       value: data?.reduce((acc, { value }) => acc + value, 0) ?? 0
-    }
+    };
   }
 
   const { data } = await supabase
@@ -39,15 +39,15 @@ export default async function ShowTotalExpensesService({
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-  await supabase
+  const { data: expensesLastMonth } = await supabase
     .from("transactions")
     .select("value")
     .eq("user_id", user_id)
     .eq("type", "expense")
     .lte("created_at", lastMonth.toISOString());
 
-  const totalExpensesLastMonth = data?.reduce((acc, { value }) => acc + value, 0) ?? 0;
-
+  const totalExpensesLastMonth =
+    expensesLastMonth?.reduce((acc, { value }) => acc + value, 0) ?? 0;
 
   try {
     const percentageFromLastMonth = calculatePercentageChange(

@@ -13,46 +13,45 @@ export default async function ShowTotalBalanceService({
   date_from,
   date_to
 }: IShowTotalBalanceService) {
-  let totalSaves = 0;
-  let query = supabase
+  const isCalculatingPeriodically = date_from && date_to;
+
+  if (isCalculatingPeriodically) {
+    const { data } = await supabase
+      .from("wallets")
+      .select("current_balance")
+      .eq("user_id", user_id)
+      .gte("created_at", date_from)
+      .lte("created_at", date_to);
+
+    return {
+      value:
+        data?.reduce((acc, { current_balance }) => acc + current_balance, 0) ??
+        0
+    };
+  }
+
+  const { data } = await supabase
     .from("wallets")
     .select("current_balance")
     .eq("user_id", user_id);
 
-  if (date_from) {
-    query = query.gte("created_at", date_from);
-  }
-  if (date_to) {
-    query = query.lte("created_at", date_to);
-  }
-
-  await query.then(({ data }) => {
-    if (data) {
-      totalSaves = data.reduce(
-        (acc, { current_balance }) => acc + current_balance,
-        0
-      );
-    }
-  });
+  const totalSaves =
+    data?.reduce((acc, { current_balance }) => acc + current_balance, 0) ?? 0;
 
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-  let totalSavesLastMonth = 0;
-  let lastMonthQuery = supabase
+  const { data: lasMonthBalance } = await supabase
     .from("wallets")
     .select("current_balance")
     .eq("user_id", user_id)
     .lte("created_at", lastMonth.toISOString());
 
-  await lastMonthQuery.then(({ data }) => {
-    if (data) {
-      totalSavesLastMonth = data.reduce(
-        (acc, { current_balance }) => acc + current_balance,
-        0
-      );
-    }
-  });
+  const totalSavesLastMonth =
+    lasMonthBalance?.reduce(
+      (acc, { current_balance }) => acc + current_balance,
+      0
+    ) ?? 0;
 
   try {
     const percentageFromLastMonth = calculatePercentageChange(

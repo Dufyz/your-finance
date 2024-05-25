@@ -2,10 +2,12 @@ import LeftNavbarItem from "./left-navbar-item";
 
 import {
   IconCategory,
+  IconChecklist,
   IconCreditCard,
   IconFileInvoice,
   IconHeadset,
   IconManualGearbox,
+  IconNote,
   IconSettings,
   IconTargetArrow,
   IconTransfer,
@@ -63,6 +65,18 @@ const LeftNavbar = () => {
           icon={<IconManualGearbox size={24} color="#166534" />}
           label="Categories"
           route="/categories"
+          disabled
+        />
+        <LeftNavbarItem
+          icon={<IconChecklist size={24} color="#166534" />}
+          label="Tasks"
+          route="/tasks"
+          disabled
+        />
+        <LeftNavbarItem
+          icon={<IconNote size={24} color="#166534" />}
+          label="Notes"
+          route="/notes"
           disabled
         />
       </div>

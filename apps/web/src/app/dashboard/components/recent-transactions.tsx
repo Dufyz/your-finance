@@ -45,7 +45,7 @@ export default function RecentTransactions({
     currencys.find((currency) => currency.cc === "USD")?.cc;
 
   return (
-    <Card className="flex-1">
+    <Card className="xl:col-span-4">
       <CardHeader className="flex flex-row items-center">
         <div className="grid gap-2">
           <CardTitle>Transactions</CardTitle>

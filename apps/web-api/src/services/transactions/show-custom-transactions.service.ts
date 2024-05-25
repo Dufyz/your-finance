@@ -1,5 +1,5 @@
 import supabase from "@/config/supabase";
-import { setHours, setMinutes, setSeconds } from "date-fns";
+import { setHours, setMilliseconds, setMinutes, setSeconds } from "date-fns";
 
 interface IShowCustomTransactionsService {
   user_id: number;
@@ -12,9 +12,14 @@ export default async function ShowCustomTransactionsService({
   date_from,
   date_to
 }: IShowCustomTransactionsService) {
-
-  const formattedDateFrom = setSeconds(setMinutes(setHours(new Date(date_from), 0), 0), 0).toISOString();
-  const formattedDateTo = setSeconds(setMinutes(setHours(new Date(date_to), 23), 59), 59).toISOString();
+  const formattedDateFrom = setMilliseconds(
+    setSeconds(setMinutes(setHours(new Date(date_from), 0), 0), 0),
+    0
+  ).toISOString();
+  const formattedDateTo = setMilliseconds(
+    setSeconds(setMinutes(setHours(new Date(date_to), 23), 59), 59),
+    59
+  ).toISOString();
 
   const { data, error } = await supabase
     .from("transactions")

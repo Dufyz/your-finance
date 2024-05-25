@@ -8,15 +8,21 @@ import { z } from "zod";
 
 const getUserTotalsSchema = z.object({
   user_id: z.number(),
-  date_from: z.string().optional(),
-  date_to: z.string().optional()
+  date_from: z
+    .string()
+    .transform((val) => (val === "undefined" ? undefined : val))
+    .optional(),
+  date_to: z
+    .string()
+    .transform((val) => (val === "undefined" ? undefined : val))
+    .optional()
 });
 export async function GET(request: NextRequest) {
   const reqUser = getUserFromRequest(request);
   const query = {
     date_from: request.nextUrl.searchParams.get("date_from"),
     date_to: request.nextUrl.searchParams.get("date_to")
-  }
+  };
 
   const validation = getUserTotalsSchema.safeParse({
     user_id: reqUser.user_id,
@@ -34,10 +40,26 @@ export async function GET(request: NextRequest) {
 
   const { user_id, date_from, date_to } = validation.data;
 
-  const totalBalance = await ShowTotalBalanceService({ user_id, date_from, date_to });
-  const totalSaves = await ShowTotalSavesService({ user_id, date_from, date_to });
-  const totalIncomes = await ShowTotalIncomesService({ user_id, date_from, date_to });
-  const totalExpenses = await ShowTotalExpensesService({ user_id, date_from, date_to });
+  const totalBalance = await ShowTotalBalanceService({
+    user_id,
+    date_from,
+    date_to
+  });
+  const totalSaves = await ShowTotalSavesService({
+    user_id,
+    date_from,
+    date_to
+  });
+  const totalIncomes = await ShowTotalIncomesService({
+    user_id,
+    date_from,
+    date_to
+  });
+  const totalExpenses = await ShowTotalExpensesService({
+    user_id,
+    date_from,
+    date_to
+  });
   const totalInvoices = {
     value: 0,
     percentage: 0

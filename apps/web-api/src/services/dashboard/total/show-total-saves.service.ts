@@ -3,47 +3,60 @@ import calculatePercentageChange from "@/utils/calcutate-percentage-change";
 
 interface IShowTotalSavesService {
   user_id: number;
+  date_from?: string;
+  date_to?: string;
 }
 
 export default async function ShowTotalSavesService({
-  user_id
+  user_id,
+  date_from,
+  date_to
 }: IShowTotalSavesService) {
-  let totalSaves = 0;
+  const isCalculatingPeriodically = date_from && date_to;
 
-  await supabase
+  if (isCalculatingPeriodically) {
+    const { data } = await supabase
+      .from("wallets")
+      .select("current_balance")
+      .eq("user_id", user_id)
+      .eq("type", "saving")
+      .gte("created_at", date_from)
+      .lte("created_at", date_to);
+
+    return {
+      value:
+        data?.reduce((acc, { current_balance }) => acc + current_balance, 0) ??
+        0
+    };
+  }
+
+  const { data: totalSavesData } = await supabase
     .from("wallets")
     .select("current_balance")
     .eq("user_id", user_id)
-    .eq("type", "saving")
-    .then(({ data }) => {
-      if (data) {
-        totalSaves = data.reduce(
-          (acc, { current_balance }) => acc + current_balance,
-          0
-        );
-      }
-    });
+    .eq("type", "saving");
+
+  const totalSaves =
+    totalSavesData?.reduce(
+      (acc, { current_balance }) => acc + current_balance,
+      0
+    ) ?? 0;
 
   const lastMonth = new Date();
   lastMonth.setMonth(lastMonth.getMonth() - 1);
 
-  let totalSavesLastMonth = 0;
-  await supabase
+  const { data: totalSavesLastMonthData } = await supabase
     .from("wallets")
     .select("current_balance")
     .eq("user_id", user_id)
     .eq("type", "saving")
-    .lte("created_at", lastMonth.toISOString())
-    .then(({ data }) => {
-      if (data) {
-        totalSavesLastMonth = data.reduce(
-          (acc, { current_balance }) => acc + current_balance,
-          0
-        );
-      }
-    });
+    .lte("created_at", lastMonth.toISOString());
 
-
+  const totalSavesLastMonth =
+    totalSavesLastMonthData?.reduce(
+      (acc, { current_balance }) => acc + current_balance,
+      0
+    ) ?? 0;
 
   try {
     const percentageFromLastMonth = calculatePercentageChange(

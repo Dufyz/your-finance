@@ -12,6 +12,7 @@ type DashBoardTotalCard = {
 export type DashBoardCard = {
   total: DashBoardTotalCard;
   currencyCC: string | undefined;
+  info?: string;
 };
 
 export const InfoCard = {

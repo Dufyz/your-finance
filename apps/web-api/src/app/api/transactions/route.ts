@@ -17,8 +17,14 @@ const getUserTransactionsSchema = z.object({
     .refine((value) =>
       ["week", "month", "year", "custom", "last"].includes(value)
     ),
-  date_from: z.string().optional(),
-  date_to: z.string().optional()
+  date_from: z
+    .string()
+    .transform((val) => (val === "undefined" ? undefined : val))
+    .optional(),
+  date_to: z
+    .string()
+    .transform((val) => (val === "undefined" ? undefined : val))
+    .optional()
 });
 export async function GET(request: NextRequest) {
   const body = {

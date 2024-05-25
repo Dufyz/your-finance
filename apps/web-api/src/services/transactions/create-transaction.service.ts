@@ -1,5 +1,5 @@
 import supabase from "@/config/supabase";
-import { setHours, setMinutes, setSeconds } from "date-fns";
+import { setHours, setMilliseconds, setMinutes, setSeconds } from "date-fns";
 
 interface ICreateTransactionService {
   user_id: number;
@@ -26,7 +26,10 @@ export default async function CreateTransactionService({
 }: ICreateTransactionService) {
   const isIncome = type === "income";
 
-  const formattedTransactionDate = setSeconds(setMinutes(setHours(new Date(transaction_date), 0), 0), 0).toISOString();
+  const formattedTransactionDate = setMilliseconds(
+    setSeconds(setMinutes(setHours(new Date(transaction_date), 0), 0), 0),
+    0
+  ).toISOString();
 
   const { data, error } = await supabase.from("transactions").insert({
     user_id,

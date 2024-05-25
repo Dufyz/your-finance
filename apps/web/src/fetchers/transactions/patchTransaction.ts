@@ -35,8 +35,6 @@ export const patchTransaction = async ({
     transaction_date
   });
 
-  console.log("body", body);
-
   const response = await apiServer(`/transactions`, {
     method: "PATCH",
     body
