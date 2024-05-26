@@ -54,6 +54,6 @@ export default async function PatchTransactionService({
     return newTransaction;
   } catch (error) {
     console.log("error", error);
-    throw new Error(error?.message);
+    throw new Error("Error on patch transaction service");
   }
 }

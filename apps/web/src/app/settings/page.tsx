@@ -6,7 +6,7 @@ import MyAccount from "./components/my-account/my-account";
 import { Suspense } from "react";
 import MyAccountSkeleton from "./components/my-account/skeleton";
 
-export default async function ProfilePage({
+export default async function SettingsPage({
   searchParams
 }: {
   searchParams: {
@@ -28,7 +28,9 @@ export default async function ProfilePage({
               <nav className="text-muted-foreground grid gap-4 text-sm">
                 <Link
                   href="?tab=my-account"
-                  className={`${tabUrlParam === "my-account" && "text-primary font-semibold"}`}
+                  className={`${
+                    tabUrlParam === "my-account" && "text-primary font-semibold"
+                  }`}
                 >
                   My Account
                 </Link>

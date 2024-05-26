@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useState } from "react";
+import { AuthError } from "@supabase/supabase-js";
 
 type ISignUpProps = {
   setActiveTab: any;
@@ -48,7 +49,7 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
     try {
       await signUp({ name, email, password });
       return toast.success("User created successfully");
-    } catch (error) {
+    } catch (error: any) {
       const errorStatus = error?.response?.status;
 
       if (errorStatus === 409) return toast.error("User already registered");

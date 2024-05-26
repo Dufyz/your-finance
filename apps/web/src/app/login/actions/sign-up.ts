@@ -23,7 +23,9 @@ export async function signUp({ name, email, password }: IHandleSignUp) {
     }
   });
 
-  if (error) throw error;
+  if (error) {
+    throw new Error(error.message);
+  }
 
   const { error: errorInsert } = await supabase
     .from("users")
@@ -36,7 +38,9 @@ export async function signUp({ name, email, password }: IHandleSignUp) {
     })
     .single();
 
-  if (errorInsert) throw errorInsert;
+  if (errorInsert) {
+    throw new Error(errorInsert.message);
+  }
 
   const { data: user, error: errorUser } = await supabase
     .from("users")
@@ -44,7 +48,9 @@ export async function signUp({ name, email, password }: IHandleSignUp) {
     .eq("auth_id", data?.user?.id as string)
     .single();
 
-  if (errorUser) throw errorUser;
+  if (errorUser) {
+    throw new Error(errorUser.message);
+  }
 
   await supabase.auth.updateUser({
     data: {

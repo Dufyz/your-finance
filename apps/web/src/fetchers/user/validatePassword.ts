@@ -1,3 +1,5 @@
+"use server";
+
 import apiServer from "@/config/apiServer";
 
 export default async function validatePassword({

@@ -16,7 +16,7 @@ import { toast } from "sonner";
 export function DeleteWallet({ wallet }: { wallet: Wallet }) {
   const handleDeleteWallet = async () => {
     try {
-      await deleteWallet({ id: wallet.id });
+      await deleteWallet({ id: wallet.id, user_id: wallet.user_id });
       toast.success("Wallet deleted successfully.");
     } catch (error) {
       console.error(error);

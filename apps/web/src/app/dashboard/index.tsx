@@ -10,20 +10,20 @@ import TotalSaves from "./components/total-saves";
 import TotalExpenses from "./components/total-expenses";
 import TotalInvoices from "./components/total-invoices";
 import RecentTransactions from "./components/recent-transactions";
-import { DashBoardCard } from "./components/InfoCard";
 import { useEffect, useState } from "react";
 import { DateRange } from "react-day-picker";
 import { getTotals } from "@/fetchers/dashboard/getTotals";
 import { getCustomTransactions } from "@/fetchers/transactions/getCustomTransactions";
+import { DashBoardTotalCard } from "./components/InfoCard";
 
 type DashboardIndexProps = {
   initialData: {
     totals: {
-      totalBalance: DashBoardCard;
-      totalSaves: DashBoardCard;
-      totalIncomes: DashBoardCard;
-      totalExpenses: DashBoardCard;
-      totalInvoices: DashBoardCard;
+      totalBalance: DashBoardTotalCard;
+      totalSaves: DashBoardTotalCard;
+      totalIncomes: DashBoardTotalCard;
+      totalExpenses: DashBoardTotalCard;
+      totalInvoices: DashBoardTotalCard;
     };
     lastTransactions: Transaction[];
   };

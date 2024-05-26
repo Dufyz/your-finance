@@ -17,7 +17,7 @@ export default async function DeleteUserService({
 
   if (error || !user) {
     console.log("error", error);
-    throw new Error(error?.message);
+    throw new Error(error?.message || "User not found");
   }
 
   const { error: deleteError } = await supabase.auth.admin.deleteUser(

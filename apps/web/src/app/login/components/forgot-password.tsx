@@ -1,4 +1,3 @@
-import useLogin from "../hook/useLogin";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +14,9 @@ const ForgotPasswordSchema = z.object({
 type ForgotPasswordSchemaType = z.infer<typeof ForgotPasswordSchema>;
 
 const ForgotPassword = ({ setActiveTab }: IForgotPasswordProps) => {
-  const { handleForgotPassword } = useLogin();
+  const handleForgotPassword = async (data: ForgotPasswordSchemaType) => {
+    console.log(data);
+  };
 
   const {
     register,

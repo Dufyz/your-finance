@@ -52,7 +52,7 @@ export default function ChangeEmail({ user }: { user: User }) {
       await patchUser({ user_id, email });
 
       toast.success("Email changed successfully.");
-    } catch (error) {
+    } catch (error: any) {
       console.log(error?.message);
       toast.error("Error changing email. Please try again.");
     }
@@ -82,7 +82,7 @@ export default function ChangeEmail({ user }: { user: User }) {
     if (!isValidatingPassword) {
       try {
         handleChangeEmail({ user_id, email });
-      } catch (error) {
+      } catch (error: any) {
         console.log(error?.message);
         toast.error("Error changing email. Please try again.");
       } finally {

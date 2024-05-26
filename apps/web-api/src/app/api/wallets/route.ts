@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { message: error?.message },
+      { error },
       {
         status: 400
       }
@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { message: error?.message },
+      { error },
       {
         status: 400
       }
@@ -140,7 +140,7 @@ export async function PATCH(request: NextRequest) {
     });
   } catch (error) {
     return NextResponse.json(
-      { message: error?.message },
+      { error },
       {
         status: 400
       }
@@ -180,7 +180,7 @@ export async function DELETE(request: NextRequest) {
     );
   } catch (error) {
     return NextResponse.json(
-      { message: error?.message },
+      { error },
       {
         status: 400
       }

@@ -26,7 +26,7 @@ import MoneyInput from "@/components/ui/MoneyInput";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
 import { transactionCategories } from "@/data/transaction-categories";
-import renderTablerIcon from "@/utils/render-tabler-icon";
+import renderTablerIcon, { TablerIcon } from "@/utils/render-tabler-icon";
 import { postExpenseCategoryGoal } from "@/fetchers/goals/postExpenseCategoryGoal";
 
 const CreateExpenseCategoryGoalSchema = z.object({
@@ -132,7 +132,7 @@ export default function CreateExpenseCategoryGoal({ user }: { user: User }) {
                                 <div className="flex items-center gap-2">
                                   <div className="flex h-8 w-8 items-center justify-center">
                                     {renderTablerIcon({
-                                      icon: category.icon,
+                                      icon: category.icon as TablerIcon,
                                       size: 16
                                     })}
                                   </div>

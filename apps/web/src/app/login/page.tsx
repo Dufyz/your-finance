@@ -1,11 +1,10 @@
 "use client";
 
-import ForgotPassword from "./components/forgot-password";
 import SignIn from "./components/sign-in";
 import SingUp from "./components/sign-up";
 import { useState } from "react";
 
-export const LoginPage = () => {
+export default function LoginPage() {
   const [activeTab, setActiveTab] = useState<
     "sign-in" | "sign-up" | "forgot-password"
   >("sign-in");
@@ -28,6 +27,4 @@ export const LoginPage = () => {
       </div>
     </div>
   );
-};
-
-export default LoginPage;
+}

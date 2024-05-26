@@ -32,7 +32,7 @@ export async function DELETE(request: NextRequest, context: any) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: error?.message },
+      { error },
       {
         status: 500
       }
@@ -77,7 +77,7 @@ export async function PUT(request: NextRequest, context: any) {
     });
   } catch (error) {
     return NextResponse.json(
-      { error: error?.message },
+      { error },
       {
         status: 500
       }

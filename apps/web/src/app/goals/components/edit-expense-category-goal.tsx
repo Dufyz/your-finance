@@ -57,7 +57,8 @@ export default function EditExpenseCategoryGoal({
       await putExpenseCategoryGoal({
         id: goalCategory.id,
         category_id,
-        target_value
+        target_value,
+        user_id
       });
 
       toast.success("Expense category goal updated successfully.");

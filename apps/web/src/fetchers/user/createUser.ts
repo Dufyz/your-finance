@@ -1,3 +1,5 @@
+"use server";
+
 import apiClient from "@/config/apiClient";
 
 export default async function createUser({

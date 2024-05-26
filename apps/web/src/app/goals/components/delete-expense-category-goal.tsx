@@ -24,7 +24,8 @@ export function DeleteExpenseCategoryGoal({
   const handleDeleteExpenseCategoryGoal = async () => {
     try {
       await deleteExpenseCategoryGoal({
-        id: goalCategory.id
+        id: goalCategory.id,
+        user_id: goalCategory.user_id
       });
 
       toast.success("Expense category goal deleted successfully.");

@@ -3,7 +3,7 @@ import Header from "./Header";
 import Root from "./Root";
 import Title from "./Title";
 
-type DashBoardTotalCard = {
+export type DashBoardTotalCard = {
   value: number;
   percentage?: number;
   absolute?: number;

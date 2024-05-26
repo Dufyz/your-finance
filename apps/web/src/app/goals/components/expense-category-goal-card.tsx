@@ -3,7 +3,7 @@ import { IconHome, IconTrash } from "@tabler/icons-react";
 import EditExpenseCategoryGoal from "./edit-expense-category-goal";
 import { GoalCategory } from "@/types/GoalCategory";
 import { transactionCategories } from "@/data/transaction-categories";
-import renderTablerIcon from "@/utils/render-tabler-icon";
+import renderTablerIcon, { TablerIcon } from "@/utils/render-tabler-icon";
 import { DeleteExpenseCategoryGoal } from "./delete-expense-category-goal";
 
 export default function ExpenseCategoryGoalCard({
@@ -25,7 +25,7 @@ export default function ExpenseCategoryGoalCard({
       <div className="flex items-center justify-center gap-6">
         <div className="flex h-12 w-12 items-center justify-center rounded-md bg-gray-100">
           {renderTablerIcon({
-            icon: categoryIcon,
+            icon: categoryIcon as TablerIcon,
             size: 24,
             color: "#15803d"
           })}

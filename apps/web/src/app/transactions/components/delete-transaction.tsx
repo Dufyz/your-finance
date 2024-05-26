@@ -16,7 +16,8 @@ export default function DeleteTransaction({
   const handleDeleteTransaction = async () => {
     try {
       await deleteTransaction({
-        id: transaction.id
+        id: transaction.id,
+        user_id: transaction.user_id
       });
 
       toast.success("Transaction deleted successfully.");

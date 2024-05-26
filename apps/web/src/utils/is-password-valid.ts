@@ -15,7 +15,7 @@ export default async function isPasswordValid({
   try {
     await validatePassword({ user_id, email: email, password });
     return true;
-  } catch (error) {
+  } catch (error: any) {
     console.log(error?.message);
 
     if (error?.message.includes("Invalid credentials")) {

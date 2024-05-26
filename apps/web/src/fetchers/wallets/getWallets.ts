@@ -1,3 +1,5 @@
+"use server";
+
 import apiServer from "@/config/apiServer";
 
 export default async function getWallets({ user_id }: { user_id: number }) {
