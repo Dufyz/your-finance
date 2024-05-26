@@ -28,10 +28,15 @@ export default async function DashboardPage() {
   return (
     <LeftNavbarLayout>
       <div className="flex h-full w-full flex-1 flex-col">
-        <DashboardIndex initialData={{
-          totals,
-          lastTransactions
-        }} wallets={wallets} currencyCC={currencyCC} user={user}/>
+        <DashboardIndex
+          initialData={{
+            totals,
+            lastTransactions
+          }}
+          wallets={wallets}
+          currencyCC={currencyCC}
+          user={user}
+        />
       </div>
     </LeftNavbarLayout>
   );
