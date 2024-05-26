@@ -6,7 +6,7 @@ export default async function apiServer(
   endpoint: string,
   options: RequestInit = {}
 ) {
-  const supabse = createClient();
+  const supabse = await createClient();
 
   const baseUrl = process.env.NEXT_PUBLIC_WEB_API;
 

@@ -10,7 +10,7 @@ type IHandleSignin = {
 };
 
 export async function signIn({ email, password }: IHandleSignin) {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
     email,

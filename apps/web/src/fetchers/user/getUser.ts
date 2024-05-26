@@ -4,7 +4,7 @@ import apiServer from "@/config/apiServer";
 import { createClient } from "@/config/supabase/supabaseServer";
 
 export default async function getUser() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const {
     data: { user }
