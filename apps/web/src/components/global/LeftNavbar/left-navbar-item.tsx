@@ -1,6 +1,7 @@
 "use client";
 
-import { useRouter, usePathname } from "next/navigation";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface ILeftNavbarItemProps {
   icon: React.ReactNode;
@@ -15,26 +16,33 @@ const LeftNavbarItem = ({
   route,
   disabled
 }: ILeftNavbarItemProps) => {
-  const router = useRouter();
   const currentPathname = usePathname();
 
   const isItemSelected = currentPathname === route;
 
+  if (disabled) {
+    return (
+      <div className="flex w-full cursor-default items-center justify-start gap-3 rounded-md p-2 opacity-50">
+        <div>{icon}</div>
+        <div>
+          <h1 className="text-sm font-semibold text-gray-800">{label}</h1>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <button
-      className={`flex w-full items-center justify-start gap-3 rounded-md p-2 ${isItemSelected && "border border-solid border-gray-300 bg-gray-200"} ${disabled && "cursor-default opacity-50"} ${!disabled && "hover:border-gray-300 hover:bg-gray-200"}`}
-      onClick={() => {
-        if (!disabled) {
-          router.push(route);
-        }
-      }}
-      disabled={disabled}
+    <Link
+      href={route}
+      className={`flex w-full items-center justify-start gap-3 rounded-md p-2 ${
+        isItemSelected && "border border-solid border-gray-300 bg-gray-200"
+      } hover:bg-gray-200" hover:border-gray-300`}
     >
       <div>{icon}</div>
       <div>
         <h1 className="text-sm font-semibold text-gray-800">{label}</h1>
       </div>
-    </button>
+    </Link>
   );
 };
 

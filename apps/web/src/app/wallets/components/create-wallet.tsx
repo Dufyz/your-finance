@@ -18,7 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import { Controller, useForm, useWatch } from "react-hook-form";
@@ -31,39 +31,62 @@ import { User } from "@/types/User";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { Form } from "@/components/ui/form";
 import { toast } from "sonner";
-import { DialogClose } from "@radix-ui/react-dialog";
+import { Wallet } from "@/types/Wallet";
+import patchWallet from "@/fetchers/wallets/patchWallet";
+import { DeleteWallet } from "./delete-wallet";
 
-const CreateWalletSchema = z.object({
-  user_id: z.number().int(),
-  bank_id: z.number().int(),
-  nickname: z.string().min(6, "Nickname must have at least 6 characters"),
-  initial_balance: z.coerce.number().min(0.0, "Required"),
-  is_main: z.boolean(),
-  type: z
-    .string()
-    .refine(
-      (value) =>
-        value === "saving" || value === "current" || value === "wallet",
-      {
+const CreateWalletSchema = z
+  .object({
+    id: z.number().optional(),
+    user_id: z.number().int(),
+    bank_id: z.number().optional(),
+    nickname: z.string().min(6, "Nickname must have at least 6 characters"),
+    initial_balance: z.coerce.number().min(0.0, "Required"),
+    is_main: z.boolean(),
+    type: z
+      .string()
+      .refine((value) => ["saving", "current", "wallet"].includes(value), {
         message: "You must select a valid wallet type."
+      })
+  })
+  .refine(
+    (data) => {
+      if (data.type === "wallet") {
+        return data.bank_id === undefined;
+      } else {
+        return data.bank_id !== undefined && data.bank_id > 0;
       }
-    )
-});
+    },
+    {
+      message: "You must select a bank for this type of wallet.",
+      path: ["bank_id"]
+    }
+  );
 
 type CreateWalletSchemaType = z.infer<typeof CreateWalletSchema>;
 
-export default function CreateWallet({ user }: { user: User }) {
+export default function CreateWallet({
+  user,
+  wallet
+}: {
+  user: User;
+  wallet: Wallet;
+}) {
+  const [open, setOpen] = useState(false);
   const [iconColor, setIconColor] = useState("#15803d");
+
+  const isEditing = !!wallet;
 
   const form = useForm<CreateWalletSchemaType>({
     resolver: zodResolver(CreateWalletSchema),
     defaultValues: {
-      user_id: user.id,
-      bank_id: 0,
-      initial_balance: 0.0,
-      nickname: "",
-      is_main: false,
-      type: "current"
+      id: isEditing ? wallet.id : undefined,
+      user_id: isEditing ? wallet.user_id : user.id,
+      bank_id: isEditing ? wallet.bank_id : undefined,
+      initial_balance: isEditing ? wallet.initial_balance : 0,
+      nickname: isEditing ? wallet.nickname : "",
+      is_main: isEditing ? wallet.is_main : false,
+      type: isEditing ? wallet.type : "current"
     }
   });
 
@@ -73,6 +96,8 @@ export default function CreateWallet({ user }: { user: User }) {
     register,
     reset,
     setValue,
+    getValues,
+    trigger,
     formState: { errors, isValid }
   } = form;
 
@@ -80,6 +105,16 @@ export default function CreateWallet({ user }: { user: User }) {
     control,
     name: "type"
   });
+
+  const handleTypeChange = async (type: "wallet" | "current" | "saving") => {
+    setValue("type", type);
+
+    if (type === "wallet") {
+      setValue("bank_id", undefined);
+    }
+
+    await trigger();
+  };
 
   const handleCreateWallet = async ({
     user_id,
@@ -90,7 +125,7 @@ export default function CreateWallet({ user }: { user: User }) {
     type
   }: CreateWalletSchemaType) => {
     try {
-      const newWallet = await postWallet({
+      await postWallet({
         user_id,
         bank_id,
         initial_balance: Number(initial_balance),
@@ -99,6 +134,7 @@ export default function CreateWallet({ user }: { user: User }) {
         type
       });
 
+      setOpen(false);
       reset();
       toast.success("Wallet created successfully.");
     } catch (error) {
@@ -107,21 +143,72 @@ export default function CreateWallet({ user }: { user: User }) {
     }
   };
 
+  const handleEditWallet = async ({
+    user_id,
+    id,
+    bank_id,
+    nickname,
+    initial_balance,
+    is_main,
+    type
+  }: CreateWalletSchemaType) => {
+    if (!id) return;
+
+    try {
+      await patchWallet({
+        user_id,
+        id,
+        bank_id,
+        nickname,
+        initial_balance,
+        is_main,
+        type
+      });
+
+      setOpen(false);
+      toast.success("Wallet edited successfully.");
+    } catch (error) {
+      toast.error("An error occurred while trying to edit the wallet.");
+      console.error(error);
+    }
+  };
+
+  const handleSubmitWallet = isEditing ? handleEditWallet : handleCreateWallet;
+
+  useEffect(() => {
+    if (isEditing) {
+      async () => {
+        console.log("acionei o trigger");
+        await trigger();
+        getValues();
+      };
+    }
+  }, [isEditing]);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <div
-          className="flex h-full min-h-44 w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
-          onMouseEnter={() => setIconColor("#166534")}
-          onMouseLeave={() => setIconColor("#15803d")}
-        >
-          <IconPlus size={64} color={iconColor} />
-        </div>
+        {isEditing ? (
+          <Button
+            type="submit"
+            className="w-full bg-green-700 hover:bg-green-800"
+          >
+            Edit
+          </Button>
+        ) : (
+          <div
+            className="flex h-full min-h-44 w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
+            onMouseEnter={() => setIconColor("#166534")}
+            onMouseLeave={() => setIconColor("#15803d")}
+          >
+            <IconPlus size={64} color={iconColor} />
+          </div>
+        )}
       </DialogTrigger>
       <DialogContent className="sm:max-w-4xl">
         <Form {...form}>
           <form
-            onSubmit={handleSubmit(handleCreateWallet)}
+            onSubmit={handleSubmit(handleSubmitWallet)}
             className="flex w-full flex-col items-start justify-start gap-6"
           >
             <DialogHeader className="w-full">
@@ -132,7 +219,7 @@ export default function CreateWallet({ user }: { user: User }) {
                     className={`flex flex-1 ${
                       typeFieldValue === "current" ? "" : "bg-muted-foreground"
                     }`}
-                    onClick={() => setValue("type", "current")}
+                    onClick={() => handleTypeChange("current")}
                   >
                     Current
                   </Button>
@@ -141,7 +228,7 @@ export default function CreateWallet({ user }: { user: User }) {
                     className={`flex flex-1 ${
                       typeFieldValue === "saving" ? "" : "bg-muted-foreground"
                     }`}
-                    onClick={() => setValue("type", "saving")}
+                    onClick={() => handleTypeChange("saving")}
                   >
                     Savings
                   </Button>
@@ -150,10 +237,7 @@ export default function CreateWallet({ user }: { user: User }) {
                     className={`flex flex-1 ${
                       typeFieldValue === "wallet" ? "" : "bg-muted-foreground"
                     }`}
-                    onClick={() => {
-                      setValue("type", "wallet");
-                      setValue("bank_id", 0);
-                    }}
+                    onClick={() => handleTypeChange("wallet")}
                   >
                     Wallet
                   </Button>
@@ -177,13 +261,7 @@ export default function CreateWallet({ user }: { user: User }) {
                           onValueChange={(value) =>
                             field.onChange(Number(value))
                           }
-                          value={
-                            field.value === null
-                              ? ""
-                              : field.value.toString() === "0"
-                                ? ""
-                                : field.value.toString()
-                          }
+                          value={String(field.value ?? "")}
                         >
                           <SelectTrigger className="w-full">
                             <SelectValue placeholder="Select a wallet" />
@@ -259,17 +337,15 @@ export default function CreateWallet({ user }: { user: User }) {
                 </div>
               </>
             </div>
-
-            <div className="w-full">
-              <DialogClose className="w-full" disabled={!isValid}>
-                <Button
-                  type="submit"
-                  disabled={!isValid}
-                  className="w-full rounded-md bg-green-700 p-2 text-white hover:bg-green-800"
-                >
-                  Save
-                </Button>
-              </DialogClose>
+            <div className="flex w-full items-center justify-center gap-4">
+              {isEditing && <DeleteWallet wallet={wallet} setOpen={setOpen} />}
+              <Button
+                type="submit"
+                disabled={!isValid}
+                className="flex-1 rounded-md bg-green-700 p-2 text-white hover:bg-green-800"
+              >
+                Save
+              </Button>
             </div>
           </form>
         </Form>

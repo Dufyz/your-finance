@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
 
 const postWalletSchema = z.object({
   user_id: z.number(),
-  bank_id: z.number(),
+  bank_id: z.number().optional(),
   initial_balance: z.number(),
   nickname: z.string(),
   is_main: z.boolean(),
@@ -100,7 +100,7 @@ export async function POST(request: NextRequest) {
 
 const patchWalletSchema = z.object({
   id: z.number(),
-  bank_id: z.number(),
+  bank_id: z.number().optional(),
   initial_balance: z.number(),
   nickname: z.string(),
   is_main: z.boolean(),

@@ -14,7 +14,7 @@ export default async function patchWallet({
 }: {
   user_id: number;
   id: number;
-  bank_id: number;
+  bank_id?: number;
   nickname: string;
   type: string;
   initial_balance: number;

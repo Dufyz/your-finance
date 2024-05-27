@@ -12,7 +12,7 @@ export const postWallet = async ({
   is_main
 }: {
   user_id: number;
-  bank_id: number;
+  bank_id?: number;
   nickname: string;
   type: string;
   initial_balance: number;

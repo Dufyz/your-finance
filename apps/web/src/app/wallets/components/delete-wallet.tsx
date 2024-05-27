@@ -11,12 +11,20 @@ import {
 } from "@/components/ui/alert-dialog";
 import { deleteWallet } from "@/fetchers/wallets/deleteWallet";
 import { Wallet } from "@/types/Wallet";
+import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 
-export function DeleteWallet({ wallet }: { wallet: Wallet }) {
+export function DeleteWallet({
+  wallet,
+  setOpen
+}: {
+  wallet: Wallet;
+  setOpen: Dispatch<SetStateAction<boolean>>;
+}) {
   const handleDeleteWallet = async () => {
     try {
       await deleteWallet({ id: wallet.id, user_id: wallet.user_id });
+      setOpen(false);
       toast.success("Wallet deleted successfully.");
     } catch (error) {
       console.error(error);
@@ -29,7 +37,7 @@ export function DeleteWallet({ wallet }: { wallet: Wallet }) {
       <AlertDialogTrigger asChild>
         <button
           type="button"
-          className="w-full rounded-md bg-red-700 p-2 text-white"
+          className="flex-1 rounded-md bg-red-700 p-2 text-white"
         >
           Delete
         </button>
