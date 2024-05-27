@@ -41,6 +41,9 @@ import { postTransaction } from "@/fetchers/transactions/postTransaction";
 import { Transaction } from "@/types/Transaction";
 import { patchTransaction } from "@/fetchers/transactions/patchTransaction";
 import { DialogClose } from "@radix-ui/react-dialog";
+import RenderTablerIcon, {
+  TablerIcon
+} from "@/components/global/render-tabler-icon";
 
 const CreateWalletSchema = z.object({
   user_id: z.number().int(),
@@ -272,6 +275,12 @@ export default function CreateWalletTransaction({
                               key={index}
                             >
                               <div className="flex w-full items-center justify-center gap-4">
+                                <div>
+                                  <RenderTablerIcon
+                                    icon={category.icon as TablerIcon}
+                                    size={20}
+                                  />
+                                </div>
                                 <span className="text-md">{category.name}</span>
                               </div>
                             </SelectItem>

@@ -5,6 +5,8 @@ import { Logout } from "./components/logout";
 import MyAccount from "./components/my-account/my-account";
 import { Suspense } from "react";
 import MyAccountSkeleton from "./components/my-account/skeleton";
+import Plan from "./components/plan";
+import PaymentMethod from "./components/payment-method/payment-method";
 
 export default async function SettingsPage({
   searchParams
@@ -34,18 +36,23 @@ export default async function SettingsPage({
                 >
                   My Account
                 </Link>
-                {/* <Link
+                <Link
                   href="?tab=plan"
-                  className={`${tabUrlParam === "plan" && "font-semibold text-primary"}`}
+                  className={`${
+                    tabUrlParam === "plan" && "text-primary font-semibold"
+                  }`}
                 >
                   Plan
                 </Link>
                 <Link
                   href="?tab=payment-method"
-                  className={`${tabUrlParam === "payment-method" && "font-semibold text-primary"}`}
+                  className={`${
+                    tabUrlParam === "payment-method" &&
+                    "text-primary font-semibold"
+                  }`}
                 >
                   Payment method
-                </Link> */}
+                </Link>
               </nav>
               <Logout />
             </div>
@@ -55,7 +62,7 @@ export default async function SettingsPage({
                   <MyAccount />
                 </Suspense>
               )}
-              {/* {tabUrlParam === "plan" && (
+              {tabUrlParam === "plan" && (
                 <Suspense fallback={<div>Loading...</div>}>
                   <Plan />
                 </Suspense>
@@ -64,7 +71,7 @@ export default async function SettingsPage({
                 <Suspense fallback={<div>Loading...</div>}>
                   <PaymentMethod />
                 </Suspense>
-              )} */}
+              )}
             </div>
           </div>
         </main>
