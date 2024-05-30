@@ -12,10 +12,10 @@ export default async function RecoverPasswordPage({
   const code = searchParams.code;
 
   const {
-    data: { session }
-  } = await supabase.auth.getSession();
+    data: { user }
+  } = await supabase.auth.getUser();
 
-  if (session) {
+  if (user) {
     return redirect("/dashboard");
   }
 
