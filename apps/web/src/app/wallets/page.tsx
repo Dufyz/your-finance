@@ -6,8 +6,6 @@ import getUser from "@/fetchers/user/getUser";
 import WalletCard from "./components/wallet-card";
 
 export default async function WalletsPage() {
-  //TODO Implementar lógica e atualização de is_main das wallets
-
   const user = await getUser();
 
   const wallets = await getWallets({
@@ -27,7 +25,7 @@ export default async function WalletsPage() {
   return (
     <LeftNavbarLayout>
       <div className="flex w-full flex-col">
-        <main className="grid w-full flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <main className="grid h-64 w-full flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
           <CreateWallet user={user} />
           {orderedWallets.map((wallet: Wallet, index: number) => (
             <div

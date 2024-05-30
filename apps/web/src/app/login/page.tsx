@@ -1,13 +1,37 @@
 "use client";
-
+import ForgotPassword from "./components/forgot-password";
 import SignIn from "./components/sign-in";
 import SingUp from "./components/sign-up";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function LoginPage() {
-  const [activeTab, setActiveTab] = useState<
-    "sign-in" | "sign-up" | "forgot-password"
-  >("sign-in");
+type Tab = "sign-in" | "sign-up" | "forgot-password";
+
+const isTabValid = (tab: string): tab is Tab => {
+  return ["sign-in", "sign-up", "forgot-password"].includes(tab);
+};
+
+export default function LoginPage({
+  searchParams
+}: {
+  searchParams: { tab: Tab };
+}) {
+  const [activeTab, setActiveTab] = useState<Tab>(
+    isTabValid(searchParams.tab) ? searchParams.tab : "sign-in"
+  );
+
+  const handleChangeTabSearchParam = (tab: Tab) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set("tab", tab);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${searchParams}`
+    );
+  };
+
+  useEffect(() => {
+    handleChangeTabSearchParam(activeTab);
+  }, [activeTab]);
 
   return (
     <div className="bg-bg-primary flex h-screen w-full flex-col items-center justify-center gap-8">
@@ -21,7 +45,9 @@ export default function LoginPage() {
           <div className="flex w-full flex-col items-start justify-center gap-6">
             {activeTab === "sign-in" && <SignIn setActiveTab={setActiveTab} />}
             {activeTab === "sign-up" && <SingUp setActiveTab={setActiveTab} />}
-            {/* {activeTab === "forgot-password" && (<ForgotPassword setActiveTab={setActiveTab} />)} */}
+            {activeTab === "forgot-password" && (
+              <ForgotPassword setActiveTab={setActiveTab} />
+            )}
           </div>
         </div>
       </div>

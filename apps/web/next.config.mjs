@@ -5,10 +5,10 @@ const nextConfig = {
       {
         source: "/",
         destination: "/login",
-        permanent: false,
-      },
+        permanent: false
+      }
     ];
-  },
+  }
 };
 
 export default nextConfig;

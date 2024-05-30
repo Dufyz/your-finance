@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useState } from "react";
-import { AuthError } from "@supabase/supabase-js";
 
 type ISignUpProps = {
   setActiveTab: any;
@@ -25,27 +24,18 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
+    handleSubmit,
     register,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<SignUpSchemaType>({
     resolver: zodResolver(SignUpSchema)
   });
 
-  const handleSingUpAction = async (formData: FormData) => {
-    const name = formData.get("name") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    const validation = SignUpSchema.safeParse({
-      name,
-      email,
-      password
-    });
-
-    if (!validation.success) {
-      return validation.error.errors;
-    }
-
+  const handleSingUpAction = async ({
+    name,
+    email,
+    password
+  }: SignUpSchemaType) => {
     try {
       await signUp({ name, email, password });
       return toast.success("User created successfully");
@@ -61,8 +51,8 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8">
       <form
+        onSubmit={handleSubmit(handleSingUpAction)}
         className="flex w-full flex-col items-center justify-center gap-6"
-        action={handleSingUpAction}
       >
         <div className="flex w-full flex-col items-center justify-center gap-6">
           <div className="flex w-full flex-col items-start justify-center gap-2">
@@ -121,7 +111,6 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
           <div className="flex w-full flex-col items-start justify-center gap-6">
             <Button
               type="submit"
-              disabled={!isValid}
               className="flex h-12 w-full items-center justify-center rounded-[8px] text-base font-semibold text-white"
             >
               Sign Up

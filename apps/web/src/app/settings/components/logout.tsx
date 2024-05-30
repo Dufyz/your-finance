@@ -1,5 +1,6 @@
 "use client";
 
+import signOut from "@/app/login/actions/sign-out";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,18 +12,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from "@/components/ui/alert-dialog";
-import supabaseClient from "@/config/supabase/supabaseClient";
 import { IconLogout } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
 export function Logout() {
-  const router = useRouter();
-
   const handleSignOutAction = async () => {
     try {
-      await supabaseClient.auth.signOut();
-      router.push("/login");
+      await signOut();
       return toast.success("You have been logged out successfully");
     } catch {
       return toast.error("An error occurred while logging out");

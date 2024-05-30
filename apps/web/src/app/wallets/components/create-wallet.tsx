@@ -70,7 +70,7 @@ export default function CreateWallet({
   wallet
 }: {
   user: User;
-  wallet: Wallet;
+  wallet?: Wallet;
 }) {
   const [open, setOpen] = useState(false);
   const [iconColor, setIconColor] = useState("#15803d");
@@ -197,7 +197,7 @@ export default function CreateWallet({
           </Button>
         ) : (
           <div
-            className="flex h-full min-h-44 w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
+            className="flex h-full w-full cursor-pointer items-center justify-center rounded-md border bg-white shadow-md hover:bg-gray-100"
             onMouseEnter={() => setIconColor("#166534")}
             onMouseLeave={() => setIconColor("#15803d")}
           >

@@ -7,7 +7,6 @@ import { useState } from "react";
 import { signIn } from "../actions/sign-in";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
 interface ISignInProps {
   setActiveTab: any;
@@ -20,29 +19,18 @@ const SignInSchema = z.object({
 
 type SignInSchemaType = z.infer<typeof SignInSchema>;
 
-const SignIn = ({ setActiveTab }: ISignInProps) => {
+export default function SignIn({ setActiveTab }: ISignInProps) {
   const [showPassword, setShowPassword] = useState(false);
 
   const {
+    handleSubmit,
     register,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<SignInSchemaType>({
     resolver: zodResolver(SignInSchema)
   });
 
-  const handleSingInAction = async (formData: FormData) => {
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-
-    const validation = SignInSchema.safeParse({
-      email,
-      password
-    });
-
-    if (!validation.success) {
-      return validation.error.errors;
-    }
-
+  const handleSingInAction = async ({ email, password }: SignInSchemaType) => {
     try {
       await signIn({ email, password });
       return toast.success("Login successfully");
@@ -50,10 +38,11 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
       return toast.error("Invalid credentials. Please try again.");
     }
   };
+
   return (
     <div className="flex w-full flex-col items-center justify-center gap-8">
       <form
-        action={handleSingInAction}
+        onSubmit={handleSubmit(handleSingInAction)}
         className="flex w-full flex-col items-center justify-center gap-6"
       >
         <div className="flex w-full flex-col items-start justify-center gap-2">
@@ -105,7 +94,6 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
           <div className="flex w-full flex-col items-start justify-center gap-6">
             <Button
               type="submit"
-              disabled={!isValid}
               className="flex h-12 w-full items-center justify-center rounded-[8px] text-base font-semibold text-white"
             >
               Login
@@ -123,6 +111,4 @@ const SignIn = ({ setActiveTab }: ISignInProps) => {
       </div>
     </div>
   );
-};
-
-export default SignIn;
+}
