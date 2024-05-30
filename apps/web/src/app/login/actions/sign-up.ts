@@ -1,5 +1,6 @@
 "use server";
 
+import apiServer from "@/config/apiServer";
 import { createClient } from "@/config/supabase/supabaseServer";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -23,41 +24,18 @@ export async function signUp({ name, email, password }: IHandleSignUp) {
     }
   });
 
-  if (error) {
-    throw new Error(error.message);
+  if (error || !data?.user?.id) {
+    throw new Error(error?.message);
   }
 
-  const { error: errorInsert } = await supabase
-    .from("users")
-    .insert({
-      auth_id: data?.user?.id as string,
-      name,
+  await apiServer("/auth/sign-up", {
+    method: "POST",
+    body: JSON.stringify({
       email,
-      created_at: new Date(),
-      updated_at: new Date()
+      name,
+      auth_id: data.user.id
     })
-    .single();
-
-  if (errorInsert) {
-    throw new Error(errorInsert.message);
-  }
-
-  const { data: user, error: errorUser } = await supabase
-    .from("users")
-    .select("*")
-    .eq("auth_id", data?.user?.id as string)
-    .single();
-
-  if (errorUser) {
-    throw new Error(errorUser.message);
-  }
-
-  await supabase.auth.updateUser({
-    data: {
-      id: user?.id
-    }
   });
 
-  revalidatePath("/dashboard", "page");
-  redirect("/dashboard");
+  redirect("/login?tab=sign-in");
 }

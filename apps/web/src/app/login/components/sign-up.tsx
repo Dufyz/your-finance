@@ -38,7 +38,8 @@ const SingUp = ({ setActiveTab }: ISignUpProps) => {
   }: SignUpSchemaType) => {
     try {
       await signUp({ name, email, password });
-      return toast.success("User created successfully");
+      setActiveTab("sign-in");
+      return toast.success("Please check your email to confirm your account.");
     } catch (error: any) {
       const errorStatus = error?.response?.status;
 
