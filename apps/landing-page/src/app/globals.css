@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap');
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -74,4 +76,17 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f1f3f5;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #099268;
+  border-radius: 8px;
 }

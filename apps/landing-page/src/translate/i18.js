@@ -4,14 +4,14 @@ import { messages } from "./languages";
 
 i18n
   .use({
-    type: "3rdParty",
+    type: "3rdParty"
   })
   .init({
     debug: false,
     defaultNS: ["translations"],
     fallbackLng: "pt",
     ns: ["translations"],
-    resources: messages,
+    resources: messages
   });
 
 export { i18n };
