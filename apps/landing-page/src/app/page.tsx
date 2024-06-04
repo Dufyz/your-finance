@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import AOS from "aos";
+// import AOS from "aos";
 
 import Footer from "@/components/pages/Home/footer";
 import SectionAbout from "@/components/pages/Home/section-about";
@@ -11,11 +11,11 @@ import SectionHome from "@/components/pages/Home/section-home";
 import { i18n } from "@/translate/i18";
 
 export default function Home() {
-  useEffect(() => {
-    AOS.init({
-      duration: 500
-    });
-  }, []);
+  // useEffect(() => {
+  //   AOS.init({
+  //     duration: 500
+  //   });
+  // }, []);
 
   useEffect(() => {
     const language = navigator.language;

@@ -1,5 +1,5 @@
 import "./globals.css";
-import "aos/dist/aos.css";
+// import "aos/dist/aos.css";
 
 import { Inter as FontSans } from "next/font/google";
 import Navbar from "@/components/Global/Navbar/navbar";
