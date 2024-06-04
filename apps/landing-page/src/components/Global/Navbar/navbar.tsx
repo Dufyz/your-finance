@@ -1,7 +1,6 @@
 "use client";
 
 import { i18n } from "@/translate/i18";
-import scrollTo from "@/utils/scrollTo";
 import { IconMenu2, IconX } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";

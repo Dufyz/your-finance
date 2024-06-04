@@ -11,8 +11,6 @@ import SectionHome from "@/components/pages/Home/section-home";
 import { i18n } from "@/translate/i18";
 
 export default function Home() {
-  const language = navigator.language;
-
   useEffect(() => {
     AOS.init({
       duration: 500
@@ -20,8 +18,10 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
+    const language = navigator.language;
+
     if (language) i18n.changeLanguage(language);
-  }, [language]);
+  }, []);
 
   return (
     <>
