@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import AOS from "aos";
-
+import Aos from "aos";
 import Footer from "@/components/pages/Home/footer";
 import SectionAbout from "@/components/pages/Home/section-about";
 import SectionPlans from "@/components/pages/Home/section-plans";
@@ -12,7 +11,7 @@ import { i18n } from "@/translate/i18";
 
 export default function Home() {
   useEffect(() => {
-    AOS.init({
+    Aos.init({
       duration: 500
     });
   }, []);

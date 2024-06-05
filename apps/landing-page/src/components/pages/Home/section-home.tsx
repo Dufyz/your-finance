@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { i18n } from "@/translate/i18";
-import Spline from "@splinetool/react-spline";
+// import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -27,7 +27,7 @@ export default function SectionHome() {
         <div
           className={`flex h-full w-full max-w-sm items-center justify-center lg:max-w-xl`}
         >
-          {!isSplineLoaded && (
+          {/* {!isSplineLoaded && (
             <Spline
               scene="https://prod.spline.design/ElYXVrG-jAaLyxfj/scene.splinecode"
               onLoad={() => {
@@ -36,7 +36,7 @@ export default function SectionHome() {
                 }, 500);
               }}
             />
-          )}
+          )} */}
           {isSplineLoaded && <Skeleton className="h-[222px] w-[333px]" />}
         </div>
       </div>
