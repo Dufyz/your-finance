@@ -1,6 +1,6 @@
 import { Skeleton } from "@/components/ui/skeleton";
 import { i18n } from "@/translate/i18";
-// import Spline from "@splinetool/react-spline";
+import Spline from "@splinetool/react-spline";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -19,7 +19,7 @@ export default function SectionHome() {
           </h1>
           <Link href="/#About">
             <button className="flex  h-12 w-40 items-center justify-around rounded-md bg-green-700 p-4 text-base font-semibold text-white hover:bg-green-700">
-              <p>{i18n.t("home.button")}</p>
+              Start
               <p>➞</p>
             </button>
           </Link>
@@ -27,7 +27,7 @@ export default function SectionHome() {
         <div
           className={`flex h-full w-full max-w-sm items-center justify-center lg:max-w-xl`}
         >
-          {/* {!isSplineLoaded && (
+          {isSplineLoaded && (
             <Spline
               scene="https://prod.spline.design/ElYXVrG-jAaLyxfj/scene.splinecode"
               onLoad={() => {
@@ -36,8 +36,8 @@ export default function SectionHome() {
                 }, 500);
               }}
             />
-          )} */}
-          {isSplineLoaded && <Skeleton className="h-[222px] w-[333px]" />}
+          )}
+          {!isSplineLoaded && <Skeleton className="h-[222px] w-[333px]" />}
         </div>
       </div>
     </section>

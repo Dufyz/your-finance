@@ -7,13 +7,14 @@ import Link from "next/link";
 import { useState } from "react";
 import { NAVBAR_ITEMS } from "./data/navbar-items";
 import NavbarMobile from "./navbar-mobile";
+import getWebUrl from "@/utils/getWebUrl";
 
 export default function Navbar() {
   const [isMenuMobileOpen, setIsMenuMobileOpen] = useState(false);
 
   return (
     <>
-      <nav className="sticky top-0 z-[9] flex min-h-16 w-full items-center justify-between bg-gray-100 p-6">
+      <nav className="sticky top-0 z-[9] flex min-h-16 w-full items-center justify-between bg-gray-50 p-6">
         <div className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-12">
           <Link href={"#Home"}>
             <div aria-label="Logo">
@@ -30,9 +31,11 @@ export default function Navbar() {
             </ul>
           </div>
           <div className="hidden flex-wrap items-center justify-around gap-8 text-base lg:flex">
-            <button className="flex h-7 w-32 items-center justify-center rounded-md bg-blue-900 font-medium text-white hover:bg-blue-950">
-              <Link href="#">{i18n.t("navbar.button.login")}</Link>
-            </button>
+            <Link href={getWebUrl()} target="_blank">
+              <button className="flex h-7 w-32 items-center justify-center rounded-md bg-green-700 font-medium text-white hover:bg-green-800">
+                {i18n.t("navbar.button.login")}
+              </button>
+            </Link>
           </div>
           <div
             className="280px:w-auto flex cursor-pointer items-center justify-center lg:hidden"

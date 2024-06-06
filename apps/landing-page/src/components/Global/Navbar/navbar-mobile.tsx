@@ -3,6 +3,7 @@ import { NAVBAR_ITEMS } from "./data/navbar-items";
 import { i18n } from "@/translate/i18";
 import { Dispatch } from "react";
 import { SetStateAction } from "react";
+import getWebUrl from "@/utils/getWebUrl";
 
 type NavbarMobielProps = {
   isMenuMobileOpen: boolean;
@@ -15,7 +16,7 @@ export default function NavbarMobile({
 }: NavbarMobielProps) {
   return (
     <div
-      className={`h-[calc(100vh-96px)] bg-gray-100 lg:hidden ${
+      className={`h-[calc(100vh-96px)] bg-gray-50 lg:hidden ${
         isMenuMobileOpen ? "flex" : "hidden"
       } 
          fixed left-0 z-50  w-full flex-grow flex-col items-center justify-start gap-16 p-8 
@@ -33,9 +34,11 @@ export default function NavbarMobile({
         ))}
       </ul>
       <div className="flex flex-wrap items-center justify-center gap-8">
-        <button className="flex h-7 w-32 items-center justify-center rounded-md bg-blue-900 font-medium text-white hover:bg-blue-950">
-          <Link href="#">{i18n.t("navbar.button.login")}</Link>
-        </button>
+        <Link href={getWebUrl()} target="_blank">
+          <button className="flex h-7 w-32 items-center justify-center rounded-md bg-green-700 font-medium text-white hover:bg-green-800">
+            {i18n.t("navbar.button.login")}
+          </button>
+        </Link>
       </div>
     </div>
   );

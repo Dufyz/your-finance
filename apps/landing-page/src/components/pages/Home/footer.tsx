@@ -2,13 +2,24 @@ import { DonateModal } from "@/components/Global/donate-modal";
 import RenderTablerIcon from "@/components/Global/render-tabler-icon";
 import SocialIcon from "@/components/Global/social-icon";
 import { Button } from "@/components/ui/button";
-import { i18n } from "@/translate/i18";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import { i18n } from "@/translate/i18";
 
 export default function Footer() {
   const [isDonateModalOpen, setIsDonateModalOpen] = useState(false);
+
+  const handleChangeLanguage = (language: string) => {
+    i18n.changeLanguage(language);
+  };
 
   return (
     <>
@@ -49,9 +60,23 @@ export default function Footer() {
             <div>
               <Image src={"/logo.svg"} height={48} width={48} alt="logo icon" />
             </div>
-            <p className="center text-muted-foreground text-base">
-              {i18n.t("contact.copy-right")}
-            </p>
+            <div className="flex items-center justify-center gap-2">
+              <p className="center text-muted-foreground text-base">
+                {i18n.t("contact.copy-right")}
+              </p>
+              {/* <Select
+                onValueChange={(language) => handleChangeLanguage(language)}
+              >
+                <SelectTrigger className="w-40 min-w-[unset]">
+                  <SelectValue placeholder="Language" defaultValue="en" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="pt-BR">pt-BR</SelectItem>
+                  <SelectItem value="en">en</SelectItem>
+                </SelectContent>
+              </Select> */}
+            </div>
+
             <div className="flex flex-wrap items-center justify-center gap-12 sm:justify-between">
               <SocialIcon link="">
                 <RenderTablerIcon
