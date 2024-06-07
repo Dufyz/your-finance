@@ -93,24 +93,25 @@ const messages = {
           "Answered all frequently asked questions, Still confused? feel free to contact us.",
         list: {
           1: {
-            question: "What are some random questions to ask?",
-            answer: `That's exactly the reason we created this random question generator. There are hundreds of random questions to choose from so you're able to find the perfect random question.`
+            question: "What is this project?",
+            answer:
+              "This project is a financial application designed to meet the real needs of common users. The interface features a modern and intuitive design that makes navigation and use of the app easy. Additionally, the project is open-source, allowing anyone to contribute to it."
           },
           2: {
-            question: "Do you include common questions?",
-            answer: `This generator doesn't include most common questions. The thought is that you can come up with common questions on your own so most of the questions in this generator.`
+            question: "How does the project contribute to the community?",
+            answer: `The project was created to address the need for financial software that meets the real needs of common users. Additionally, the project is open-source, allowing anyone to contribute or even create their own version of the application.`
           },
           3: {
-            question: "Can I use this for 21 questions?",
-            answer: `Yes! there are two ways that you can use this question generator depending on what you're after. You can indicate that you want 21 questions generated.`
+            question: "How can I suggest new features?",
+            answer: `You can create an account in the app and suggest new features through our contact form in the "Support" section.`
           },
           4: {
-            question: "Are these questions for girls or for boys?",
-            answer: `The questions in this generator are gender neutral and can be used to ask either male of females (or any other gender the person identifies with).`
+            question: "Can I contribute to the project?",
+            answer: `Yes, you can contribute to the project in several ways. You can contribute code, report bugs, suggest new features, or even donate to the project. For more information, click the "Contact" or "More" button.`
           },
           5: {
-            question: "What do you wish you had more talent doing?",
-            answer: `If you've been searching for a way to get random questions, you've landed on the correct webpage. We created the Random Question Generator to ask you as many random questions as your heart desires.`
+            question: "Do I need to pay to use the app?",
+            answer: ` No, the app is free to use. If you wish, you can contribute through the "Donate" button.`
           }
         }
       },

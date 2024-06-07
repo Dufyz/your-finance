@@ -1,3 +1,5 @@
+"use client";
+
 import { DonateModal } from "@/components/Global/donate-modal";
 import RenderTablerIcon from "@/components/Global/render-tabler-icon";
 import SocialIcon from "@/components/Global/social-icon";
@@ -5,13 +7,6 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
 import { i18n } from "@/translate/i18";
 
 export default function Footer() {
@@ -78,23 +73,26 @@ export default function Footer() {
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-12 sm:justify-between">
-              <SocialIcon link="">
+              <SocialIcon link="https://dufyz.netlify.app/">
+                <RenderTablerIcon icon="IconWorld" size={20} color="#099268" />
+              </SocialIcon>
+              <SocialIcon link="https://github.com/dufyz/">
                 <RenderTablerIcon
-                  icon="IconBrandFacebook"
+                  icon="IconBrandGithub"
                   size={20}
                   color="#099268"
                 />
               </SocialIcon>
-              <SocialIcon link="">
+              <SocialIcon link="https://www.linkedin.com/in/schmidt-iago-thomaz/">
                 <RenderTablerIcon
-                  icon="IconBrandInstagram"
+                  icon="IconBrandLinkedin"
                   size={20}
                   color="#099268"
                 />
               </SocialIcon>
-              <SocialIcon link="">
+              <SocialIcon link="https://linktr.ee/Dufyz">
                 <RenderTablerIcon
-                  icon="IconBrandTwitter"
+                  icon="IconBrandLinktree"
                   size={20}
                   color="#099268"
                 />

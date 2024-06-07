@@ -2,7 +2,6 @@
 
 import { useEffect } from "react";
 import AOS from "aos";
-import Footer from "@/components/pages/Home/footer";
 import SectionAbout from "@/components/pages/Home/section-about";
 import SectionPlans from "@/components/pages/Home/section-plans";
 import SectionFAQS from "@/components/pages/Home/section-faqs";
@@ -21,7 +20,6 @@ export default function Home() {
       <SectionAbout />
       {/* <SectionPlans /> */}
       <SectionFAQS />
-      <Footer />
     </>
   );
 }

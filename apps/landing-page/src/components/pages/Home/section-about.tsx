@@ -29,11 +29,11 @@ const PLANS_CARDS = [
 export default function SectionAbout() {
   return (
     <section
-      className="flex min-h-[calc(100vh-96px)] items-center justify-center p-8"
+      className="flex min-h-[calc(100vh-96px)] items-center justify-center p-8 lg:min-h-[unset]"
       id="About"
     >
       <div className="mx-auto max-w-7xl">
-        <div className="mx-auto max-w-2xl lg:text-center">
+        <div className="mx-auto max-w-2xl lg:hidden lg:text-center">
           <p className="mt-2 text-3xl font-bold tracking-tight text-green-700 sm:text-4xl">
             {i18n.t("about.title")}
           </p>
