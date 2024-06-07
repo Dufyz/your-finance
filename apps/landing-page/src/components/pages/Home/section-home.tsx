@@ -14,7 +14,7 @@ export default function SectionHome() {
     >
       <div className="mx-auto flex w-full  max-w-7xl flex-nowrap items-center justify-center gap-8 lg:justify-between">
         <div className="flex flex-col items-center justify-center gap-8 md:items-start">
-          <h1 className="max-w-xs text-center text-[32px] font-medium text-green-700 md:text-start lg:text-[48px] xl:text-[64px]">
+          <h1 className="max-w-md text-center text-[32px] font-medium text-green-700 md:text-start lg:text-[48px] xl:text-[48px]">
             {i18n.t("home.title")}
           </h1>
           <Link href="/#About">
