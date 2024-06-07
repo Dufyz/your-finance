@@ -15,7 +15,8 @@ export function DonateModal({
       <DialogHeader></DialogHeader>
       <DialogContent className="bg-[#fff] sm:max-w-[425px]">
         <div className="">
-          <div className="space-y- flex flex-col items-center justify-center p-4 md:p-5">
+          <p>QR CODE PIX</p>
+          <div className="flex flex-col items-center justify-center p-4 md:p-5">
             <div>
               <Image
                 src="/qr-code.jpeg"

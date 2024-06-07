@@ -1,4 +1,5 @@
 export default function getWebUrl() {
-  const env = String(process.env.NEXT_WEB_URL!);
-  return env;
+  const baseUrl = process.env.NEXT_PUBLIC_WEB_URL || "";
+
+  return baseUrl;
 }
