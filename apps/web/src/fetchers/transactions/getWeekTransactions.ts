@@ -1,9 +1,9 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export const getWeekTransactions = async ({ user_id }: { user_id: number }) => {
-  const response = await apiServer(`/transactions?tab=week`, {
+  const response = await api(`/transactions?tab=week`, {
     method: "GET",
     next: {
       tags: [`get-week-transactions-${user_id}`]

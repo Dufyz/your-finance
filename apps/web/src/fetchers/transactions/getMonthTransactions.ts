@@ -1,13 +1,13 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export const getMonthTransactions = async ({
   user_id
 }: {
   user_id: number;
 }) => {
-  const response = await apiServer(`/transactions?tab=month`, {
+  const response = await api(`/transactions?tab=month`, {
     method: "GET",
     next: {
       tags: [`get-month-transactions-${user_id}`]

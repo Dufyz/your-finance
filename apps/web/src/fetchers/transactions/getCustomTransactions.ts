@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export const getCustomTransactions = async ({
   user_id,
@@ -11,7 +11,7 @@ export const getCustomTransactions = async ({
   date_from: String;
   date_to: String;
 }) => {
-  const response = await apiServer(
+  const response = await api(
     `/transactions?tab=custom&date_from=${date_from}&date_to=${date_to}`,
     {
       method: "GET",

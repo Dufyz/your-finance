@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidateTag } from "next/cache";
-import apiServer from "../../config/apiServer";
+import api from "../../config/api";
 
 export const deleteExpenseCategoryGoal = async ({
   user_id,
@@ -10,7 +10,7 @@ export const deleteExpenseCategoryGoal = async ({
   user_id: number;
   id: number;
 }) => {
-  const response = await apiServer(`/goals/categories/${id}`, {
+  const response = await api(`/goals/categories/${id}`, {
     method: "DELETE"
   });
 

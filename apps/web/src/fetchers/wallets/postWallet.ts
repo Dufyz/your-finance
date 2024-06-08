@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const postWallet = async ({
@@ -27,7 +27,7 @@ export const postWallet = async ({
     is_main
   });
 
-  const response = await apiServer(`/wallets`, {
+  const response = await api(`/wallets`, {
     method: "POST",
     body
   });

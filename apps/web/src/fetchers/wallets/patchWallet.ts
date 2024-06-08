@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export default async function patchWallet({
@@ -29,7 +29,7 @@ export default async function patchWallet({
     is_main
   });
 
-  const response = await apiServer(`/wallets`, {
+  const response = await api(`/wallets`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json"

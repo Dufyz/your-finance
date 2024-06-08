@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { createClient } from "@/config/supabase/supabaseServer";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -28,7 +28,7 @@ export async function signUp({ name, email, password }: IHandleSignUp) {
     throw new Error(error?.message);
   }
 
-  await apiServer("/auth/sign-up", {
+  await api("/auth/sign-up", {
     method: "POST",
     body: JSON.stringify({
       email,

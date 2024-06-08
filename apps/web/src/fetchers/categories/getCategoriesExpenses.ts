@@ -1,13 +1,13 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export const getCategoriesExpenses = async ({
   user_id
 }: {
   user_id: number;
 }) => {
-  const response = await apiServer(`/categories/expenses`, {
+  const response = await api(`/categories/expenses`, {
     method: "GET",
     next: {
       tags: [`get-categories-expenses-${user_id}`]

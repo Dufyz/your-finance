@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 type GetTototals = {
   user_id: number;
@@ -12,7 +12,7 @@ export const getTotals = async ({
   date_from,
   date_to
 }: GetTototals) => {
-  const response = await apiServer(
+  const response = await api(
     `/dashboard/totals?date_from=${date_from}&date_to=${date_to}`,
     {
       method: "GET",

@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 interface IPatchUser {
@@ -31,7 +31,7 @@ export default async function patchUser({
     is_dark_mode
   });
 
-  await apiServer(`/user`, {
+  await api(`/user`, {
     method: "PATCH",
     body
   });

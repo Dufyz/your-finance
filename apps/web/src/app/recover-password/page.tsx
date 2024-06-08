@@ -24,10 +24,16 @@ export default async function RecoverPasswordPage({
   }
 
   try {
-    await supabase.auth.exchangeCodeForSession(code);
+    const {
+      data: { session }
+    } = await supabase.auth.exchangeCodeForSession(code);
+
+    if (!session) {
+      throw new Error("");
+    }
+
+    return <RecoverPassword session={session} />;
   } catch (error) {
     return <InvalidCodeFeedback />;
   }
-
-  return <RecoverPassword code={code} />;
 }

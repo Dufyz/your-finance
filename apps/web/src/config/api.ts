@@ -2,13 +2,12 @@
 
 import { createClient } from "./supabase/supabaseServer";
 
-export default async function apiServer(
-  endpoint: string,
-  options: RequestInit = {}
-) {
+export default async function api(endpoint: string, options: RequestInit = {}) {
   const supabse = await createClient();
 
   const baseUrl = process.env.NEXT_PUBLIC_WEB_API;
+
+  await supabse.auth.getUser();
 
   const {
     data: { session }

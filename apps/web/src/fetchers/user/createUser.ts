@@ -1,6 +1,6 @@
 "use server";
 
-import apiClient from "@/config/apiClient";
+import api from "@/config/api";
 
 export default async function createUser({
   auth_id,
@@ -13,7 +13,7 @@ export default async function createUser({
 }): Promise<void> {
   const body = JSON.stringify({ auth_id, name, email });
 
-  const response = await apiClient("/auth/sign-up", {
+  const response = await api("/auth/sign-up", {
     method: "POST",
     body
   });

@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const putExpenseCategoryGoal = async ({
@@ -19,7 +19,7 @@ export const putExpenseCategoryGoal = async ({
     target_value
   });
 
-  const response = await apiServer(`/goals/categories`, {
+  const response = await api(`/goals/categories`, {
     body,
     method: "PUT"
   });

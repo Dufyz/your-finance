@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { createClient } from "@/config/supabase/supabaseServer";
 
 export default async function getUser() {
@@ -12,7 +12,7 @@ export default async function getUser() {
 
   const user_id = user?.user_metadata.id;
 
-  const response = await apiServer(`/user`, {
+  const response = await api(`/user`, {
     next: {
       tags: [`user-${user_id}`]
     },

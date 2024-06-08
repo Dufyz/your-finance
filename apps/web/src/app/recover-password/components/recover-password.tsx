@@ -9,6 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import FormError from "@/components/global/form-error";
 import { useState } from "react";
 import { IconEye } from "@tabler/icons-react";
+import { Session } from "@supabase/supabase-js";
 
 const RecoverPasswordSchema = z
   .object({
@@ -26,7 +27,7 @@ const RecoverPasswordSchema = z
 
 type SignInSchemaType = z.infer<typeof RecoverPasswordSchema>;
 
-export default function RecoverPassword({ code }: { code: string }) {
+export default function RecoverPassword({ session }: { session: Session }) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -42,7 +43,7 @@ export default function RecoverPassword({ code }: { code: string }) {
     password
   }: SignInSchemaType) => {
     try {
-      await recoverPassword({ password, code });
+      await recoverPassword({ password, session });
       toast.success("Password recovered successfully");
     } catch (error) {
       toast.error("An error occurred while recovering the password");

@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export default async function submitSupportForm({
   user_id,
@@ -20,7 +20,7 @@ export default async function submitSupportForm({
     isAgreed
   });
 
-  const response = await apiServer(`/support`, {
+  const response = await api(`/support`, {
     method: "POST",
     body
   });

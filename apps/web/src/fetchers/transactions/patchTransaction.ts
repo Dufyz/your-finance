@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const patchTransaction = async ({
@@ -35,7 +35,7 @@ export const patchTransaction = async ({
     transaction_date
   });
 
-  const response = await apiServer(`/transactions`, {
+  const response = await api(`/transactions`, {
     method: "PATCH",
     body
   });

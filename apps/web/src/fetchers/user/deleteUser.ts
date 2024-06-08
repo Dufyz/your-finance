@@ -1,11 +1,11 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export default async function deleteUser({ id }: { id: number }) {
   const body = JSON.stringify({ id });
 
-  const response = await apiServer("/user", {
+  const response = await api("/user", {
     method: "DELETE",
     body
   });

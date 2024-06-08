@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 
 export default async function validatePassword({
   user_id,
@@ -13,7 +13,7 @@ export default async function validatePassword({
 }) {
   const body = JSON.stringify({ email, password });
 
-  const response = await apiServer(`/user/validate-password`, {
+  const response = await api(`/user/validate-password`, {
     method: "POST",
     body
   });

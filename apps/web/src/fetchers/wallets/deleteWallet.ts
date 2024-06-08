@@ -1,6 +1,6 @@
 "use server";
 
-import apiServer from "@/config/apiServer";
+import api from "@/config/api";
 import { revalidateTag } from "next/cache";
 
 export const deleteWallet = async ({
@@ -14,7 +14,7 @@ export const deleteWallet = async ({
     id
   });
 
-  const response = await apiServer(`/wallets`, {
+  const response = await api(`/wallets`, {
     method: "DELETE",
     body
   });
