@@ -61,24 +61,6 @@ const LeftNavbar = () => {
           label="Goals"
           route="/goals"
         />
-        <LeftNavbarItem
-          icon={<IconManualGearbox size={24} color="#166534" />}
-          label="Categories"
-          route="/categories"
-          disabled
-        />
-        <LeftNavbarItem
-          icon={<IconChecklist size={24} color="#166534" />}
-          label="Tasks"
-          route="/tasks"
-          disabled
-        />
-        <LeftNavbarItem
-          icon={<IconNote size={24} color="#166534" />}
-          label="Notes"
-          route="/notes"
-          disabled
-        />
       </div>
       <div className="flex w-full flex-col items-start justify-start gap-2">
         <LeftNavbarItem
